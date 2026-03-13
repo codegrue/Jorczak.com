@@ -588,6 +588,215 @@
       border-radius: 2px;
     }
 
+    /* ─── ⑦ FAMILY TREE ─────────────────────────────────────── */
+    #family-tree {
+      background: var(--green);
+      color: var(--parchment);
+    }
+    #family-tree h2 { color: var(--parchment); }
+    #family-tree .section-label { color: var(--gold); }
+
+    .tree-wrap {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Generation row */
+    .tree-gen {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    /* Connector vertical line between generations */
+    .tree-connector {
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(to bottom, var(--gold), rgba(201,168,76,0.3));
+      margin: 0 auto;
+    }
+
+    /* Horizontal connector bar above children */
+    .tree-h-connector {
+      position: relative;
+      height: 0;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Person card */
+    .tree-card {
+      background: rgba(244, 237, 224, 0.07);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      border-radius: 4px;
+      padding: 1.1rem 1.4rem;
+      min-width: 190px;
+      max-width: 240px;
+      position: relative;
+      transition: background 0.25s, border-color 0.25s;
+    }
+
+    .tree-card.is-root {
+      cursor: pointer;
+      border-color: rgba(201, 168, 76, 0.55);
+      background: rgba(244, 237, 224, 0.1);
+    }
+    .tree-card.is-root:hover {
+      background: rgba(244, 237, 224, 0.15);
+      border-color: var(--gold);
+    }
+
+    .tree-card.is-spouse {
+      border-style: dashed;
+      border-color: rgba(201, 168, 76, 0.25);
+      background: rgba(244, 237, 224, 0.04);
+    }
+
+    .tree-card.is-ex {
+      border-style: dashed;
+      border-color: rgba(201, 168, 76, 0.18);
+      background: rgba(244, 237, 224, 0.03);
+      opacity: 0.65;
+    }
+    .tree-card.is-ex::before { display: none; }
+
+    .tree-card.is-unknown {
+      border-style: dashed;
+      border-color: rgba(201, 168, 76, 0.18);
+      background: transparent;
+      opacity: 0.45;
+      min-width: 120px;
+      max-width: 140px;
+    }
+
+    .tree-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(to bottom, var(--gold), var(--crimson));
+      border-radius: 4px 0 0 4px;
+    }
+    .tree-card.is-spouse::before,
+    .tree-card.is-unknown::before { display: none; }
+
+    .tree-card-role {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.7;
+      margin-bottom: 0.3rem;
+    }
+
+    .tree-card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--parchment);
+      line-height: 1.25;
+      margin-bottom: 0.4rem;
+    }
+
+    .tree-card.is-unknown .tree-card-name {
+      font-style: italic;
+      color: rgba(244,237,224,0.4);
+      font-size: 0.9rem;
+    }
+
+    .tree-card-detail {
+      font-size: 0.78rem;
+      color: rgba(244, 237, 224, 0.55);
+      line-height: 1.5;
+    }
+
+    .tree-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-top: 0.6rem;
+      color: var(--gold);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(201,168,76,0.3);
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+    }
+    .tree-card-link:hover { border-color: var(--gold); }
+
+    /* Chevron on root card */
+    .tree-chevron {
+      position: absolute;
+      bottom: 0.7rem;
+      right: 0.9rem;
+      color: rgba(201,168,76,0.5);
+      font-size: 0.75rem;
+      transition: transform 0.35s ease, color 0.2s;
+    }
+    .tree-card.expanded .tree-chevron {
+      transform: rotate(180deg);
+      color: var(--gold);
+    }
+
+    /* Marriage badge between root and spouse */
+    .tree-marriage-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.25rem;
+    }
+    .tree-marriage-line {
+      height: 1px;
+      width: 2rem;
+      background: rgba(201,168,76,0.35);
+    }
+    .tree-marriage-symbol {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      color: rgba(201,168,76,0.45);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* Children area */
+    .tree-children-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
+    }
+    .tree-children-wrap.open {
+      opacity: 1;
+      /* max-height driven by JS for correct nested animation */
+    }
+
+    /* Wraps a parent+spouse row and their children together as a unit */
+    .tree-family-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .tree-disclaimer {
+      margin-top: 2.5rem;
+      font-size: 0.78rem;
+      font-style: italic;
+      color: rgba(244, 237, 224, 0.35);
+      text-align: center;
+      border-top: 1px solid rgba(201, 168, 76, 0.15);
+      padding-top: 1.25rem;
+    }
+
     /* ─── FOOTER ─────────────────────────────────────────────── */
     footer {
       background: var(--ink);
@@ -644,6 +853,7 @@
       <a href="#distribution" style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(201,168,76,0.55);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(201,168,76,1)'" onmouseout="this.style.color='rgba(201,168,76,0.55)'">Distribution</a>
       <a href="#crest" style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(201,168,76,0.55);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(201,168,76,1)'" onmouseout="this.style.color='rgba(201,168,76,0.55)'">Family Crest</a>
       <a href="#people" style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(201,168,76,0.55);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(201,168,76,1)'" onmouseout="this.style.color='rgba(201,168,76,0.55)'">Notable People</a>
+      <a href="#family-tree" style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(201,168,76,0.55);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(201,168,76,1)'" onmouseout="this.style.color='rgba(201,168,76,0.55)'">Family Tree</a>
     </nav>
     <div class="hero-scroll">
       <div class="hero-scroll-line"></div>
@@ -1002,6 +1212,254 @@
   </section>
 
 
+  <!-- ⑦ FAMILY TREE ─────────────────────────────────────────── -->
+  <section id="family-tree" class="section" aria-labelledby="tree-heading">
+    <div class="container">
+      <span class="section-label reveal">VI. Family Tree</span>
+      <h2 id="tree-heading" class="reveal" style="transition-delay:0.08s">Known Family Branches</h2>
+      <div class="ornament reveal" style="transition-delay:0.14s">✦</div>
+
+      <p class="reveal" style="transition-delay:0.18s">
+        Two known branches of the Jorczak family are documented below. Click any card with a ▼ to expand its descendants. The connection between branches has not yet been confirmed.
+      </p>
+
+      <div class="tree-wrap reveal" style="transition-delay:0.24s">
+
+        <!-- Generation 1: Joseph + Phyllis -->
+        <div class="tree-gen">
+          <div class="tree-card is-root" id="card-joseph" role="button" tabindex="0" aria-expanded="false" aria-controls="children-joseph">
+            <div class="tree-card-role">Root ancestor</div>
+            <div class="tree-card-name">Joseph Stanley Jorczak</div>
+            <div class="tree-card-detail">Trenton, New Jersey</div>
+            <span class="tree-chevron" aria-hidden="true">▼</span>
+          </div>
+
+          <div class="tree-marriage-badge" aria-hidden="true">
+            <div class="tree-marriage-line"></div>
+            <div class="tree-marriage-symbol">m.</div>
+            <div class="tree-marriage-line"></div>
+          </div>
+
+          <div class="tree-card is-spouse">
+            <div class="tree-card-role">Spouse</div>
+            <div class="tree-card-name">Phyllis Jorczak</div>
+            <div class="tree-card-detail"><em>née</em> Grotkowski</div>
+          </div>
+        </div>
+
+        <!-- Children of Joseph -->
+        <div class="tree-children-wrap" id="children-joseph" aria-hidden="true">
+          <div class="tree-connector"></div>
+          <div class="tree-gen">
+
+            <div class="tree-card">
+              <div class="tree-card-role">Daughter</div>
+              <div class="tree-card-name">Nancy Jorczak</div>
+              <div class="tree-card-detail">
+                b. March 4, 1948<br>Trenton, New Jersey<br>Educator &amp; Fulbright Scholar
+              </div>
+              <a class="tree-card-link" href="https://prabook.com/web/nancy.jorczak/1666584" target="_blank" rel="noopener noreferrer">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                View Biography
+              </a>
+            </div>
+
+            <div class="tree-card is-unknown" aria-hidden="true">
+              <div class="tree-card-name">Unknown</div>
+              <div class="tree-card-detail" style="font-size:0.72rem;font-style:italic;">Other children not<br>in public record</div>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- /.tree-wrap (Joseph) -->
+
+      <!-- Branch separator -->
+      <div style="margin:3rem 0 2rem;text-align:center;">
+        <div class="ornament ornament-sm" style="margin-bottom:0.75rem;">◈</div>
+        <p style="font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,168,76,0.4);">Second known branch — relationship to above unconfirmed</p>
+      </div>
+
+      <!-- Francis branch -->
+      <div class="tree-wrap">
+
+        <!-- Generation 1: Francis + Casandra -->
+        <div class="tree-gen">
+          <div class="tree-card is-root" id="card-francis" role="button" tabindex="0" aria-expanded="false" aria-controls="children-francis">
+            <div class="tree-card-role">Ancestor</div>
+            <div class="tree-card-name">Francis Jorczak</div>
+            <div class="tree-card-detail">Chicopee, Massachusetts</div>
+            <span class="tree-chevron" aria-hidden="true">▼</span>
+          </div>
+          <div class="tree-marriage-badge" aria-hidden="true">
+            <div class="tree-marriage-line"></div>
+            <div class="tree-marriage-symbol">m.</div>
+            <div class="tree-marriage-line"></div>
+          </div>
+          <div class="tree-card is-spouse">
+            <div class="tree-card-role">Spouse</div>
+            <div class="tree-card-name">Casandra Jorczak</div>
+            <div class="tree-card-detail">Chicopee, Massachusetts</div>
+          </div>
+        </div>
+
+        <!-- Francis's children: Raymond and Robert as family units -->
+        <div class="tree-children-wrap" id="children-francis" aria-hidden="true">
+          <div class="tree-connector"></div>
+          <div class="tree-gen" style="align-items:flex-start;gap:2.5rem;">
+
+            <!-- Raymond family unit -->
+            <div class="tree-family-unit">
+              <div class="tree-gen">
+                <div class="tree-card is-root" id="card-raymond" role="button" tabindex="0" aria-expanded="false" aria-controls="children-raymond">
+                  <div class="tree-card-role">Son</div>
+                  <div class="tree-card-name">Raymond Jorczak</div>
+                  <div class="tree-card-detail">Palm Harbor, Florida</div>
+                  <span class="tree-chevron" aria-hidden="true">▼</span>
+                </div>
+                <div class="tree-marriage-badge" aria-hidden="true">
+                  <div class="tree-marriage-line"></div>
+                  <div class="tree-marriage-symbol">m.</div>
+                  <div class="tree-marriage-line"></div>
+                </div>
+                <div class="tree-card is-spouse">
+                  <div class="tree-card-role">Spouse</div>
+                  <div class="tree-card-name">Jan Jorczak</div>
+                  <div class="tree-card-detail"><em>née</em> Clouatre<br>Palm Harbor, Florida</div>
+                </div>
+              </div>
+              <div class="tree-children-wrap" id="children-raymond" aria-hidden="true">
+                <div class="tree-connector"></div>
+                <div class="tree-gen">
+                  <div class="tree-family-unit">
+                    <div class="tree-gen">
+                      <div class="tree-card is-root" id="card-jeffrey" role="button" tabindex="0" aria-expanded="false" aria-controls="children-jeffrey">
+                        <div class="tree-card-role">Son</div>
+                        <div class="tree-card-name">Jeffrey Jorczak</div>
+                        <div class="tree-card-detail">South Windsor, Connecticut</div>
+                        <div class="tree-card-chevron" aria-hidden="true">&#8964;</div>
+                      </div>
+                    </div>
+                    <div class="tree-children-wrap" id="children-jeffrey" aria-hidden="true">
+                      <div class="tree-connector"></div>
+                      <div class="tree-gen" style="align-items:flex-start;gap:2.5rem;">
+
+                        <!-- Jeffrey + Joan family -->
+                        <div class="tree-family-unit">
+                          <div class="tree-gen">
+                            <div class="tree-marriage-badge" aria-hidden="true">
+                              <div class="tree-marriage-line"></div>
+                              <div class="tree-marriage-symbol">m.</div>
+                              <div class="tree-marriage-line"></div>
+                            </div>
+                            <div class="tree-card is-ex">
+                              <div class="tree-card-role">Ex-Spouse</div>
+                              <div class="tree-card-name">Joan Jorczak</div>
+                              <div class="tree-card-detail"><em>née</em> Daignault<br>Manchester, Connecticut</div>
+                            </div>
+                          </div>
+                          <div class="tree-connector"></div>
+                          <div class="tree-gen">
+                            <div class="tree-card">
+                              <div class="tree-card-role">Son</div>
+                              <div class="tree-card-name">Alexander Jorczak</div>
+                              <div class="tree-card-detail">Manchester, Connecticut</div>
+                            </div>
+                            <div class="tree-card">
+                              <div class="tree-card-role">Son</div>
+                              <div class="tree-card-name">Tanner Jorczak</div>
+                              <div class="tree-card-detail">Manchester, Connecticut</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Jeffrey + Missy family -->
+                        <div class="tree-family-unit">
+                          <div class="tree-gen">
+                            <div class="tree-marriage-badge" aria-hidden="true">
+                              <div class="tree-marriage-line"></div>
+                              <div class="tree-marriage-symbol">m.</div>
+                              <div class="tree-marriage-line"></div>
+                            </div>
+                            <div class="tree-card is-spouse">
+                              <div class="tree-card-role">Spouse</div>
+                              <div class="tree-card-name">Missy Jorczak</div>
+                              <div class="tree-card-detail"><em>née</em> Parmlee<br>South Windsor, Connecticut</div>
+                            </div>
+                          </div>
+                          <div class="tree-connector"></div>
+                          <div class="tree-gen">
+                            <div class="tree-card">
+                              <div class="tree-card-role">Son</div>
+                              <div class="tree-card-name">Nathan Jorczak</div>
+                            </div>
+                            <div class="tree-card">
+                              <div class="tree-card-role">Daughter</div>
+                              <div class="tree-card-name">Sara Jorczak</div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- /Raymond unit -->
+
+            <!-- Robert family unit -->
+            <div class="tree-family-unit">
+              <div class="tree-gen">
+                <div class="tree-card is-root" id="card-robert" role="button" tabindex="0" aria-expanded="false" aria-controls="children-robert">
+                  <div class="tree-card-role">Son</div>
+                  <div class="tree-card-name">Robert Jorczak</div>
+                  <span class="tree-chevron" aria-hidden="true">▼</span>
+                </div>
+                <div class="tree-marriage-badge" aria-hidden="true">
+                  <div class="tree-marriage-line"></div>
+                  <div class="tree-marriage-symbol">m.</div>
+                  <div class="tree-marriage-line"></div>
+                </div>
+                <div class="tree-card is-spouse">
+                  <div class="tree-card-role">Spouse</div>
+                  <div class="tree-card-name">Jean Jorczak</div>
+                </div>
+              </div>
+              <div class="tree-children-wrap" id="children-robert" aria-hidden="true">
+                <div class="tree-connector"></div>
+                <div class="tree-gen">
+                  <div class="tree-card">
+                    <div class="tree-card-role">Son</div>
+                    <div class="tree-card-name">Philip Jorczak</div>
+                  </div>
+                  <div class="tree-card">
+                    <div class="tree-card-role">Son</div>
+                    <div class="tree-card-name">Eric Jorczak</div>
+                  </div>
+                  <div class="tree-card">
+                    <div class="tree-card-role">Daughter</div>
+                    <div class="tree-card-name">Kimberly Jorczak</div>
+                  </div>
+                  <div class="tree-card">
+                    <div class="tree-card-role">Daughter</div>
+                    <div class="tree-card-name">Melissa Jorczak</div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- /Robert unit -->
+
+          </div>
+        </div><!-- /children-francis -->
+
+      </div><!-- /.tree-wrap (Francis) -->
+
+      <p class="tree-disclaimer reveal">
+        This tree shows only publicly documented individuals from verified sources.
+        Records are limited to what appears in Prabook's biographical encyclopedia and related public archives.
+      </p>
+    </div>
+  </section>
+
   </main>
 
   <!-- FOOTER ──────────────────────────────────────────────────── -->
@@ -1050,6 +1508,47 @@
 
     const barWrap = document.querySelector('.distribution-bar-wrap');
     if (barWrap) barObserver.observe(barWrap);
+
+    // ── Family tree expand/collapse (dynamic height for nested trees) ──
+    function toggleTreeCard(card) {
+      const el = document.getElementById(card.getAttribute('aria-controls'));
+      if (!el) return;
+      const isExpanded = card.getAttribute('aria-expanded') === 'true';
+
+      if (isExpanded) {
+        // Snapshot current rendered height, then animate to 0
+        el.style.maxHeight = el.scrollHeight + 'px';
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          el.style.maxHeight = '0';
+          el.style.opacity = '0';
+        }));
+        card.setAttribute('aria-expanded', 'false');
+        card.classList.remove('expanded');
+        el.setAttribute('aria-hidden', 'true');
+        el.classList.remove('open');
+      } else {
+        // Animate to content height, then free it so nested items can grow
+        el.style.maxHeight = el.scrollHeight + 'px';
+        el.style.opacity = '1';
+        card.setAttribute('aria-expanded', 'true');
+        card.classList.add('expanded');
+        el.setAttribute('aria-hidden', 'false');
+        el.classList.add('open');
+        el.addEventListener('transitionend', function h(e) {
+          if (e.propertyName === 'max-height') {
+            if (card.getAttribute('aria-expanded') === 'true') el.style.maxHeight = 'none';
+            el.removeEventListener('transitionend', h);
+          }
+        });
+      }
+    }
+
+    document.querySelectorAll('.tree-card.is-root').forEach(card => {
+      card.addEventListener('click', () => toggleTreeCard(card));
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTreeCard(card); }
+      });
+    });
   </script>
 </body>
 </html>
