@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jorczak — A Name Rooted in Earth &amp; History</title>
+  <meta name="description" content="The history, origin, and meaning of the Jorczak surname — a rare Polish-Rusyn name rooted in the Carpathian borderlands." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Variables ─────────────────────────────────────────── */
+    :root {
+      --green:      #1a3a2a;
+      --green-mid:  #254d38;
+      --green-light:#2e6347;
+      --parchment:  #f4ede0;
+      --parchment2: #ede3d0;
+      --cream:      #faf6ef;
+      --crimson:    #8b1a1a;
+      --crimson-mid:#a32020;
+      --gold:       #c9a84c;
+      --gold-light: #e0c06a;
+      --ink:        #1c1409;
+      --ink-soft:   #3a2e22;
+      --ink-muted:  #6b5d4e;
+    }
+
+    /* ─── Reset & Base ──────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── Scroll reveal ─────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ─── Ornamental divider ────────────────────────────────── */
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 0 auto 2.5rem;
+      max-width: 360px;
+      color: var(--gold);
+      font-size: 1.25rem;
+    }
+    .ornament::before,
+    .ornament::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    .ornament-sm {
+      margin-bottom: 1.5rem;
+      max-width: 220px;
+    }
+
+    /* ─── Section label ─────────────────────────────────────── */
+    .section-label {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+
+    p { margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+
+    strong { font-weight: 600; }
+
+    em { font-style: italic; }
+
+    /* ─── ① HERO ─────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      background-color: var(--green);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    /* Parchment grain overlay */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.04;
+      pointer-events: none;
+    }
+
+    /* Radial vignette */
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(10, 22, 16, 0.55) 100%);
+      pointer-events: none;
+    }
+
+    .hero-kicker {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(5rem, 18vw, 14rem);
+      font-weight: 900;
+      line-height: 0.92;
+      color: var(--parchment);
+      letter-spacing: -0.01em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-name-accent {
+      color: var(--gold);
+    }
+
+    .hero-tagline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-style: italic;
+      color: rgba(244, 237, 224, 0.7);
+      margin-top: 1.75rem;
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(201, 168, 76, 0.6);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .hero-scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.15); }
+    }
+
+    /* ─── Section wrapper ───────────────────────────────────── */
+    .section {
+      padding: 6rem 2rem;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .container-wide {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ─── ② ORIGIN ──────────────────────────────────────────── */
+    #origin {
+      background: var(--parchment);
+    }
+
+    #origin .drop-cap::first-letter {
+      font-family: 'Playfair Display', serif;
+      font-size: 4.5rem;
+      font-weight: 900;
+      float: left;
+      line-height: 0.78;
+      margin-right: 0.12em;
+      margin-top: 0.12em;
+      color: var(--crimson);
+    }
+
+    .origin-tag {
+      display: inline-block;
+      background: var(--green);
+      color: var(--gold);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.3em 0.85em;
+      border-radius: 2px;
+      margin-bottom: 1rem;
+    }
+
+    .callout-box {
+      border-left: 3px solid var(--gold);
+      padding: 1.2rem 1.5rem;
+      background: rgba(201, 168, 76, 0.08);
+      margin: 2rem 0;
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 1.05rem;
+    }
+
+    /* ─── ③ MEANING ─────────────────────────────────────────── */
+    #meaning {
+      background: var(--green);
+      color: var(--parchment);
+    }
+
+    #meaning h2 { color: var(--parchment); }
+    #meaning .section-label { color: var(--gold); }
+    #meaning p { color: rgba(244, 237, 224, 0.85); }
+
+    .etymology-chain {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0 0.5rem;
+      margin: 2.5rem 0;
+    }
+
+    .etym-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(201, 168, 76, 0.25);
+      border-radius: 4px;
+      padding: 0.75rem 1.1rem;
+      min-width: 110px;
+      text-align: center;
+    }
+
+    .etym-word {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .etym-lang {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(201, 168, 76, 0.55);
+      margin-top: 0.2rem;
+    }
+
+    .etym-meaning {
+      font-size: 0.8rem;
+      color: rgba(244, 237, 224, 0.55);
+      margin-top: 0.25rem;
+    }
+
+    .etym-arrow {
+      color: var(--gold);
+      font-size: 1.1rem;
+      opacity: 0.5;
+      align-self: center;
+      padding-top: 0;
+      flex-shrink: 0;
+    }
+
+    .suffix-box {
+      background: rgba(139, 26, 26, 0.25);
+      border: 1px solid rgba(139, 26, 26, 0.5);
+      border-radius: 4px;
+      padding: 1.4rem 1.8rem;
+      margin-top: 2.5rem;
+    }
+
+    .suffix-box h3 {
+      color: var(--gold-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .suffix-box p {
+      font-size: 0.95rem;
+      color: rgba(244, 237, 224, 0.75);
+    }
+
+    /* ─── ④ DISTRIBUTION ────────────────────────────────────── */
+    #distribution {
+      background: var(--cream);
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.25rem;
+      margin: 2.5rem 0;
+    }
+
+    .stat-card {
+      background: var(--parchment2);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      border-radius: 4px;
+      padding: 1.4rem 1.2rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--crimson);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+
+    .distribution-bar-wrap {
+      margin: 2rem 0;
+    }
+
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .bar-label {
+      min-width: 110px;
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      text-align: right;
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 8px;
+      background: rgba(26, 58, 42, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--green), var(--green-light));
+      border-radius: 4px;
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .bar-pct {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      min-width: 36px;
+    }
+
+    /* ─── ⑤ CREST ───────────────────────────────────────────── */
+    #crest {
+      background: var(--parchment);
+    }
+
+    .crest-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+      margin-top: 2.5rem;
+    }
+
+    @media (max-width: 700px) {
+      .crest-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    .crest-svg-wrap {
+      display: flex;
+      justify-content: center;
+    }
+
+    .crest-svg-wrap svg {
+      max-width: 320px;
+      width: 100%;
+      filter: drop-shadow(0 8px 24px rgba(26, 58, 42, 0.2));
+    }
+
+    .crest-legend h3 {
+      margin-top: 1.4rem;
+      color: var(--green);
+    }
+    .crest-legend h3:first-child { margin-top: 0; }
+
+    .crest-legend p {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+    }
+
+    .crest-disclaimer {
+      margin-top: 2rem;
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--ink-muted);
+      border-top: 1px solid rgba(201, 168, 76, 0.3);
+      padding-top: 1rem;
+    }
+
+    /* ─── ⑥ NOTABLE PEOPLE ──────────────────────────────────── */
+    #people {
+      background: var(--green);
+      color: var(--parchment);
+    }
+
+    #people h2 { color: var(--parchment); }
+    #people .section-label { color: var(--gold); }
+
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2.5rem;
+    }
+
+    .person-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      border-radius: 4px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .person-card:hover {
+      border-color: rgba(201, 168, 76, 0.5);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .person-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--gold), var(--crimson));
+    }
+
+    .person-role {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .person-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--parchment);
+      margin-bottom: 1rem;
+    }
+
+    .person-desc {
+      font-size: 0.95rem;
+      color: rgba(244, 237, 224, 0.75);
+      line-height: 1.65;
+    }
+
+    .person-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      background: rgba(201, 168, 76, 0.15);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      color: var(--gold);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.25em 0.75em;
+      border-radius: 2px;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      background: var(--ink);
+      color: rgba(244, 237, 224, 0.45);
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+
+    .footer-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-tagline {
+      font-style: italic;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-meta {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+
+    footer a { color: rgba(201, 168, 76, 0.6); text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+
+    /* ─── Responsive tweaks ──────────────────────────────────── */
+    @media (max-width: 600px) {
+      .etymology-chain { flex-direction: column; align-items: flex-start; }
+      .etym-arrow { transform: rotate(90deg); }
+      .etym-step { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ① HERO ─────────────────────────────────────────────────── -->
+  <section id="hero">
+    <p class="hero-kicker reveal">A Surname of the Carpathian Borderlands</p>
+    <h1 class="hero-name reveal" style="transition-delay:0.12s">
+      <span>Jorcz</span><span class="hero-name-accent">ak</span>
+    </h1>
+    <p class="hero-tagline reveal" style="transition-delay:0.24s">
+      A name rooted in earth and history
+    </p>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+
+  <!-- ② ORIGIN ────────────────────────────────────────────────── -->
+  <section id="origin" class="section">
+    <div class="container">
+      <span class="section-label reveal">I. Origin</span>
+      <h2 class="reveal" style="transition-delay:0.08s">From the Carpathian Borderlands</h2>
+      <div class="ornament reveal" style="transition-delay:0.14s">❧</div>
+
+      <p class="drop-cap reveal" style="transition-delay:0.18s">
+        <strong>Jorczak</strong> is a Polish-Rusyn patronymic surname with deep roots in the Carpathian
+        borderlands — the mountainous region where Polish and Ruthenian cultures intertwined for centuries.
+        It is a variant spelling of the more common <em>Jurczak</em>, the "o" reflecting regional
+        dialect pronunciation differences found along the Galician frontier.
+      </p>
+
+      <p class="reveal" style="transition-delay:0.22s">
+        The name is associated with the <strong>Lemko Rusyns</strong>, an Eastern Slavic ethnic group
+        inhabiting the Carpathian region spanning southeastern Poland, northeastern Slovakia, and
+        western Ukraine. This borderland people maintained a distinctive culture blending Catholic and
+        Orthodox traditions, Slavic folklore, and mountain life.
+      </p>
+
+      <div class="callout-box reveal" style="transition-delay:0.26s">
+        "The Lemko Rusyns preserved their mountain heritage through centuries of shifting borders —
+        their surnames carrying the memory of who they were long after borders changed around them."
+      </div>
+
+      <p class="reveal" style="transition-delay:0.3s">
+        Like many Polish and Rusyn surnames, Jorczak solidified as a hereditary name during the
+        13th–18th centuries, when peasant and non-noble families across the region began adopting
+        fixed family names, often drawn from the given name of a founding ancestor.
+      </p>
+
+      <p class="reveal" style="transition-delay:0.34s">
+        The great wave of <em>za chlebem</em> — "for bread" — emigration in the late 19th and early
+        20th centuries brought the Jorczak name to America. The first documented Jorczak families
+        in U.S. records appear in <strong>Illinois in the 1920 census</strong>, among the hundreds of
+        thousands who left the impoverished Galicia region seeking a better life.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ③ MEANING ───────────────────────────────────────────────── -->
+  <section id="meaning" class="section">
+    <div class="container">
+      <span class="section-label reveal">II. Meaning</span>
+      <h2 class="reveal" style="transition-delay:0.08s">Son of the Earthworker</h2>
+      <div class="ornament reveal" style="transition-delay:0.14s">✦</div>
+
+      <p class="reveal" style="transition-delay:0.18s">
+        The name Jorczak is a patronymic — literally meaning <strong>"son of Jurek"</strong> — descended
+        through a remarkable chain from ancient Greek through Latin and into Polish. Jurek is itself
+        a beloved diminutive of <em>Jerzy</em>, the Polish form of <strong>George</strong>.
+      </p>
+
+      <div class="etymology-chain reveal" style="transition-delay:0.24s">
+        <div class="etym-step">
+          <span class="etym-word">Georgios</span>
+          <span class="etym-lang">Greek</span>
+          <span class="etym-meaning">earth + worker</span>
+        </div>
+        <span class="etym-arrow">→</span>
+        <div class="etym-step">
+          <span class="etym-word">Georgius</span>
+          <span class="etym-lang">Latin</span>
+          <span class="etym-meaning">the farmer</span>
+        </div>
+        <span class="etym-arrow">→</span>
+        <div class="etym-step">
+          <span class="etym-word">Jerzy</span>
+          <span class="etym-lang">Polish</span>
+          <span class="etym-meaning">George</span>
+        </div>
+        <span class="etym-arrow">→</span>
+        <div class="etym-step">
+          <span class="etym-word">Jurek</span>
+          <span class="etym-lang">Diminutive</span>
+          <span class="etym-meaning">little George</span>
+        </div>
+        <span class="etym-arrow">→</span>
+        <div class="etym-step" style="border-color: rgba(201,168,76,0.6); background: rgba(201,168,76,0.1);">
+          <span class="etym-word">Jorczak</span>
+          <span class="etym-lang">Polish/Rusyn</span>
+          <span class="etym-meaning">son of Jurek</span>
+        </div>
+      </div>
+
+      <div class="suffix-box reveal" style="transition-delay:0.3s">
+        <h3>The <em>-ak</em> Suffix</h3>
+        <p>
+          The ending <strong>-ak</strong> is one of the most recognizable patronymic suffixes in Polish
+          onomastics. When appended to a personal name root, it means "son of" — placing Jorczak
+          in the same grammatical tradition as Kowalczak (son of the smith), Wojczak (son of Wojtek),
+          and hundreds of other names that carry ancestry in their syllables.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ④ DISTRIBUTION ─────────────────────────────────────────── -->
+  <section id="distribution" class="section">
+    <div class="container">
+      <span class="section-label reveal">III. Geographic Distribution</span>
+      <h2 class="reveal" style="transition-delay:0.08s">A Rare Name, Carried Far</h2>
+      <div class="ornament reveal" style="transition-delay:0.14s">◈</div>
+
+      <p class="reveal" style="transition-delay:0.18s">
+        The spelling <strong>Jorczak</strong> is exceptionally rare — approximately
+        <strong>166 people</strong> worldwide carry this exact form. The name's center of gravity
+        has shifted from its Old World origins to the United States, where the vast majority of
+        Jorczaks now live.
+      </p>
+
+      <div class="stat-grid reveal" style="transition-delay:0.22s">
+        <div class="stat-card">
+          <div class="stat-number">~166</div>
+          <div class="stat-label">Worldwide</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">~154</div>
+          <div class="stat-label">United States</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">~10</div>
+          <div class="stat-label">France</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">~2</div>
+          <div class="stat-label">Poland</div>
+        </div>
+      </div>
+
+      <p class="reveal" style="transition-delay:0.28s">
+        Within the United States, the name clusters in three states, likely reflecting patterns
+        of chain migration — where families from the same village settled near one another in America.
+      </p>
+
+      <div class="distribution-bar-wrap reveal" style="transition-delay:0.32s">
+        <div class="bar-row">
+          <span class="bar-label">Florida</span>
+          <div class="bar-track"><div class="bar-fill" data-width="16"></div></div>
+          <span class="bar-pct">16%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Massachusetts</span>
+          <div class="bar-track"><div class="bar-fill" data-width="14"></div></div>
+          <span class="bar-pct">14%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Texas</span>
+          <div class="bar-track"><div class="bar-fill" data-width="10"></div></div>
+          <span class="bar-pct">10%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Other States</span>
+          <div class="bar-track"><div class="bar-fill" data-width="60"></div></div>
+          <span class="bar-pct">60%</span>
+        </div>
+      </div>
+
+      <p class="reveal" style="transition-delay:0.36s">
+        The related and far more common spelling <em>Jurczak</em> counts approximately
+        <strong>8,186 people</strong> globally, with Poland accounting for 84% of them — a reminder
+        that the Jorczak spelling is an emigrant variant, shaped by American phonetics and record-keeping.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ⑤ CREST ─────────────────────────────────────────────────── -->
+  <section id="crest" class="section">
+    <div class="container-wide">
+      <div style="max-width:780px; margin: 0 auto 0">
+        <span class="section-label reveal">IV. Family Crest</span>
+        <h2 class="reveal" style="transition-delay:0.08s">A Derived Coat of Arms</h2>
+        <div class="ornament reveal" style="transition-delay:0.14s">⚜</div>
+        <p class="reveal" style="transition-delay:0.18s">
+          No historically documented coat of arms exists for the Jorczak surname — under the Polish
+          heraldic system, <em>herby</em> (arms) belonged to noble clans (<em>szlachta</em>), and
+          patronymic -ak surnames typically originated among the peasant class. The following shield
+          has been <strong>derived from the name's etymology and heritage</strong> as a symbolic
+          representation of the family's roots.
+        </p>
+      </div>
+
+      <div class="crest-layout">
+        <div class="crest-svg-wrap reveal" style="transition-delay:0.2s">
+          <!-- Heraldic shield SVG -->
+          <svg viewBox="0 0 280 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Derived Jorczak family crest">
+            <defs>
+              <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#e0c06a"/>
+                <stop offset="100%" stop-color="#a07820"/>
+              </linearGradient>
+              <linearGradient id="greenGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#254d38"/>
+                <stop offset="100%" stop-color="#1a3a2a"/>
+              </linearGradient>
+              <clipPath id="shieldClip">
+                <path d="M140 10 L270 10 L270 200 Q270 320 140 335 Q10 320 10 200 L10 10 Z"/>
+              </clipPath>
+            </defs>
+
+            <!-- Shield shadow -->
+            <path d="M144 14 L274 14 L274 204 Q274 324 144 339 Q14 324 14 204 L14 14 Z" fill="rgba(0,0,0,0.18)" transform="translate(3,3)"/>
+
+            <!-- Shield base — quartered -->
+            <!-- Top-left: crimson -->
+            <rect x="10" y="10" width="130" height="130" clip-path="url(#shieldClip)" fill="#8b1a1a"/>
+            <!-- Top-right: white/silver -->
+            <rect x="140" y="10" width="130" height="130" clip-path="url(#shieldClip)" fill="#f0ebe0"/>
+            <!-- Bottom-left: white/silver -->
+            <rect x="10" y="140" width="130" height="200" clip-path="url(#shieldClip)" fill="#f0ebe0"/>
+            <!-- Bottom-right: forest green -->
+            <rect x="140" y="140" width="130" height="200" clip-path="url(#shieldClip)" fill="url(#greenGrad)"/>
+
+            <!-- Dividing cross (fimbriated gold) -->
+            <rect x="10" y="130" width="260" height="22" clip-path="url(#shieldClip)" fill="url(#goldGrad)"/>
+            <rect x="130" y="10" width="22" height="325" clip-path="url(#shieldClip)" fill="url(#goldGrad)"/>
+
+            <!-- Top-left: Cross of St. George (white on crimson) -->
+            <rect x="60" y="30" width="10" height="70" fill="white" opacity="0.9"/>
+            <rect x="35" y="58" width="60" height="10" fill="white" opacity="0.9"/>
+
+            <!-- Top-right: Wheat sheaf (gold on silver) -->
+            <!-- Stalks -->
+            <line x1="168" y1="120" x2="168" y2="60" stroke="#c9a84c" stroke-width="2.5"/>
+            <line x1="176" y1="120" x2="176" y2="58" stroke="#c9a84c" stroke-width="2.5"/>
+            <line x1="184" y1="120" x2="184" y2="60" stroke="#c9a84c" stroke-width="2.5"/>
+            <line x1="192" y1="120" x2="192" y2="58" stroke="#c9a84c" stroke-width="2.5"/>
+            <line x1="200" y1="120" x2="200" y2="60" stroke="#c9a84c" stroke-width="2.5"/>
+            <!-- Grain heads -->
+            <ellipse cx="168" cy="55" rx="4" ry="8" fill="#c9a84c"/>
+            <ellipse cx="176" cy="52" rx="4" ry="9" fill="#c9a84c"/>
+            <ellipse cx="184" cy="50" rx="4.5" ry="10" fill="#a07820"/>
+            <ellipse cx="192" cy="52" rx="4" ry="9" fill="#c9a84c"/>
+            <ellipse cx="200" cy="55" rx="4" ry="8" fill="#c9a84c"/>
+            <!-- Binding tie -->
+            <ellipse cx="184" cy="97" rx="12" ry="4" fill="none" stroke="#8b1a1a" stroke-width="2"/>
+
+            <!-- Bottom-left: Mountain peaks (green on silver) -->
+            <polygon points="20,210 55,155 90,210" fill="#1a3a2a" opacity="0.7"/>
+            <polygon points="50,210 85,160 120,210" fill="#254d38" opacity="0.85"/>
+            <!-- Snow caps -->
+            <polygon points="50,170 55,155 60,170" fill="white" opacity="0.6"/>
+            <polygon points="80,173 85,160 90,173" fill="white" opacity="0.6"/>
+
+            <!-- Bottom-right: Star / compass rose (gold on green) -->
+            <g transform="translate(183, 235)">
+              <circle cx="0" cy="0" r="22" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" opacity="0.4"/>
+              <polygon points="0,-18 4,-4 18,0 4,4 0,18 -4,4 -18,0 -4,-4" fill="url(#goldGrad)" opacity="0.9"/>
+              <circle cx="0" cy="0" r="4" fill="#1a3a2a"/>
+              <circle cx="0" cy="0" r="2.5" fill="url(#goldGrad)"/>
+            </g>
+
+            <!-- Shield outline -->
+            <path d="M140 10 L270 10 L270 200 Q270 320 140 335 Q10 320 10 200 L10 10 Z"
+                  fill="none" stroke="url(#goldGrad)" stroke-width="3.5"/>
+            <!-- Inner border -->
+            <path d="M140 18 L262 18 L262 199 Q262 312 140 327 Q18 312 18 199 L18 18 Z"
+                  fill="none" stroke="url(#goldGrad)" stroke-width="1" opacity="0.4"/>
+          </svg>
+        </div>
+
+        <div class="crest-legend reveal" style="transition-delay:0.28s">
+          <h3>◈ Quarterly Division</h3>
+          <p>The shield is divided into four quarters — Polish crimson, silver, silver, and Carpathian forest green — representing the dual Polish-Rusyn heritage of the name.</p>
+
+          <h3>✝ Cross of St. George</h3>
+          <p>The white cross on crimson honors St. George (<em>Jerzy</em> in Polish), the name from which Jorczak ultimately descends through its etymology chain.</p>
+
+          <h3>𝌲 Wheat Sheaf</h3>
+          <p>A bound sheaf of wheat recalls the original meaning of <em>Georgios</em> — "earthworker" or farmer — the ancient Greek root of the name. The land was central to identity.</p>
+
+          <h3>⛰ Mountain Peaks</h3>
+          <p>Three Carpathian peaks recall the Lemko homeland: the rugged highlands of southeastern Poland where the Jorczak/Jurczak name was carried for generations before emigration.</p>
+
+          <h3>✦ Navigator's Star</h3>
+          <p>A compass rose on green honors those who made the journey west — the <em>za chlebem</em> emigrants who carried the name across the Atlantic to America.</p>
+
+          <p class="crest-disclaimer">
+            This coat of arms is a modern derived design, not a historically documented heraldic record.
+            It is offered as a symbolic representation only.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ⑥ NOTABLE PEOPLE ────────────────────────────────────────── -->
+  <section id="people" class="section">
+    <div class="container">
+      <span class="section-label reveal">V. Notable People</span>
+      <h2 class="reveal" style="transition-delay:0.08s">Bearers of the Name</h2>
+      <div class="ornament reveal" style="transition-delay:0.14s">✦</div>
+
+      <p class="reveal" style="transition-delay:0.18s">
+        Given its rarity, the Jorczak surname has been carried by a select few in public life.
+        Two individuals have been documented in verified sources:
+      </p>
+
+      <div class="people-grid">
+        <div class="person-card reveal" style="transition-delay:0.24s">
+          <div class="person-role">Educator &amp; Scholar</div>
+          <div class="person-name">Nancy Jorczak</div>
+          <p class="person-desc">
+            Born March 4, 1948 in Trenton, New Jersey. Earned a B.A. from Colby College (1970) and
+            an M.A. in Teaching from Trenton State College (1973). Taught history at the Okayama Cultural
+            Center in Japan (1971–72) before joining Council Rock High School in Newtown, Pennsylvania in 1973.
+            Named a <strong>Fulbright Scholar in 1981</strong>. Listed in <em>Marquis Who's Who</em>.
+            Member of the American Historical Association, World History Association, and National Council
+            for the Social Studies.
+          </p>
+          <span class="person-tag">Fulbright Scholar · 1981</span>
+        </div>
+
+        <div class="person-card reveal" style="transition-delay:0.32s">
+          <div class="person-role">Actor</div>
+          <div class="person-name">Craig Jorczak</div>
+          <p class="person-desc">
+            American screen actor with film credits spanning a decade. Known for roles in
+            <em>The Way It Was</em> (2018), <em>The Best Laid Plans</em> (2009), and
+            <em>Growing Up Harry</em> (2016).
+          </p>
+          <span class="person-tag">Film · 2009–2018</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER ──────────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-name">Jorczak</div>
+    <p class="footer-tagline">Son of Jurek · Son of the earthworker · Son of the mountains</p>
+    <p class="footer-meta">
+      Jorczak.com &nbsp;·&nbsp; <span id="year"></span>
+    </p>
+  </footer>
+
+
+  <script>
+    // ── Set year ──────────────────────────────────────────────
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ── Scroll reveal ────────────────────────────────────────
+    const revealEls = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── Trigger hero reveals immediately ─────────────────────
+    document.querySelectorAll('#hero .reveal').forEach(el => {
+      setTimeout(() => el.classList.add('visible'), 100);
+    });
+
+    // ── Animate distribution bars on reveal ──────────────────
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.bar-fill').forEach(bar => {
+            const target = bar.dataset.width;
+            setTimeout(() => { bar.style.width = target + '%'; }, 200);
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+
+    const barWrap = document.querySelector('.distribution-bar-wrap');
+    if (barWrap) barObserver.observe(barWrap);
+  </script>
+</body>
+</html>

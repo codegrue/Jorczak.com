@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:www.familysearch.org)",
+      "WebFetch(domain:namecensus.com)",
+      "WebFetch(domain:en.geneanet.org)",
+      "WebFetch(domain:surnameorigin.info)",
+      "WebFetch(domain:forebears.io)",
+      "WebFetch(domain:www.ancientfaces.com)",
+      "WebFetch(domain:www.imdb.com)",
+      "WebFetch(domain:lastnames.myheritage.com)",
+      "WebFetch(domain:prabook.com)",
+      "WebFetch(domain:familynames.org)",
+      "WebFetch(domain:www.ancestry.com)",
+      "WebFetch(domain:www.behindthename.com)",
+      "WebFetch(domain:lemko.org)"
+    ]
+  }
+}
