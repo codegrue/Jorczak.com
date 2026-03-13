@@ -14,7 +14,8 @@
       "WebFetch(domain:familynames.org)",
       "WebFetch(domain:www.ancestry.com)",
       "WebFetch(domain:www.behindthename.com)",
-      "WebFetch(domain:lemko.org)"
+      "WebFetch(domain:lemko.org)",
+      "Bash(npx --yes live-server --version)"
     ]
   }
 }

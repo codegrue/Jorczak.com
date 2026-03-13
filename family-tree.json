@@ -1,0 +1,47 @@
+{
+  "defaultFocus": "jeffrey",
+  "people": [
+    { "id": "joseph",    "name": "Joseph Stanley Jorczak", "location": "Trenton, New Jersey",          "gender": "m" },
+    { "id": "phyllis",   "name": "Phyllis Jorczak",        "maidenName": "Grotkowski",  "location": "Trenton, New Jersey",          "gender": "f" },
+    { "id": "nancy",     "name": "Nancy Jorczak",          "birth": "1948",             "location": "Trenton, New Jersey",          "bio": "History educator, Fulbright Scholar 1981", "link": "https://prabook.com/web/nancy.jorczak/1666584", "gender": "f" },
+    { "id": "francis",   "name": "Francis Jorczak",        "location": "Chicopee, Massachusetts",      "gender": "m" },
+    { "id": "casandra",  "name": "Casandra Jorczak",       "location": "Chicopee, Massachusetts",      "gender": "f" },
+    { "id": "raymond",   "name": "Raymond Jorczak",        "location": "Palm Harbor, Florida",         "gender": "m" },
+    { "id": "jan",       "name": "Jan Jorczak",            "maidenName": "Clouatre",    "location": "Palm Harbor, Florida",         "gender": "f" },
+    { "id": "robert",    "name": "Robert Jorczak",         "gender": "m" },
+    { "id": "jean",      "name": "Jean Jorczak",           "gender": "f" },
+    { "id": "jeffrey",   "name": "Jeffrey Jorczak",        "location": "South Windsor, Connecticut",   "gender": "m" },
+    { "id": "joan",      "name": "Joan Jorczak",           "maidenName": "Daignault",   "location": "Manchester, Connecticut",      "gender": "f" },
+    { "id": "missy",     "name": "Missy Jorczak",          "maidenName": "Parmlee",     "location": "South Windsor, Connecticut",   "gender": "f" },
+    { "id": "alexander", "name": "Alexander Jorczak",      "location": "Manchester, Connecticut",      "gender": "m" },
+    { "id": "tanner",    "name": "Tanner Jorczak",         "location": "Manchester, Connecticut",      "gender": "m" },
+    { "id": "nathan",    "name": "Nathan Jorczak",         "gender": "m" },
+    { "id": "sara",      "name": "Sara Jorczak",           "gender": "f" },
+    { "id": "philip",    "name": "Philip Jorczak",         "gender": "m" },
+    { "id": "eric",      "name": "Eric Jorczak",           "gender": "m" },
+    { "id": "kimberly",  "name": "Kimberly Jorczak",       "gender": "f" },
+    { "id": "melissa",   "name": "Melissa Jorczak",        "gender": "f" }
+  ],
+  "marriages": [
+    { "id": "m1", "spouseA": "joseph",  "spouseB": "phyllis",  "status": "married"  },
+    { "id": "m2", "spouseA": "francis", "spouseB": "casandra", "status": "married"  },
+    { "id": "m3", "spouseA": "raymond", "spouseB": "jan",      "status": "married"  },
+    { "id": "m4", "spouseA": "robert",  "spouseB": "jean",     "status": "married"  },
+    { "id": "m5", "spouseA": "jeffrey", "spouseB": "joan",     "status": "divorced" },
+    { "id": "m6", "spouseA": "jeffrey", "spouseB": "missy",    "status": "married"  }
+  ],
+  "parentage": [
+    { "child": "nancy",     "parents": ["joseph",  "phyllis"]  },
+    { "child": "raymond",   "parents": ["francis", "casandra"] },
+    { "child": "robert",    "parents": ["francis", "casandra"] },
+    { "child": "jeffrey",   "parents": ["raymond", "jan"]      },
+    { "child": "philip",    "parents": ["robert",  "jean"]     },
+    { "child": "eric",      "parents": ["robert",  "jean"]     },
+    { "child": "kimberly",  "parents": ["robert",  "jean"]     },
+    { "child": "melissa",   "parents": ["robert",  "jean"]     },
+    { "child": "alexander", "parents": ["jeffrey", "joan"]     },
+    { "child": "tanner",    "parents": ["jeffrey", "joan"]     },
+    { "child": "nathan",    "parents": ["jeffrey", "missy"]    },
+    { "child": "sara",      "parents": ["jeffrey", "missy"]    }
+  ]
+}
