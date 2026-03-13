@@ -17,7 +17,10 @@
       "WebFetch(domain:lemko.org)",
       "Bash(npx --yes live-server --version)",
       "Bash(node -e \"require\\(''./family-tree.json''\\)\")",
-      "Bash(node -e \"require\\(''./family-tree.json''\\); console.log\\(''valid''\\)\")"
+      "Bash(node -e \"require\\(''./family-tree.json''\\); console.log\\(''valid''\\)\")",
+      "WebFetch(domain:www.inkfreenews.com)",
+      "WebFetch(domain:www.odonnellfhome.com)",
+      "Bash(node -e \"require\\(''c:/Users/jeff/OneDrive/Projects/Code/Websites/Jorczak/family-tree.json''\\); console.log\\(''JSON valid''\\)\")"
     ]
   }
 }

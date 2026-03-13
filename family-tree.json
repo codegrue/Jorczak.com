@@ -10,6 +10,11 @@
       "gender": "m"
     },
     {
+      "id": "pat",
+      "name": "Pat Jorczak",
+      "gender": "f"
+    },
+    {
       "id": "daniel",
       "name": "Daniel Jorczak",
       "location": "Norwalk, Connecticut",
@@ -20,6 +25,110 @@
       "name": "Michael Jorczak",
       "location": "New Boston, New Hampshire",
       "gender": "m"
+    },
+    {
+      "id": "colleen",
+      "name": "Colleen Jorczak",
+      "gender": "f"
+    },
+    {
+      "id": "hannah",
+      "name": "Hannah Jorczak",
+      "gender": "f"
+    },
+    {
+      "id": "molly",
+      "name": "Molly Jorczak",
+      "gender": "f"
+    },
+    {
+      "id": "maggie",
+      "name": "Maggie Jorczak",
+      "gender": "f"
+    },
+    {
+      "id": "edward-j",
+      "name": "Edward Jorczak",
+      "gender": "m"
+    },
+    {
+      "id": "betty-r",
+      "name": "Elizabeth Jorczak",
+      "nickname": "Betty",
+      "maidenName": "Rohrer",
+      "gender": "f"
+    },
+    {
+      "id": "james-1937",
+      "name": "James E Jorczak",
+      "birth": "Jul 8, 1937",
+      "death": "Feb 20, 2026",
+      "location": "Goshen, Indiana",
+      "bio": "Educator &amp; golf course operator",
+      "link": "https://www.inkfreenews.com/2026/02/23/james-e-jorczak/",
+      "gender": "m"
+    },
+    {
+      "id": "judy-g",
+      "name": "Judy Jorczak",
+      "maidenName": "Gotschall",
+      "gender": "f"
+    },
+    {
+      "id": "barbara-shafer",
+      "name": "Barbara Shafer",
+      "maidenName": "Jorczak",
+      "location": "Indianapolis, Indiana",
+      "gender": "f"
+    },
+    {
+      "id": "cathy-queen",
+      "name": "Cathy Queen",
+      "maidenName": "Jorczak",
+      "location": "Marion, Indiana",
+      "gender": "f"
+    },
+    {
+      "id": "jeffrey-d2018",
+      "name": "Jeffrey Jorczak",
+      "death": "Oct 10, 2018",
+      "gender": "m"
+    },
+    {
+      "id": "jonathan-j",
+      "name": "Jonathan Jorczak",
+      "location": "Petaluma, California",
+      "gender": "m"
+    },
+    {
+      "id": "debra-seal",
+      "name": "Debra Jorczak",
+      "maidenName": "Seal",
+      "gender": "f"
+    },
+    {
+      "id": "jennifer-martin",
+      "name": "Jennifer Martin",
+      "maidenName": "Jorczak",
+      "location": "Warsaw, Indiana",
+      "gender": "f"
+    },
+    {
+      "id": "katherine-j",
+      "name": "Katherine Jorczak",
+      "location": "Monterey, California",
+      "gender": "f"
+    },
+    {
+      "id": "grace-j",
+      "name": "Grace Martin",
+      "gender": "f"
+    },
+    {
+      "id": "emma-j",
+      "name": "Emma Martin",
+      "death": "Jun 19, 2009",
+      "gender": "f"
     },
     {
       "id": "joseph",
@@ -158,9 +267,91 @@
       "id": "melissa",
       "name": "Melissa Jorczak",
       "gender": "f"
+    },
+    {
+      "id": "thomas-alan",
+      "name": "Thomas Alan Jorczak",
+      "location": "North Judson, Indiana",
+      "gender": "m"
+    },
+    {
+      "id": "sherry-1953",
+      "name": "Sherry Lynn Jorczak",
+      "birth": "Aug 10, 1953",
+      "death": "Jan 1, 2023",
+      "maidenName": "Hochstedler",
+      "location": "North Judson, Indiana",
+      "link": "https://www.odonnellfhome.com/obituaries/sherry-jorczak/#!/Obituary",
+      "gender": "f"
+    },
+    {
+      "id": "thomas-eric",
+      "name": "Thomas Eric Jorczak",
+      "location": "Valparaiso, Indiana",
+      "gender": "m"
+    },
+    {
+      "id": "adrianne-ray",
+      "name": "Adrianne Jorczak",
+      "maidenName": "Ray",
+      "gender": "f"
+    },
+    {
+      "id": "timothy-alan-j",
+      "name": "Timothy Alan Jorczak",
+      "location": "Normal, Illinois",
+      "gender": "m"
+    },
+    {
+      "id": "jamie-h",
+      "name": "Jamie Jorczak",
+      "maidenName": "Henselmeier",
+      "gender": "f"
+    },
+    {
+      "id": "robert-aaron",
+      "name": "Robert Aaron Louis Jorczak",
+      "location": "Noblesville, Indiana",
+      "gender": "m"
+    },
+    {
+      "id": "christin-c",
+      "name": "Christin Jorczak",
+      "maidenName": "Cunningham",
+      "gender": "f"
     }
   ],
   "marriages": [
+    {
+      "id": "m-ej",
+      "spouseA": "edward-j",
+      "spouseB": "betty-r",
+      "status": "married"
+    },
+    {
+      "id": "m-james",
+      "spouseA": "james-1937",
+      "spouseB": "judy-g",
+      "status": "married"
+    },
+    {
+      "id": "m-jonathan",
+      "spouseA": "jonathan-j",
+      "spouseB": "debra-seal",
+      "status": "married"
+    },
+    {
+      "id": "m0a",
+      "spouseA": "stanley-1930",
+      "spouseB": "pat",
+      "status": "married"
+    },
+    {
+      "id": "m0b",
+      "spouseA": "michael",
+      "spouseB": "colleen",
+      "status": "married"
+    },
     {
       "id": "m1",
       "spouseA": "joseph",
@@ -196,9 +387,42 @@
       "spouseA": "jeffrey-1969",
       "spouseB": "missy-1978",
       "status": "married"
+    },
+    {
+      "id": "m-thomas-alan",
+      "spouseA": "thomas-alan",
+      "spouseB": "sherry-1953",
+      "status": "married"
+    },
+    {
+      "id": "m-thomas-eric",
+      "spouseA": "thomas-eric",
+      "spouseB": "adrianne-ray",
+      "status": "married"
+    },
+    {
+      "id": "m-timothy-alan",
+      "spouseA": "timothy-alan-j",
+      "spouseB": "jamie-h",
+      "status": "married"
+    },
+    {
+      "id": "m-robert-aaron",
+      "spouseA": "robert-aaron",
+      "spouseB": "christin-c",
+      "status": "married"
     }
   ],
   "parentage": [
+    { "child": "james-1937",    "parents": ["edward-j",    "betty-r"]    },
+    { "child": "barbara-shafer","parents": ["edward-j",    "betty-r"]    },
+    { "child": "cathy-queen",   "parents": ["edward-j",    "betty-r"]    },
+    { "child": "jeffrey-d2018", "parents": ["james-1937",  "judy-g"]     },
+    { "child": "jonathan-j",    "parents": ["james-1937",  "judy-g"]     },
+    { "child": "jennifer-martin","parents": ["james-1937", "judy-g"]     },
+    { "child": "katherine-j",   "parents": ["jonathan-j",  "debra-seal"] },
+    { "child": "grace-j",       "parents": ["jennifer-martin"]           },
+    { "child": "emma-j",        "parents": ["jennifer-martin"]           },
     {
       "child": "nancy-1948",
       "parents": [
@@ -238,6 +462,18 @@
       "parents": [
         "stanley-1930"
       ]
+    },
+    {
+      "child": "hannah",
+      "parents": [ "michael", "colleen" ]
+    },
+    {
+      "child": "molly",
+      "parents": [ "michael", "colleen" ]
+    },
+    {
+      "child": "maggie",
+      "parents": [ "michael", "colleen" ]
     },
     {
       "child": "philip",
@@ -294,6 +530,9 @@
         "jeffrey-1969",
         "missy-1978"
       ]
-    }
+    },
+    { "child": "thomas-eric",   "parents": ["thomas-alan", "sherry-1953"] },
+    { "child": "timothy-alan-j","parents": ["thomas-alan", "sherry-1953"] },
+    { "child": "robert-aaron",  "parents": ["thomas-alan", "sherry-1953"] }
   ]
 }
