@@ -597,10 +597,28 @@
     #family-tree h2 { color: var(--parchment); }
     #family-tree .section-label { color: var(--gold); }
 
-    .tree-navigator {
+    #tree-container {
       margin-top: 2.5rem;
       width: 100%;
-      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+    .tree-widget {
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 6px;
+      padding: 1.5rem 1.5rem 2rem;
+      background: rgba(0,0,0,0.12);
+    }
+    .tree-widget-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.5;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
     }
     .tree-nav-content {
       animation: treeSlideIn 0.3s ease both;
@@ -1299,7 +1317,7 @@
       </p>
     </div>
     <div style="padding:0 2rem;">
-      <div class="tree-navigator reveal" id="tree-navigator" style="transition-delay:0.24s">
+      <div id="tree-container" class="reveal" style="transition-delay:0.24s">
         <div style="text-align:center;padding:2rem;opacity:0.45;font-style:italic">Loading family tree…</div>
       </div>
       <p class="tree-disclaimer reveal" style="transition-delay:0.3s">
@@ -1361,9 +1379,9 @@
     const barWrap = document.querySelector('.distribution-bar-wrap');
     if (barWrap) barObserver.observe(barWrap);
 
-    // ── Family Tree Navigator ─────────────────────────────────────────
+    // ── Family Tree Navigator (multi-branch) ─────────────────────────────────
     (function () {
-      var data, focusId, history = [];
+      var data;
       var peopleMap = {}, childrenMap = {}, parentsMap = {}, spousesMap = {};
 
       function buildMaps() {
@@ -1385,16 +1403,42 @@
         });
       }
 
-      function navigateTo(id) {
-        if (!id || id === focusId) return;
-        history.push(focusId);
-        focusId = id;
-        render();
+      function findRoots() {
+        // Find all people with no known parents
+        var childSet = {};
+        data.parentage.forEach(function (r) { childSet[r.child] = true; });
+        var allRoots = data.people.filter(function (p) { return !childSet[p.id]; });
+
+        // Group them by connected component, then pick one representative per component
+        // (the one with the earliest birth year, falling back to array order)
+        var assigned = {};
+        var representatives = [];
+        allRoots.forEach(function (root) {
+          if (assigned[root.id]) return;
+          var connected = getConnectedIds(root.id);
+          var componentRoots = allRoots.filter(function (r) { return connected.indexOf(r.id) !== -1; });
+          componentRoots.forEach(function (r) { assigned[r.id] = true; });
+          var rep = componentRoots.reduce(function (best, r) {
+            var bestYear = best.birth ? parseInt(best.birth.match(/\d{4}/)[0]) : Infinity;
+            var rYear    = r.birth    ? parseInt(r.birth.match(/\d{4}/)[0])    : Infinity;
+            return rYear < bestYear ? r : best;
+          });
+          representatives.push(rep);
+        });
+        return representatives;
       }
-      function goBack() {
-        if (!history.length) return;
-        focusId = history.pop();
-        render();
+
+      function getConnectedIds(rootId) {
+        var visited = {};
+        var queue = [rootId];
+        while (queue.length) {
+          var id = queue.shift();
+          if (visited[id]) continue;
+          visited[id] = true;
+          (spousesMap[id] || []).forEach(function (s) { if (!visited[s.id]) queue.push(s.id); });
+          (childrenMap[id] || []).forEach(function (cid) { if (!visited[cid]) queue.push(cid); });
+        }
+        return Object.keys(visited);
       }
 
       function roleLabel(person, ctx) {
@@ -1412,123 +1456,134 @@
         if (ctx === 'spouse') cls.push('is-spouse', 'is-navigable');
         if (ctx === 'ex')     cls.push('is-ex', 'is-navigable');
         if (ctx === 'parent' || ctx === 'child') cls.push('is-navigable');
-
         var nav = (ctx !== 'focus') ? ' data-nav="' + person.id + '" role="button" tabindex="0"' : '';
-        var role = roleLabel(person, ctx);
-
         var det = '';
         if (person.nickname)   det += '&#8220;' + person.nickname + '&#8221;';
         if (person.maidenName) det += (det ? '<br>' : '') + '<em>née</em> ' + person.maidenName;
         if (person.location)   det += (det ? '<br>' : '') + person.location;
         if (person.birth)      det += (det ? '<br>' : '') + person.birth + ' &#8211; ' + (person.death || 'living');
         if (person.bio)        det += (det ? '<br>' : '') + '<span class="tree-card-bio">' + person.bio + '</span>';
-
         var lnk = person.link
           ? '<a href="' + person.link + '" target="_blank" rel="noopener" class="tree-card-link" onclick="event.stopPropagation()">View Biography &#8599;</a>'
           : '';
-
         return '<div class="' + cls.join(' ') + '"' + nav + '>'
-          + (role ? '<div class="tree-card-role">' + role + '</div>' : '')
+          + (roleLabel(person, ctx) ? '<div class="tree-card-role">' + roleLabel(person, ctx) + '</div>' : '')
           + '<div class="tree-card-name">' + person.name + '</div>'
           + (det ? '<div class="tree-card-detail">' + det + '</div>' : '')
-          + lnk
-          + '</div>';
+          + lnk + '</div>';
       }
 
       function mbadge(status) {
         return '<div class="tree-marriage-badge" aria-hidden="true">'
           + '<div class="tree-marriage-line"></div>'
           + '<div class="tree-marriage-symbol">' + (status === 'divorced' ? 'div.' : 'm.') + '</div>'
-          + '<div class="tree-marriage-line"></div>'
-          + '</div>';
+          + '<div class="tree-marriage-line"></div></div>';
       }
 
-      function render() {
-        var focus     = peopleMap[focusId];
-        var parentIds = parentsMap[focusId]  || [];
-        var spouses   = spousesMap[focusId]  || [];
-        var childIds  = childrenMap[focusId] || [];
-        var exSpouses  = spouses.filter(function (s) { return s.status === 'divorced'; });
-        var curSpouses = spouses.filter(function (s) { return s.status !== 'divorced'; });
+      function createWidget(el, rootId) {
+        var focusId = rootId;
+        var history = [];
+        var connectedPeople = getConnectedIds(rootId)
+          .map(function (id) { return peopleMap[id]; }).filter(Boolean)
+          .sort(function (a, b) { return a.name.localeCompare(b.name); });
+        var branchLabel = peopleMap[rootId].name + '\u2019s Branch';
+        var uid = rootId.replace(/[^a-z0-9]/gi, '-');
+        var jumpId = 'tnav-jump-' + uid;
 
-        var sortedPeople = data.people.slice().sort(function (a, b) { return a.name.localeCompare(b.name); });
+        function navigateTo(id) {
+          if (!id || id === focusId) return;
+          history.push(focusId);
+          focusId = id;
+          render();
+        }
+        function goBack() {
+          if (!history.length) return;
+          focusId = history.pop();
+          render();
+        }
 
-        var h = '<div class="tree-nav-content">';
+        function render() {
+          var focus     = peopleMap[focusId];
+          var parentIds = parentsMap[focusId]  || [];
+          var spouses   = spousesMap[focusId]  || [];
+          var childIds  = childrenMap[focusId] || [];
+          var exSpouses  = spouses.filter(function (s) { return s.status === 'divorced'; });
+          var curSpouses = spouses.filter(function (s) { return s.status !== 'divorced'; });
 
-        // Nav header
-        h += '<div class="tree-nav-header">';
-        h += '<button class="tree-nav-btn" id="tnav-back"' + (!history.length ? ' disabled' : '') + '>&#8592; Back</button>';
-        h += '<div class="tree-nav-title">' + focus.name + '</div>';
-        h += '<select class="tree-jump-select" id="tnav-jump" aria-label="Jump to person">';
-        sortedPeople.forEach(function (p) {
-          h += '<option value="' + p.id + '"' + (p.id === focusId ? ' selected' : '') + '>' + p.name + '</option>';
-        });
-        h += '</select></div>';
+          var h = '<div class="tree-nav-content">';
+          h += '<div class="tree-nav-header">';
+          h += '<div class="tree-widget-label" style="margin:0;padding:0;border:none;opacity:0.6">' + branchLabel + '</div>';
+          h += '<div class="tree-nav-title">' + focus.name + '</div>';
+          h += '<select class="tree-jump-select" id="' + jumpId + '" aria-label="Jump to person">';
+          connectedPeople.forEach(function (p) {
+            h += '<option value="' + p.id + '"' + (p.id === focusId ? ' selected' : '') + '>' + p.name + '</option>';
+          });
+          h += '</select></div>';
 
-        // Parents
-        if (parentIds.length) {
-          h += '<div class="tree-level-label">Parents</div><div class="tree-gen">';
-          if (parentIds.length === 2) {
-            var p0 = peopleMap[parentIds[0]], p1 = peopleMap[parentIds[1]];
-            var pm = null;
-            for (var i = 0; i < data.marriages.length; i++) {
-              var m = data.marriages[i];
-              if ((m.spouseA === p0.id && m.spouseB === p1.id) || (m.spouseA === p1.id && m.spouseB === p0.id)) { pm = m; break; }
+          if (parentIds.length) {
+            h += '<div class="tree-level-label">Parents</div><div class="tree-gen">';
+            if (parentIds.length === 2) {
+              var p0 = peopleMap[parentIds[0]], p1 = peopleMap[parentIds[1]], pm = null;
+              for (var i = 0; i < data.marriages.length; i++) {
+                var m = data.marriages[i];
+                if ((m.spouseA === p0.id && m.spouseB === p1.id) || (m.spouseA === p1.id && m.spouseB === p0.id)) { pm = m; break; }
+              }
+              h += cardHTML(p0, 'parent') + (pm ? mbadge(pm.status) : '') + cardHTML(p1, 'parent');
+            } else {
+              parentIds.forEach(function (id) { h += cardHTML(peopleMap[id], 'parent'); });
             }
-            h += cardHTML(p0, 'parent');
-            if (pm) h += mbadge(pm.status);
-            h += cardHTML(p1, 'parent');
-          } else {
-            parentIds.forEach(function (id) { h += cardHTML(peopleMap[id], 'parent'); });
+            h += '</div><div class="tree-connector"></div>';
           }
-          h += '</div><div class="tree-connector"></div>';
-        }
 
-        // Focus + spouses
-        h += '<div class="tree-gen">';
-        exSpouses.forEach(function (s) { h += cardHTML(peopleMap[s.id], 'ex') + mbadge('divorced'); });
-        h += cardHTML(focus, 'focus');
-        curSpouses.forEach(function (s) { h += mbadge(s.status) + cardHTML(peopleMap[s.id], 'spouse'); });
-        h += '</div>';
-
-        // Children
-        if (childIds.length) {
-          h += '<div class="tree-connector"></div>';
-          h += '<div class="tree-level-label">Children</div>';
-          h += '<div class="tree-children-row">';
-          childIds.forEach(function (id) {
-            h += '<div class="tree-child-branch"><div class="tree-child-stub"></div>' + cardHTML(peopleMap[id], 'child') + '</div>';
-          });
+          h += '<div class="tree-gen">';
+          exSpouses.forEach(function (s) { h += cardHTML(peopleMap[s.id], 'ex') + mbadge('divorced'); });
+          h += cardHTML(focus, 'focus');
+          curSpouses.forEach(function (s) { h += mbadge(s.status) + cardHTML(peopleMap[s.id], 'spouse'); });
           h += '</div>';
+
+          if (childIds.length) {
+            h += '<div class="tree-connector"></div><div class="tree-level-label">Children</div><div class="tree-children-row">';
+            childIds.forEach(function (id) {
+              h += '<div class="tree-child-branch"><div class="tree-child-stub"></div>' + cardHTML(peopleMap[id], 'child') + '</div>';
+            });
+            h += '</div>';
+          }
+
+          h += '</div>';
+          el.innerHTML = h;
+
+          el.querySelectorAll('[data-nav]').forEach(function (node) {
+            node.addEventListener('click', function () { navigateTo(node.dataset.nav); });
+            node.addEventListener('keydown', function (e) {
+              if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigateTo(node.dataset.nav); }
+            });
+          });
+          var jumpSel = document.getElementById(jumpId);
+          if (jumpSel) jumpSel.addEventListener('change', function (e) { navigateTo(e.target.value); });
         }
 
-        h += '</div>';
-
-        var container = document.getElementById('tree-navigator');
-        container.innerHTML = h;
-
-        container.querySelectorAll('[data-nav]').forEach(function (el) {
-          el.addEventListener('click', function () { navigateTo(el.dataset.nav); });
-          el.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigateTo(el.dataset.nav); }
-          });
-        });
-        var backBtn = document.getElementById('tnav-back');
-        if (backBtn) backBtn.addEventListener('click', goBack);
-        var jumpSel = document.getElementById('tnav-jump');
-        if (jumpSel) jumpSel.addEventListener('change', function (e) { navigateTo(e.target.value); });
+        render();
       }
 
       fetch('./family-tree.json')
         .then(function (r) { return r.json(); })
         .then(function (d) {
           data = d;
-          focusId = d.defaultFocus;
           buildMaps();
-          render();
+          var roots = findRoots();
+          var container = document.getElementById('tree-container');
+          container.innerHTML = '';
+          roots.forEach(function (root) {
+            var widget = document.createElement('div');
+            widget.className = 'tree-widget';
+            var nav = document.createElement('div');
+            widget.appendChild(nav);
+            container.appendChild(widget);
+            createWidget(nav, root.id);
+          });
         })
         .catch(function () {
-          var el = document.getElementById('tree-navigator');
+          var el = document.getElementById('tree-container');
           if (el) el.innerHTML = '<p style="text-align:center;opacity:0.45;font-style:italic;padding:2rem">Family tree data could not be loaded. Please serve this page from a web server.</p>';
         });
     }());

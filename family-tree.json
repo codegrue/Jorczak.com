@@ -2,6 +2,26 @@
   "defaultFocus": "jeffrey-1969",
   "people": [
     {
+      "id": "stanley-1930",
+      "name": "Stanley Jorczak",
+      "birth": "Aug 25, 1930",
+      "death": "Sep 25, 2024",
+      "location": "Chicopee, Massachusetts",
+      "gender": "m"
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel Jorczak",
+      "location": "Norwalk, Connecticut",
+      "gender": "m"
+    },
+    {
+      "id": "michael",
+      "name": "Michael Jorczak",
+      "location": "New Boston, New Hampshire",
+      "gender": "m"
+    },
+    {
       "id": "joseph",
       "name": "Joseph Stanley Jorczak",
       "location": "Trenton, New Jersey",
@@ -58,8 +78,8 @@
     {
       "id": "robert",
       "name": "Robert Jorczak",
-      "birth": "Apr 24, 1950", 
-      "death": "XXX 00, 0000",   
+      "birth": "Apr 24, 1950",
+      "death": "XXX 00, 0000",
       "gender": "m"
     },
     {
@@ -126,7 +146,7 @@
     {
       "id": "eric",
       "name": "Eric Jorczak",
-      "location": "Orlando, Florida",      
+      "location": "Orlando, Florida",
       "gender": "m"
     },
     {
@@ -205,6 +225,18 @@
       "parents": [
         "raymond-1944",
         "jan-1950"
+      ]
+    },
+    {
+      "child": "daniel",
+      "parents": [
+        "stanley-1930"
+      ]
+    },
+    {
+      "child": "michael",
+      "parents": [
+        "stanley-1930"
       ]
     },
     {

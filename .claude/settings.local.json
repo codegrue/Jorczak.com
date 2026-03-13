@@ -15,7 +15,9 @@
       "WebFetch(domain:www.ancestry.com)",
       "WebFetch(domain:www.behindthename.com)",
       "WebFetch(domain:lemko.org)",
-      "Bash(npx --yes live-server --version)"
+      "Bash(npx --yes live-server --version)",
+      "Bash(node -e \"require\\(''./family-tree.json''\\)\")",
+      "Bash(node -e \"require\\(''./family-tree.json''\\); console.log\\(''valid''\\)\")"
     ]
   }
 }
