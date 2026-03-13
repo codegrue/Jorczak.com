@@ -825,6 +825,43 @@
       opacity: 0.75;
     }
 
+    /* Top-down branch connectors for children */
+    .tree-children-row {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+    .tree-child-branch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 220px;
+      padding: 0 0.5rem;
+      position: relative;
+    }
+    /* Horizontal bar connecting siblings */
+    .tree-child-branch::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(201,168,76,0.35);
+    }
+    .tree-child-branch:first-child::before { left: 50%; }
+    .tree-child-branch:last-child::before  { right: 50%; }
+    .tree-child-branch:only-child::before  { display: none; }
+    /* Vertical stub from h-bar (or connector) down to card */
+    .tree-child-stub {
+      width: 1px;
+      height: 20px;
+      background: rgba(201,168,76,0.35);
+    }
+
     .tree-disclaimer {
       margin-top: 2.5rem;
       font-size: 0.78rem;
@@ -1256,15 +1293,14 @@
       <span class="section-label reveal">VI. Family Tree</span>
       <h2 id="tree-heading" class="reveal" style="transition-delay:0.08s">Known Family Branches</h2>
       <div class="ornament reveal" style="transition-delay:0.14s">✦</div>
-
       <p class="reveal" style="transition-delay:0.18s">
         Navigate the family tree by clicking any person card. Each view shows three generations: parents above, the selected person in the centre, and their children below. Use the dropdown to jump to any family member.
       </p>
-
+    </div>
+    <div style="padding:0 2rem;">
       <div class="tree-navigator reveal" id="tree-navigator" style="transition-delay:0.24s">
         <div style="text-align:center;padding:2rem;opacity:0.45;font-style:italic">Loading family tree…</div>
       </div>
-
       <p class="tree-disclaimer reveal" style="transition-delay:0.3s">
         This tree shows only publicly documented individuals from verified sources.
         Records are limited to what appears in Prabook's biographical encyclopedia and related public archives.
@@ -1380,9 +1416,10 @@
         var role = roleLabel(person, ctx);
 
         var det = '';
-        if (person.maidenName) det += '<em>née</em> ' + person.maidenName;
+        if (person.nickname)   det += '&#8220;' + person.nickname + '&#8221;';
+        if (person.maidenName) det += (det ? '<br>' : '') + '<em>née</em> ' + person.maidenName;
         if (person.location)   det += (det ? '<br>' : '') + person.location;
-        if (person.birth)      det += (det ? '<br>' : '') + 'b. ' + person.birth;
+        if (person.birth)      det += (det ? '<br>' : '') + person.birth + ' &#8211; ' + (person.death || 'living');
         if (person.bio)        det += (det ? '<br>' : '') + '<span class="tree-card-bio">' + person.bio + '</span>';
 
         var lnk = person.link
@@ -1455,8 +1492,12 @@
 
         // Children
         if (childIds.length) {
-          h += '<div class="tree-connector"></div><div class="tree-level-label">Children</div><div class="tree-gen">';
-          childIds.forEach(function (id) { h += cardHTML(peopleMap[id], 'child'); });
+          h += '<div class="tree-connector"></div>';
+          h += '<div class="tree-level-label">Children</div>';
+          h += '<div class="tree-children-row">';
+          childIds.forEach(function (id) {
+            h += '<div class="tree-child-branch"><div class="tree-child-stub"></div>' + cardHTML(peopleMap[id], 'child') + '</div>';
+          });
           h += '</div>';
         }
 

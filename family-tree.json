@@ -1,47 +1,267 @@
 {
-  "defaultFocus": "jeffrey",
+  "defaultFocus": "jeffrey-1969",
   "people": [
-    { "id": "joseph",    "name": "Joseph Stanley Jorczak", "location": "Trenton, New Jersey",          "gender": "m" },
-    { "id": "phyllis",   "name": "Phyllis Jorczak",        "maidenName": "Grotkowski",  "location": "Trenton, New Jersey",          "gender": "f" },
-    { "id": "nancy",     "name": "Nancy Jorczak",          "birth": "1948",             "location": "Trenton, New Jersey",          "bio": "History educator, Fulbright Scholar 1981", "link": "https://prabook.com/web/nancy.jorczak/1666584", "gender": "f" },
-    { "id": "francis",   "name": "Francis Jorczak",        "location": "Chicopee, Massachusetts",      "gender": "m" },
-    { "id": "casandra",  "name": "Casandra Jorczak",       "location": "Chicopee, Massachusetts",      "gender": "f" },
-    { "id": "raymond",   "name": "Raymond Jorczak",        "location": "Palm Harbor, Florida",         "gender": "m" },
-    { "id": "jan",       "name": "Jan Jorczak",            "maidenName": "Clouatre",    "location": "Palm Harbor, Florida",         "gender": "f" },
-    { "id": "robert",    "name": "Robert Jorczak",         "gender": "m" },
-    { "id": "jean",      "name": "Jean Jorczak",           "gender": "f" },
-    { "id": "jeffrey",   "name": "Jeffrey Jorczak",        "location": "South Windsor, Connecticut",   "gender": "m" },
-    { "id": "joan",      "name": "Joan Jorczak",           "maidenName": "Daignault",   "location": "Manchester, Connecticut",      "gender": "f" },
-    { "id": "missy",     "name": "Missy Jorczak",          "maidenName": "Parmlee",     "location": "South Windsor, Connecticut",   "gender": "f" },
-    { "id": "alexander", "name": "Alexander Jorczak",      "location": "Manchester, Connecticut",      "gender": "m" },
-    { "id": "tanner",    "name": "Tanner Jorczak",         "location": "Manchester, Connecticut",      "gender": "m" },
-    { "id": "nathan",    "name": "Nathan Jorczak",         "gender": "m" },
-    { "id": "sara",      "name": "Sara Jorczak",           "gender": "f" },
-    { "id": "philip",    "name": "Philip Jorczak",         "gender": "m" },
-    { "id": "eric",      "name": "Eric Jorczak",           "gender": "m" },
-    { "id": "kimberly",  "name": "Kimberly Jorczak",       "gender": "f" },
-    { "id": "melissa",   "name": "Melissa Jorczak",        "gender": "f" }
+    {
+      "id": "joseph",
+      "name": "Joseph Stanley Jorczak",
+      "location": "Trenton, New Jersey",
+      "gender": "m"
+    },
+    {
+      "id": "phyllis",
+      "name": "Phyllis Jorczak",
+      "maidenName": "Grotkowski",
+      "location": "Trenton, New Jersey",
+      "gender": "f"
+    },
+    {
+      "id": "nancy-1948",
+      "name": "Nancy Jorczak",
+      "birth": "1948",
+      "location": "Trenton, New Jersey",
+      "bio": "History educator, Fulbright Scholar 1981",
+      "link": "https://prabook.com/web/nancy.jorczak/1666584",
+      "gender": "f"
+    },
+    {
+      "id": "francis-1904",
+      "name": "Francis J Jorczak",
+      "birth": "Jul 31, 1904",
+      "death": "Dec 4, 1994",
+      "location": "Chicopee, Massachusetts",
+      "gender": "m"
+    },
+    {
+      "id": "casimiera-1919",
+      "name": "Casimiera V Jorczak",
+      "birth": "Nov 16, 1919",
+      "death": "Aug 17, 1992",
+      "maidenName": "Cwiertnia",
+      "location": "Chicopee, Massachusetts",
+      "gender": "f"
+    },
+    {
+      "id": "raymond-1944",
+      "name": "Raymond J Jorczak",
+      "birth": "Apr 14, 1944",
+      "location": "Palm Harbor, Florida",
+      "gender": "m"
+    },
+    {
+      "id": "jan-1950",
+      "name": "Janice I Jorczak",
+      "maidenName": "Clouatre",
+      "birth": "Sep 13, 1950",
+      "location": "Palm Harbor, Florida",
+      "gender": "f"
+    },
+    {
+      "id": "robert",
+      "name": "Robert Jorczak",
+      "birth": "Apr 24, 1950", 
+      "death": "XXX 00, 0000",   
+      "gender": "m"
+    },
+    {
+      "id": "jean",
+      "name": "Jean Jorczak",
+      "gender": "f"
+    },
+    {
+      "id": "jeffrey-1969",
+      "name": "Jeffrey S Jorczak",
+      "birth": "Sep 3, 1969",
+      "location": "South Windsor, Connecticut",
+      "gender": "m"
+    },
+    {
+      "id": "joan",
+      "name": "Joan Jorczak",
+      "maidenName": "Daignault",
+      "location": "Manchester, Connecticut",
+      "gender": "f"
+    },
+    {
+      "id": "missy-1978",
+      "name": "Missy A Jorczak",
+      "birth": "Nov 27, 1978",
+      "maidenName": "Parmlee",
+      "location": "South Windsor, Connecticut",
+      "gender": "f"
+    },
+    {
+      "id": "alexander-2004",
+      "name": "Alexander R Jorczak",
+      "birth": "Feb 7, 2004",
+      "location": "Manchester, Connecticut",
+      "gender": "m"
+    },
+    {
+      "id": "tanner-2005",
+      "name": "Tanner J Jorczak",
+      "birth": "May 18, 2005",
+      "location": "Manchester, Connecticut",
+      "gender": "m"
+    },
+    {
+      "id": "nathan-2010",
+      "name": "Nathan L Jorczak",
+      "birth": "July 27, 2010",
+      "location": "South Windsor, Connecticut",
+      "gender": "m"
+    },
+    {
+      "id": "sara-2012",
+      "name": "Sara M Jorczak",
+      "birth": "Jan 25, 2012",
+      "location": "South Windsor, Connecticut",
+      "gender": "f"
+    },
+    {
+      "id": "philip",
+      "name": "Philip Jorczak",
+      "location": "Albany, New York",
+      "gender": "m"
+    },
+    {
+      "id": "eric",
+      "name": "Eric Jorczak",
+      "location": "Orlando, Florida",      
+      "gender": "m"
+    },
+    {
+      "id": "kimberly",
+      "name": "Kimberly Jorczak",
+      "gender": "f"
+    },
+    {
+      "id": "melissa",
+      "name": "Melissa Jorczak",
+      "gender": "f"
+    }
   ],
   "marriages": [
-    { "id": "m1", "spouseA": "joseph",  "spouseB": "phyllis",  "status": "married"  },
-    { "id": "m2", "spouseA": "francis", "spouseB": "casandra", "status": "married"  },
-    { "id": "m3", "spouseA": "raymond", "spouseB": "jan",      "status": "married"  },
-    { "id": "m4", "spouseA": "robert",  "spouseB": "jean",     "status": "married"  },
-    { "id": "m5", "spouseA": "jeffrey", "spouseB": "joan",     "status": "divorced" },
-    { "id": "m6", "spouseA": "jeffrey", "spouseB": "missy",    "status": "married"  }
+    {
+      "id": "m1",
+      "spouseA": "joseph",
+      "spouseB": "phyllis",
+      "status": "married"
+    },
+    {
+      "id": "m2",
+      "spouseA": "francis-1904",
+      "spouseB": "casimiera-1919",
+      "status": "married"
+    },
+    {
+      "id": "m3",
+      "spouseA": "raymond-1944",
+      "spouseB": "jan-1950",
+      "status": "married"
+    },
+    {
+      "id": "m4",
+      "spouseA": "robert",
+      "spouseB": "jean",
+      "status": "married"
+    },
+    {
+      "id": "m5",
+      "spouseA": "jeffrey-1969",
+      "spouseB": "joan",
+      "status": "divorced"
+    },
+    {
+      "id": "m6",
+      "spouseA": "jeffrey-1969",
+      "spouseB": "missy-1978",
+      "status": "married"
+    }
   ],
   "parentage": [
-    { "child": "nancy",     "parents": ["joseph",  "phyllis"]  },
-    { "child": "raymond",   "parents": ["francis", "casandra"] },
-    { "child": "robert",    "parents": ["francis", "casandra"] },
-    { "child": "jeffrey",   "parents": ["raymond", "jan"]      },
-    { "child": "philip",    "parents": ["robert",  "jean"]     },
-    { "child": "eric",      "parents": ["robert",  "jean"]     },
-    { "child": "kimberly",  "parents": ["robert",  "jean"]     },
-    { "child": "melissa",   "parents": ["robert",  "jean"]     },
-    { "child": "alexander", "parents": ["jeffrey", "joan"]     },
-    { "child": "tanner",    "parents": ["jeffrey", "joan"]     },
-    { "child": "nathan",    "parents": ["jeffrey", "missy"]    },
-    { "child": "sara",      "parents": ["jeffrey", "missy"]    }
+    {
+      "child": "nancy-1948",
+      "parents": [
+        "joseph",
+        "phyllis"
+      ]
+    },
+    {
+      "child": "raymond-1944",
+      "parents": [
+        "francis-1904",
+        "casimiera-1919"
+      ]
+    },
+    {
+      "child": "robert",
+      "parents": [
+        "francis-1904",
+        "casimiera-1919"
+      ]
+    },
+    {
+      "child": "jeffrey-1969",
+      "parents": [
+        "raymond-1944",
+        "jan-1950"
+      ]
+    },
+    {
+      "child": "philip",
+      "parents": [
+        "robert",
+        "jean"
+      ]
+    },
+    {
+      "child": "eric",
+      "parents": [
+        "robert",
+        "jean"
+      ]
+    },
+    {
+      "child": "kimberly",
+      "parents": [
+        "robert",
+        "jean"
+      ]
+    },
+    {
+      "child": "melissa",
+      "parents": [
+        "robert",
+        "jean"
+      ]
+    },
+    {
+      "child": "alexander-2004",
+      "parents": [
+        "jeffrey-1969",
+        "joan"
+      ]
+    },
+    {
+      "child": "tanner-2005",
+      "parents": [
+        "jeffrey-1969",
+        "joan"
+      ]
+    },
+    {
+      "child": "nathan-2010",
+      "parents": [
+        "jeffrey-1969",
+        "missy-1978"
+      ]
+    },
+    {
+      "child": "sara-2012",
+      "parents": [
+        "jeffrey-1969",
+        "missy-1978"
+      ]
+    }
   ]
 }
