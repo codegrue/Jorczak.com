@@ -198,6 +198,8 @@
     {
       "id": "jean",
       "name": "Jean Jorczak",
+      "birth": "1939",
+      "location": "Albany, New York",
       "gender": "f"
     },
     {
@@ -253,23 +255,36 @@
     {
       "id": "philip",
       "name": "Philip Jorczak",
+      "birth": "Apr 19, 1973",
       "location": "Albany, New York",
       "gender": "m"
     },
     {
+      "id": "angela-1970",
+      "name": "Angela M Jorczak",
+      "gender": "f",
+      "birth": "1970",
+      "maidenName": "Breyette"
+    },
+    {
       "id": "eric",
       "name": "Eric Jorczak",
+      "birth": "Nov 1977",
       "location": "Orlando, Florida",
       "gender": "m"
     },
     {
       "id": "kimberly",
-      "name": "Kimberly Jorczak",
+      "name": "Kimberley Jorczak",
+      "birth": "Dec 30, 1975",
+      "location":"Worthington, Massachusetts",
       "gender": "f"
     },
     {
       "id": "melissa",
       "name": "Melissa Jorczak",
+      "birth": "Jan 17, 1978",
+      "location": "Kirkland, WAshington",
       "gender": "f"
     },
     {
@@ -982,6 +997,12 @@
       "id": "m-ed-ta",
       "spouseA": "ed-ta",
       "spouseB": "betsy-ed-j",
+      "status": "married"
+    },
+    {
+      "id": "m-philip",
+      "spouseA": "philip",
+      "spouseB": "angela-1970",
       "status": "married"
     }
   ],

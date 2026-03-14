@@ -24,7 +24,8 @@
       "WebFetch(domain:www.legacy.com)",
       "Bash(node -e \":*)",
       "Bash(node validate.js)",
-      "Bash(node -e \"var d=require\\(''./family-tree.json''\\); console.log\\(JSON.stringify\\(d.marriages[0]\\)\\); console.log\\(JSON.stringify\\(d.parentage[0]\\)\\);\")"
+      "Bash(node -e \"var d=require\\(''./family-tree.json''\\); console.log\\(JSON.stringify\\(d.marriages[0]\\)\\); console.log\\(JSON.stringify\\(d.parentage[0]\\)\\);\")",
+      "Bash(node -e \"require\\(''./family-tree.json''\\); console.log\\(''JSON valid''\\)\")"
     ]
   }
 }
