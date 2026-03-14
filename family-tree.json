@@ -164,6 +164,7 @@
     {
       "id": "francis-1904",
       "name": "Francis Joseph Jorczak",
+      "nickname": "Frank",
       "birth": "Jul 31, 1904",
       "death": "Dec 4, 1994",
       "location": "Chicopee, Massachusetts",
@@ -173,6 +174,7 @@
     {
       "id": "casimiera-1919",
       "name": "Casimiera V Jorczak",
+      "nickname": "Cassie",
       "birth": "Nov 16, 1919",
       "death": "Aug 17, 1992",
       "maidenName": "Cwiertnia",
@@ -199,6 +201,7 @@
     {
       "id": "robert-1950",
       "name": "Robert Jorczak",
+      "nickname": "Bob",
       "birth": "Apr 24, 1950",
       "death": "April 28, 2011",
       "birthplace": "Chicopee, Massachusetts",

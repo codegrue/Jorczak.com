@@ -715,7 +715,7 @@
     .ftree-card-nickname {
       font-style: italic;
       font-weight: 400;
-      color: rgba(201,168,76,0.7);
+
       font-size: 0.8rem;
     }
     .ftree-spouse-card .ftree-card-name {
@@ -1451,9 +1451,17 @@
             + ' class="ftree-card-link" onclick="event.stopPropagation()">\u2197 biography</a>'
           : '';
 
-        var displayName = p.nickname
-          ? '<span class="ftree-card-nickname">\u201c' + p.nickname + '\u201d</span>\u00a0' + p.name
-          : p.name;
+        var displayName;
+        if (p.nickname) {
+          var nameParts = p.name.split(' ');
+          var firstName = nameParts[0];
+          var restName  = nameParts.slice(1).join(' ');
+          displayName = firstName
+            + '\u00a0<span class="ftree-card-nickname">\u201c' + p.nickname + '\u201d</span>'
+            + (restName ? '\u00a0' + restName : '');
+        } else {
+          displayName = p.name;
+        }
 
         return '<div class="' + cls + '">'
           + '<div class="ftree-card-name">' + displayName + '</div>'
