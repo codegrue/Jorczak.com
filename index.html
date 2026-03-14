@@ -591,11 +591,11 @@
 
     /* ─── ⑦ FAMILY TREE ─────────────────────────────────────── */
     #family-tree {
-      background: var(--green);
-      color: var(--parchment);
+      background: var(--parchment);
+      color: var(--ink);
     }
-    #family-tree h2 { color: var(--parchment); }
-    #family-tree .section-label { color: var(--gold); }
+    #family-tree h2 { color: var(--ink); }
+    #family-tree .section-label { color: var(--crimson); }
 
     #tree-container {
       margin-top: 2.5rem;
@@ -613,7 +613,7 @@
     .ftree-children {
       padding-left: 0.9rem;
       margin-left: 0.95rem;
-      border-left: 1px solid rgba(201,168,76,0.18);
+      border-left: 1px solid rgba(26,58,42,0.18);
     }
 
     /* Horizontal connector from left-border to each row */
@@ -628,7 +628,7 @@
       left: -0.9rem;
       top: 1.05rem;
       width: 0.65rem;
-      border-top: 1px solid rgba(201,168,76,0.18);
+      border-top: 1px solid rgba(26,58,42,0.18);
     }
 
     /* ── Row ────────────────────────────────────────────────── */
@@ -647,10 +647,10 @@
       flex-shrink: 0;
       align-self: flex-start;
       margin-top: 0.52rem;
-      background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(201,168,76,0.32);
+      background: rgba(26,58,42,0.07);
+      border: 1px solid rgba(26,58,42,0.25);
       border-radius: 2px;
-      color: var(--gold);
+      color: var(--green);
       cursor: pointer;
       font-size: 0.72rem;
       font-weight: 700;
@@ -663,7 +663,7 @@
       transition: background 0.15s;
       user-select: none;
     }
-    .ftree-toggle:hover { background: rgba(201,168,76,0.14); }
+    .ftree-toggle:hover { background: rgba(26,58,42,0.14); }
 
     /* Leaf indent spacer */
     .ftree-leaf {
@@ -674,15 +674,15 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: rgba(201,168,76,0.2);
+      color: rgba(26,58,42,0.2);
       font-size: 0.85rem;
       line-height: 1;
     }
 
     /* ── Person card ─────────────────────────────────────────── */
     .ftree-card {
-      background: rgba(244,237,224,0.05);
-      border: 1px solid rgba(201,168,76,0.28);
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(26,58,42,0.16);
       border-radius: 4px;
       padding: 0.42rem 0.75rem 0.42rem 0.9rem;
       position: relative;
@@ -699,9 +699,9 @@
 
     /* Spouse card: muted, dashed, no accent bar */
     .ftree-spouse-card {
-      background: rgba(244,237,224,0.025);
+      background: rgba(255,255,255,0.25);
       border-style: dashed;
-      border-color: rgba(201,168,76,0.16);
+      border-color: rgba(26,58,42,0.12);
     }
     .ftree-spouse-card::before { display: none; }
 
@@ -709,7 +709,7 @@
       font-family: 'Playfair Display', serif;
       font-size: 0.88rem;
       font-weight: 700;
-      color: var(--parchment);
+      color: var(--ink);
       line-height: 1.25;
     }
     .ftree-card-nickname {
@@ -719,13 +719,24 @@
       font-size: 0.8rem;
     }
     .ftree-spouse-card .ftree-card-name {
-      color: var(--parchment);
+      color: var(--ink-muted);
       font-style: italic;
       font-weight: 400;
     }
+    /* Deceased: muted opacity */
+    .ftree-card.is-deceased {
+      opacity: 0.72;
+    }
+
+    /* Unknown ancestor: clearly a placeholder */
+    .ftree-card.is-unknown {
+      background: transparent;
+      border-style: dashed;
+      border-color: rgba(26,58,42,0.15);
+    }
     .ftree-card.is-unknown .ftree-card-name {
       font-style: italic;
-      opacity: 0.35;
+      opacity: 0.4;
       font-weight: 400;
     }
 
@@ -733,7 +744,7 @@
     .ftree-card-detail {
       font-family: 'EB Garamond', serif;
       font-size: 0.72rem;
-      color: var(--parchment);
+      color: var(--ink-soft);
       font-style: italic;
       line-height: 1.4;
       margin-top: 0.18rem;
@@ -750,13 +761,13 @@
       margin-top: 0.28rem;
       font-family: 'EB Garamond', serif;
       font-size: 0.68rem;
-      color: var(--gold);
-      opacity: 0.65;
+      color: var(--crimson);
+      opacity: 0.7;
       text-decoration: none;
-      border-bottom: 1px solid rgba(201,168,76,0.28);
+      border-bottom: 1px solid rgba(139,26,26,0.25);
       transition: opacity 0.15s;
     }
-    .ftree-card-link:hover { opacity: 1; border-color: var(--gold); }
+    .ftree-card-link:hover { opacity: 1; border-color: var(--crimson); }
 
     /* Spouse group: sep + spouse card as a unit */
     .ftree-spouse-group {
@@ -767,7 +778,7 @@
     .ftree-sep {
       font-family: 'EB Garamond', serif;
       font-size: 0.7rem;
-      color: rgba(201,168,76,0.42);
+      color: rgba(26,58,42,0.38);
       flex-shrink: 0;
       margin-top: 0.65rem;
     }
@@ -788,33 +799,48 @@
       flex: 1;
       min-width: 160px;
     }
+    .ftree-search-label {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(26,58,42,0.45);
+      flex-shrink: 0;
+    }
     .ftree-search {
       flex: 1;
-      background: rgba(0,0,0,0.25);
-      border: 1px solid rgba(201,168,76,0.28);
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(26,58,42,0.2);
       border-radius: 3px;
-      color: var(--parchment);
+      color: var(--ink);
       padding: 0.32rem 0.6rem;
       font-family: 'EB Garamond', serif;
       font-size: 0.9rem;
       outline: none;
       transition: border-color 0.2s;
     }
-    .ftree-search:focus { border-color: var(--gold); }
-    .ftree-search::placeholder { color: rgba(244,237,224,0.28); }
+    .ftree-search:focus { border-color: var(--green); }
+    .ftree-search::placeholder { color: rgba(26,58,42,0.3); }
     .ftree-match-count {
       font-family: 'EB Garamond', serif;
       font-size: 0.72rem;
       font-style: italic;
-      color: rgba(244,237,224,0.38);
+      color: rgba(26,58,42,0.38);
       white-space: nowrap;
     }
-    .ftree-toolbar-btns { display: flex; gap: 0.4rem; }
+    .ftree-toolbar-btns { display: flex; gap: 0.4rem; align-items: center; }
+    .ftree-toolbar-btns .ftree-btn-suggest {
+      margin-left: 0.6rem;
+      padding-left: 0.9rem;
+      border-left: 1px solid rgba(26,58,42,0.15);
+      color: rgba(26,58,42,0.45);
+    }
+    .ftree-toolbar-btns .ftree-btn-suggest:hover { color: var(--green); background: transparent; }
     .ftree-btn {
       background: transparent;
-      border: 1px solid rgba(201,168,76,0.28);
+      border: 1px solid rgba(26,58,42,0.22);
       border-radius: 3px;
-      color: var(--gold);
+      color: var(--green);
       padding: 0.3rem 0.7rem;
       font-family: 'EB Garamond', serif;
       font-size: 0.68rem;
@@ -824,23 +850,23 @@
       cursor: pointer;
       transition: background 0.15s, border-color 0.15s;
     }
-    .ftree-btn:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); }
+    .ftree-btn:hover { background: rgba(26,58,42,0.07); border-color: var(--green); }
 
     /* Search match highlight */
     .ftree-card.is-match {
-      border-color: var(--gold);
-      background: rgba(201,168,76,0.1);
-      box-shadow: 0 0 0 1px rgba(201,168,76,0.25);
+      border-color: var(--crimson);
+      background: rgba(139,26,26,0.06);
+      box-shadow: 0 0 0 1px rgba(139,26,26,0.15);
     }
-    .ftree-card.is-match .ftree-card-name { color: var(--gold); }
+    .ftree-card.is-match .ftree-card-name { color: var(--crimson); }
 
     .tree-disclaimer {
       margin-top: 2.5rem;
       font-size: 0.78rem;
       font-style: italic;
-      color: rgba(244, 237, 224, 0.35);
+      color: rgba(28, 20, 9, 0.38);
       text-align: center;
-      border-top: 1px solid rgba(201, 168, 76, 0.15);
+      border-top: 1px solid rgba(26, 58, 42, 0.12);
       padding-top: 1.25rem;
     }
 
@@ -874,6 +900,18 @@
 
     footer a { color: rgba(201, 168, 76, 0.6); text-decoration: none; }
     footer a:hover { color: var(--gold); }
+
+    /* ─── Hero nav ───────────────────────────────────────────── */
+    .hero-nav-link {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(201,168,76,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .hero-nav-link:hover,
+    .hero-nav-link:focus-visible { color: rgba(201,168,76,1); outline: none; }
 
     /* ─── Responsive tweaks ──────────────────────────────────── */
     @media (max-width: 600px) {
@@ -909,12 +947,12 @@
       A name rooted in earth and history
     </p>
     <nav aria-label="Page sections" style="position:absolute;bottom:5.5rem;left:50%;transform:translateX(-50%);z-index:1;display:flex;gap:1.5rem;flex-wrap:wrap;justify-content:center;">
-      <a href="#origin" style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(201,168,76,0.55);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(201,168,76,1)'" onmouseout="this.style.color='rgba(201,168,76,0.55)'">Origin</a>
-      <a href="#meaning" style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(201,168,76,0.55);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(201,168,76,1)'" onmouseout="this.style.color='rgba(201,168,76,0.55)'">Meaning</a>
-      <a href="#distribution" style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(201,168,76,0.55);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(201,168,76,1)'" onmouseout="this.style.color='rgba(201,168,76,0.55)'">Distribution</a>
-      <a href="#crest" style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(201,168,76,0.55);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(201,168,76,1)'" onmouseout="this.style.color='rgba(201,168,76,0.55)'">Family Crest</a>
-      <a href="#people" style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(201,168,76,0.55);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(201,168,76,1)'" onmouseout="this.style.color='rgba(201,168,76,0.55)'">Notable People</a>
-      <a href="#family-tree" style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(201,168,76,0.55);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(201,168,76,1)'" onmouseout="this.style.color='rgba(201,168,76,0.55)'">Family Tree</a>
+      <a href="#origin" class="hero-nav-link">Origin</a>
+      <a href="#meaning" class="hero-nav-link">Meaning</a>
+      <a href="#distribution" class="hero-nav-link">Distribution</a>
+      <a href="#crest" class="hero-nav-link">Family Crest</a>
+      <a href="#people" class="hero-nav-link">Notable People</a>
+      <a href="#family-tree" class="hero-nav-link">Family Tree</a>
     </nav>
     <div class="hero-scroll">
       <div class="hero-scroll-line"></div>
@@ -1089,6 +1127,7 @@
         The related and far more common spelling <em>Jurczak</em> counts approximately
         <strong>8,186 people</strong> globally, with Poland accounting for 84% of them — a reminder
         that the Jorczak spelling is an emigrant variant, shaped by American phonetics and record-keeping.
+        <em style="font-size:0.8em;opacity:0.5">(Source: Forebears.io)</em>
       </p>
     </div>
   </section>
@@ -1224,7 +1263,8 @@
 
       <p class="reveal" style="transition-delay:0.18s">
         Given its rarity, the Jorczak surname has been carried by a select few in public life.
-        Two individuals have been documented in verified sources:
+        Two individuals have been documented in verified sources. Know of another?
+        <a href="mailto:jeff@jorczak.com?subject=Notable%20Jorczak%20Suggestion" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.35)">Send a suggestion.</a>
       </p>
 
       <div class="people-grid">
@@ -1288,8 +1328,9 @@
         <div style="text-align:center;padding:2rem;opacity:0.45;font-style:italic">Loading family tree…</div>
       </div>
       <p class="tree-disclaimer reveal" style="transition-delay:0.3s">
-        This tree shows only publicly documented individuals from verified sources.
-        Records are limited to what appears in Prabook's biographical encyclopedia and related public archives.
+        This tree includes publicly documented individuals from verified sources and living family members.
+        Biographical records drawn from Prabook's encyclopedia and related public archives.
+        Know someone missing? <a href="mailto:jeff@jorczak.com?subject=Suggested%20Addition%20to%20Jorczak%20Genealogy" style="color:var(--gold);opacity:0.7;text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.3)">Suggest an addition.</a>
       </p>
     </div>
   </section>
@@ -1311,7 +1352,7 @@
 
   <script>
     // ── Set year ──────────────────────────────────────────────
-    document.getElementById('year').textContent = 'March 13, 2026';
+    document.getElementById('year').textContent = new Date().getFullYear();
 
     // ── Scroll reveal ────────────────────────────────────────
     const revealEls = document.querySelectorAll('.reveal');
@@ -1492,7 +1533,8 @@
 
         if (hasKids) {
           h += '<button class="ftree-toggle" data-target="' + uid + '" aria-expanded="false"'
-             + ' aria-label="Expand ' + person.name + '">+</button>';
+             + ' data-name="' + person.name + '"'
+             + ' aria-label="Expand children of ' + person.name + '">+</button>';
         } else {
           h += '<span class="ftree-leaf">\u00b7</span>';
         }
@@ -1532,8 +1574,11 @@
           container.innerHTML = '';
 
           // Sort roots: known birth years ascending; unknown birth with children first (ancestors),
-          // unknown birth with no children last (detached individuals)
+          // unknown birth with no children last; unknown-* placeholder nodes always at bottom
           roots.sort(function (a, b) {
+            var aUnk = a.id.indexOf('unknown') === 0 ? 1 : 0;
+            var bUnk = b.id.indexOf('unknown') === 0 ? 1 : 0;
+            if (aUnk !== bUnk) return aUnk - bUnk;
             var aKids = (childrenMap[a.id] || []).length;
             var bKids = (childrenMap[b.id] || []).length;
             var ay = a.birth ? (parseInt(yr(a.birth)) || 50000) : (aKids > 0 ? -1 : 50000);
@@ -1564,20 +1609,23 @@
           toolbar.className = 'ftree-toolbar';
           toolbar.innerHTML =
             '<div class="ftree-search-wrap">'
-            + '<input class="ftree-search" type="search" placeholder="Search names\u2026" aria-label="Search family tree">'
+            + '<label class="ftree-search-label" for="ftree-search-input">Search</label>'
+            + '<input class="ftree-search" id="ftree-search-input" type="search" placeholder="Name or nickname\u2026" aria-label="Search family tree">'
             + '<span class="ftree-match-count"></span>'
             + '</div>'
             + '<div class="ftree-toolbar-btns">'
             + '<button class="ftree-btn" id="ftbtn-expand">Expand All</button>'
             + '<button class="ftree-btn" id="ftbtn-collapse">Collapse All</button>'
-            + '<a class="ftree-btn" href="mailto:jeff@jorczak.com?subject=Suggested%20Addition%20to%20Jorczak%20Genealogy">Suggest Additions</a>'
+            + '<a class="ftree-btn ftree-btn-suggest" href="mailto:jeff@jorczak.com?subject=Suggested%20Addition%20to%20Jorczak%20Genealogy">Suggest Additions</a>'
             + '</div>';
           container.appendChild(toolbar);
 
           // ── Tree list ────────────────────────────────────────────
           var list = document.createElement('ul');
           list.className = 'ftree-list';
-          roots.forEach(function (root) { list.innerHTML += buildNodeHTML(root.id); });
+          var htmlParts = [];
+          roots.forEach(function (root) { htmlParts.push(buildNodeHTML(root.id)); });
+          list.innerHTML = htmlParts.join('');
           container.appendChild(list);
           equalizeLevel(list);
 
@@ -1610,7 +1658,9 @@
             var childList = document.getElementById(targetId);
             if (!childList) return;
             var expanded = btn.getAttribute('aria-expanded') === 'true';
+            var name = btn.getAttribute('data-name') || '';
             btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+            btn.setAttribute('aria-label', (expanded ? 'Expand' : 'Collapse') + ' children of ' + name);
             btn.textContent = expanded ? '+' : '\u2212';
             childList.hidden = expanded;
             if (!expanded) { equalizeLevel(childList); }
@@ -1645,7 +1695,13 @@
             if (!q) { matchCount.textContent = ''; return; }
 
             var matched = Object.keys(peopleMap).filter(function (id) {
-              return peopleMap[id].name.toLowerCase().indexOf(q) !== -1;
+              var p = peopleMap[id];
+              return p.name.toLowerCase().indexOf(q) !== -1
+                || (p.nickname && p.nickname.toLowerCase().indexOf(q) !== -1)
+                || (spousesMap[id] && spousesMap[id].some(function (s) {
+                     var sp = peopleMap[s.id];
+                     return sp && sp.name.toLowerCase().indexOf(q) !== -1;
+                   }));
             });
             matchCount.textContent = matched.length ? matched.length + ' found' : 'no matches';
             if (!matched.length) return;
