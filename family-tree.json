@@ -1,5 +1,4 @@
 {
-  "defaultFocus": "jeffrey-1969",
   "people": [
     {
       "id": "stanley-1930",
@@ -7,11 +6,14 @@
       "birth": "Aug 25, 1930",
       "death": "Sep 25, 2024",
       "location": "Chicopee, Massachusetts",
+      "bio": "U.S. Army Korean War veteran; UMass graduate; Monsanto Chemical Co., retired",
       "gender": "m"
     },
     {
       "id": "pat",
-      "name": "Pat Jorczak",
+      "name": "Patricia Jorczak",
+      "nickname": "Pat",
+      "maidenName": "Aitken",
       "gender": "f"
     },
     {
@@ -135,11 +137,12 @@
       "gender": "f"
     },
     {
-      "id": "joseph",
+      "id": "joseph-1911",
       "name": "Joseph Stanley Jorczak",
-      "birth": "1911",
-      "death": "1993",
+      "birth": "Oct 1, 1911",
+      "death": "Oct 9, 1993",
       "location": "Trenton, New Jersey",
+      "root": true,
       "gender": "m"
     },
     {
@@ -160,10 +163,11 @@
     },
     {
       "id": "francis-1904",
-      "name": "Francis J Jorczak",
+      "name": "Francis Joseph Jorczak",
       "birth": "Jul 31, 1904",
       "death": "Dec 4, 1994",
       "location": "Chicopee, Massachusetts",
+      "root": true,
       "gender": "m"
     },
     {
@@ -178,7 +182,7 @@
     },
     {
       "id": "raymond-1944",
-      "name": "Raymond J Jorczak",
+      "name": "Raymond Joseph Jorczak",
       "birth": "Apr 14, 1944",
       "birthplace": "Chicopee, Massachusetts",
       "location": "Palm Harbor, Florida",
@@ -186,7 +190,7 @@
     },
     {
       "id": "jan-1950",
-      "name": "Janice I Jorczak",
+      "name": "Janice Irene Jorczak",
       "maidenName": "Clouatre",
       "birth": "Sep 13, 1950",
       "location": "Palm Harbor, Florida",
@@ -196,33 +200,35 @@
       "id": "robert-1950",
       "name": "Robert Jorczak",
       "birth": "Apr 24, 1950",
+      "death": "April 28, 2011",
       "birthplace": "Chicopee, Massachusetts",
       "gender": "m"
     },
     {
-      "id": "jean",
+      "id": "jean-1939",
       "name": "Jean Jorczak",
+      "maidenName": "Kempinski",
       "birth": "1939",
       "location": "Albany, New York",
       "gender": "f"
     },
     {
       "id": "jeffrey-1969",
-      "name": "Jeffrey S Jorczak",
+      "name": "Jeffrey Scott Jorczak",
       "birth": "Sep 3, 1969",
       "location": "South Windsor, Connecticut",
       "gender": "m"
     },
     {
       "id": "joan",
-      "name": "Joan Jorczak",
+      "name": "Joan Daignault Jorczak",
       "maidenName": "Daignault",
       "location": "Manchester, Connecticut",
       "gender": "f"
     },
     {
       "id": "missy-1978",
-      "name": "Missy A Jorczak",
+      "name": "Missy Anne Jorczak",
       "birth": "Nov 27, 1978",
       "maidenName": "Parmlee",
       "location": "South Windsor, Connecticut",
@@ -230,34 +236,34 @@
     },
     {
       "id": "alexander-2004",
-      "name": "Alexander R Jorczak",
+      "name": "Alexander Raymond Jorczak",
       "birth": "Feb 7, 2004",
       "location": "Manchester, Connecticut",
       "gender": "m"
     },
     {
       "id": "tanner-2005",
-      "name": "Tanner J Jorczak",
+      "name": "Tanner William Jorczak",
       "birth": "May 18, 2005",
       "location": "Manchester, Connecticut",
       "gender": "m"
     },
     {
       "id": "nathan-2010",
-      "name": "Nathan L Jorczak",
+      "name": "Nathan Lawrence Jorczak",
       "birth": "July 27, 2010",
       "location": "South Windsor, Connecticut",
       "gender": "m"
     },
     {
       "id": "sara-2012",
-      "name": "Sara M Jorczak",
+      "name": "Sara Madison Jorczak",
       "birth": "Jan 25, 2012",
       "location": "South Windsor, Connecticut",
       "gender": "f"
     },
     {
-      "id": "philip",
+      "id": "philip-1973",
       "name": "Philip Jorczak",
       "birth": "Apr 19, 1973",
       "location": "Albany, New York",
@@ -271,21 +277,21 @@
       "maidenName": "Breyette"
     },
     {
-      "id": "eric",
+      "id": "eric-1977",
       "name": "Eric Jorczak",
       "birth": "Nov 1977",
       "location": "Orlando, Florida",
       "gender": "m"
     },
     {
-      "id": "kimberly",
+      "id": "kimberly-1975",
       "name": "Kimberley Jorczak",
       "birth": "Dec 30, 1975",
       "location":"Worthington, Massachusetts",
       "gender": "f"
     },
     {
-      "id": "melissa",
+      "id": "melissa-1978",
       "name": "Melissa Jorczak",
       "birth": "Jan 17, 1978",
       "location": "Kirkland, WAshington",
@@ -347,6 +353,7 @@
       "id": "karl-j",
       "name": "Karl Jorczak",
       "location": "Springfield, Massachusetts",
+      "root": true,
       "gender": "m"
     },
     {
@@ -408,7 +415,7 @@
       "gender": "m"
     },
     {
-      "id": "shirley-john",
+      "id": "shirley-1941",
       "name": "Shirley D Jorczak",
       "birth": "May 17, 1941",
       "death": "Feb 7, 2023",
@@ -420,6 +427,7 @@
       "id": "stanley-j-2000",
       "name": "Stanley J Jorczak",
       "death": "Jul 16, 2000",
+      "root": true,
       "gender": "m"
     },
     {
@@ -517,6 +525,7 @@
     {
       "id": "unknown-father-don",
       "name": "Donald's Unknown Father",
+      "root": true,
       "gender": "m"
     },
     {
@@ -524,15 +533,10 @@
       "name": "Phyllis G Jorczak",
       "birth": "Feb 13, 1913",
       "death": "Mar 12, 2003",
+      "root": true,
       "gender": "f"
     },
-    {
-      "id": "joseph-1911",
-      "name": "Joseph S Jorczak",
-      "birth": "Oct 1, 1911",
-      "death": "Oct 9, 1993",
-      "gender": "m"
-    },
+
     {
       "id": "edward-1919",
       "name": "Edward Joseph Jorczak",
@@ -540,6 +544,7 @@
       "death": "Aug 18, 2011",
       "location": "West Palm Beach, Florida",
       "bio": "US military veteran",
+      "root": true,
       "gender": "m"
     },
     {
@@ -574,6 +579,7 @@
       "death": "Mar 28, 2006",
       "location": "Holyoke, Massachusetts",
       "bio": "Retired, Pratt &amp; Whitney Aircraft",
+      "root": true,
       "gender": "m"
     },
     {
@@ -668,7 +674,7 @@
       "gender": "f"
     },
     {
-      "id": "edwin-j",
+      "id": "edwin-1922",
       "name": "Edwin Jorczak",
       "birth": "Sep 9, 1922",
       "death": "1974",
@@ -756,7 +762,7 @@
       "gender": "m"
     },
     {
-      "id": "walter-1940",
+      "id": "walter-1939",
       "name": "Walter P Jorczak",
       "birth": "Sep 11, 1939",
       "death": "Apr 14, 1998",
@@ -764,8 +770,39 @@
       "gender": "m"
     },
     {
-      "id": "unknown-father-edwin",
-      "name": "Edwin's Unknown Father",
+      "id": "john-father",
+      "name": "John Jorczak",
+      "birthplace": "Poland",
+      "death": "Unknown",
+      "location": "Chicopee, Massachusetts",
+      "root": true,
+      "gender": "m"
+    },
+    {
+      "id": "mary-mroz",
+      "name": "Mary Jorczak",
+      "maidenName": "Mroz",
+      "birthplace": "Poland",
+      "location": "Chicopee, Massachusetts",
+      "gender": "f"
+    },
+    {
+      "id": "sophie-kusek",
+      "name": "Sophie Kusek",
+      "maidenName": "Jorczak",
+      "death": "2018",
+      "location": "Chicopee, Massachusetts",
+      "gender": "f"
+    },
+    {
+      "id": "edward-kusek",
+      "name": "Edward Kusek",
+      "gender": "m"
+    },
+    {
+      "id": "unknown-father-adam",
+      "name": "Unknown Father",
+      "root": true,
       "gender": "m"
     },
     {
@@ -820,7 +857,7 @@
     },
     {
       "id": "m1",
-      "spouseA": "joseph",
+      "spouseA": "joseph-1911",
       "spouseB": "phyllis",
       "status": "married"
     },
@@ -839,7 +876,7 @@
     {
       "id": "m4",
       "spouseA": "robert-1950",
-      "spouseB": "jean",
+      "spouseB": "jean-1939",
       "status": "married"
     },
     {
@@ -899,7 +936,7 @@
     {
       "id": "m-john-lv",
       "spouseA": "john-j-lv",
-      "spouseB": "shirley-john",
+      "spouseB": "shirley-1941",
       "status": "married"
     },
     {
@@ -976,7 +1013,7 @@
     },
     {
       "id": "m-edwin-j",
-      "spouseA": "edwin-j",
+      "spouseA": "edwin-1922",
       "spouseB": "eleanore-muldoon",
       "status": "married"
     },
@@ -1006,8 +1043,20 @@
     },
     {
       "id": "m-philip",
-      "spouseA": "philip",
+      "spouseA": "philip-1973",
       "spouseB": "angela-1970",
+      "status": "married"
+    },
+    {
+      "id": "m-john-father",
+      "spouseA": "john-father",
+      "spouseB": "mary-mroz",
+      "status": "married"
+    },
+    {
+      "id": "m-sophie-kusek",
+      "spouseA": "sophie-kusek",
+      "spouseB": "edward-kusek",
       "status": "married"
     }
   ],
@@ -1024,7 +1073,7 @@
     {
       "child": "nancy-1948",
       "parents": [
-        "joseph",
+        "joseph-1911",
         "phyllis"
       ]
     },
@@ -1074,31 +1123,31 @@
       "parents": [ "michael", "colleen" ]
     },
     {
-      "child": "philip",
+      "child": "philip-1973",
       "parents": [
         "robert-1950",
-        "jean"
+        "jean-1939"
       ]
     },
     {
-      "child": "eric",
+      "child": "eric-1977",
       "parents": [
         "robert-1950",
-        "jean"
+        "jean-1939"
       ]
     },
     {
-      "child": "kimberly",
+      "child": "kimberly-1975",
       "parents": [
         "robert-1950",
-        "jean"
+        "jean-1939"
       ]
     },
     {
-      "child": "melissa",
+      "child": "melissa-1978",
       "parents": [
         "robert-1950",
-        "jean"
+        "jean-1939"
       ]
     },
     {
@@ -1156,18 +1205,23 @@
     { "child": "russell-j",     "parents": ["eugene-j", "imagene-p"] },
     { "child": "randal-j",      "parents": ["eugene-j", "imagene-p"] },
     { "child": "robyn-johnston", "parents": ["eugene-j", "imagene-p"] },
-    { "child": "jay-jlv",        "parents": ["john-j-lv", "shirley-john"] },
-    { "child": "laurie-jlv",     "parents": ["john-j-lv", "shirley-john"] },
-    { "child": "marie-jlv",      "parents": ["john-j-lv", "shirley-john"] },
-    { "child": "catherine-1951", "parents": ["edwin-j", "eleanore-muldoon"] },
-    { "child": "john-stephen-j", "parents": ["edwin-j", "eleanore-muldoon"] },
-    { "child": "thomas-alan",    "parents": ["edwin-j", "eleanore-muldoon"] },
-    { "child": "mary-beth-j",    "parents": ["edwin-j", "eleanore-muldoon"] },
+    { "child": "jay-jlv",        "parents": ["john-j-lv", "shirley-1941"] },
+    { "child": "laurie-jlv",     "parents": ["john-j-lv", "shirley-1941"] },
+    { "child": "marie-jlv",      "parents": ["john-j-lv", "shirley-1941"] },
+    { "child": "catherine-1951", "parents": ["edwin-1922", "eleanore-muldoon"] },
+    { "child": "john-stephen-j", "parents": ["edwin-1922", "eleanore-muldoon"] },
+    { "child": "thomas-alan",    "parents": ["edwin-1922", "eleanore-muldoon"] },
+    { "child": "mary-beth-j",    "parents": ["edwin-1922", "eleanore-muldoon"] },
     { "child": "nick-ta",        "parents": ["thomas-alan", "sherry-1953"] },
     { "child": "ed-ta",          "parents": ["thomas-alan", "sherry-1953"] },
-    { "child": "edwin-j",        "parents": ["unknown-father-edwin"] },
-    { "child": "adam-j",         "parents": ["unknown-father-edwin"] },
-    { "child": "harry-j",        "parents": ["unknown-father-edwin"] },
-    { "child": "rudy-j",         "parents": ["unknown-father-edwin"] }
+    { "child": "edwin-1922",        "parents": ["john-father", "mary-mroz"] },
+    { "child": "edward-j",       "parents": ["john-father", "mary-mroz"] },
+    { "child": "john-1915",      "parents": ["john-father", "mary-mroz"] },
+    { "child": "stanley-1930",   "parents": ["john-father", "mary-mroz"] },
+    { "child": "sophie-kusek",   "parents": ["john-father", "mary-mroz"] },
+    { "child": "eugene-j",       "parents": ["john-father", "mary-mroz"] },
+    { "child": "adam-j",         "parents": ["unknown-father-adam"] },
+    { "child": "harry-j",        "parents": ["unknown-father-adam"] },
+    { "child": "rudy-j",         "parents": ["unknown-father-adam"] }
   ]
 }

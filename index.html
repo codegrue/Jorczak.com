@@ -712,6 +712,12 @@
       color: var(--parchment);
       line-height: 1.25;
     }
+    .ftree-card-nickname {
+      font-style: italic;
+      font-weight: 400;
+      color: rgba(201,168,76,0.7);
+      font-size: 0.8rem;
+    }
     .ftree-spouse-card .ftree-card-name {
       color: var(--parchment);
       font-style: italic;
@@ -1364,28 +1370,35 @@
       }
 
       function findRoots() {
-        // Find all people with no known parents
         var childSet = {};
         data.parentage.forEach(function (r) { childSet[r.child] = true; });
         var allRoots = data.people.filter(function (p) { return !childSet[p.id]; });
 
-        // Group them by connected component, then pick one representative per component
-        // (the one with the earliest birth year, falling back to array order)
         var assigned = {};
         var representatives = [];
+
+        // First pass: honour explicit root:true flags
+        allRoots.forEach(function (root) {
+          if (!root.root) return;
+          var connected = getConnectedIds(root.id);
+          allRoots.filter(function (r) { return connected.indexOf(r.id) !== -1; })
+                  .forEach(function (r) { assigned[r.id] = true; });
+          representatives.push(root);
+        });
+
+        // Second pass: auto-detect roots for any remaining unassigned components
         allRoots.forEach(function (root) {
           if (assigned[root.id]) return;
           var connected = getConnectedIds(root.id);
           var componentRoots = allRoots.filter(function (r) { return connected.indexOf(r.id) !== -1; });
           componentRoots.forEach(function (r) { assigned[r.id] = true; });
           var rep = componentRoots.reduce(function (best, r) {
-            var bestYear = best.birth ? parseInt(best.birth.match(/\d{4}/)[0]) : Infinity;
-            var rYear    = r.birth    ? parseInt(r.birth.match(/\d{4}/)[0])    : Infinity;
-            if (rYear !== bestYear) return rYear < bestYear ? r : best;
-            // Tiebreak: prefer the node with more direct children (likely higher generation)
             var rKids    = (childrenMap[r.id]    || []).length;
             var bestKids = (childrenMap[best.id] || []).length;
-            return rKids > bestKids ? r : best;
+            if (rKids !== bestKids) return rKids > bestKids ? r : best;
+            var bestYear = best.birth ? parseInt(best.birth.match(/\d{4}/)[0]) : Infinity;
+            var rYear    = r.birth    ? parseInt(r.birth.match(/\d{4}/)[0])    : Infinity;
+            return rYear < bestYear ? r : best;
           });
           representatives.push(rep);
         });
@@ -1417,7 +1430,6 @@
       function makeCard(p, isSpouse, isUnknown) {
         var lines = [];
         if (p.maidenName) lines.push('<em>n\u00e9e</em>\u00a0' + p.maidenName);
-        if (p.nickname)   lines.push('\u201c' + p.nickname + '\u201d');
         lines.push((p.birth || 'unknown') + ' \u2013 ' + (p.death || 'living'));
         if (!isSpouse && p.birthplace) lines.push('b.\u00a0' + p.birthplace);
         if (!isSpouse && p.location)   lines.push(p.location);
@@ -1434,8 +1446,12 @@
             + ' class="ftree-card-link" onclick="event.stopPropagation()">\u2197 biography</a>'
           : '';
 
+        var displayName = p.nickname
+          ? '<span class="ftree-card-nickname">\u201c' + p.nickname + '\u201d</span>\u00a0' + p.name
+          : p.name;
+
         return '<div class="' + cls + '">'
-          + '<div class="ftree-card-name">' + p.name + '</div>'
+          + '<div class="ftree-card-name">' + displayName + '</div>'
           + (det ? '<div class="ftree-card-detail">' + det + '</div>' : '')
           + lnk
           + '</div>';
@@ -1502,10 +1518,13 @@
           var container = document.getElementById('tree-container');
           container.innerHTML = '';
 
-          // Sort roots by birth year ascending (unknown birth year sorts last)
+          // Sort roots: known birth years ascending; unknown birth with children first (ancestors),
+          // unknown birth with no children last (detached individuals)
           roots.sort(function (a, b) {
-            var ay = a.birth ? (parseInt(yr(a.birth)) || Infinity) : Infinity;
-            var by2 = b.birth ? (parseInt(yr(b.birth)) || Infinity) : Infinity;
+            var aKids = (childrenMap[a.id] || []).length;
+            var bKids = (childrenMap[b.id] || []).length;
+            var ay = a.birth ? (parseInt(yr(a.birth)) || 50000) : (aKids > 0 ? -1 : 50000);
+            var by2 = b.birth ? (parseInt(yr(b.birth)) || 50000) : (bKids > 0 ? -1 : 50000);
             return ay - by2;
           });
 
