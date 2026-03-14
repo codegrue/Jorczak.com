@@ -74,8 +74,8 @@
       --cream:      #faf6ef;
       --crimson:    #8b1a1a;
       --crimson-mid:#a32020;
-      --gold:       #c9a84c;
-      --gold-light: #e0c06a;
+      --gold:       #e0c06a;
+      --gold-light: #f0d484;
       --ink:        #1c1409;
       --ink-soft:   #3a2e22;
       --ink-muted:  #6b5d4e;
@@ -1421,7 +1421,11 @@
           var rep = componentRoots.reduce(function (best, r) {
             var bestYear = best.birth ? parseInt(best.birth.match(/\d{4}/)[0]) : Infinity;
             var rYear    = r.birth    ? parseInt(r.birth.match(/\d{4}/)[0])    : Infinity;
-            return rYear < bestYear ? r : best;
+            if (rYear !== bestYear) return rYear < bestYear ? r : best;
+            // Tiebreak: prefer the node with more direct children (likely higher generation)
+            var rKids    = (childrenMap[r.id]    || []).length;
+            var bestKids = (childrenMap[best.id] || []).length;
+            return rKids > bestKids ? r : best;
           });
           representatives.push(rep);
         });
@@ -1435,8 +1439,9 @@
           var id = queue.shift();
           if (visited[id]) continue;
           visited[id] = true;
-          (spousesMap[id] || []).forEach(function (s) { if (!visited[s.id]) queue.push(s.id); });
-          (childrenMap[id] || []).forEach(function (cid) { if (!visited[cid]) queue.push(cid); });
+          (spousesMap[id]  || []).forEach(function (s)   { if (!visited[s.id]) queue.push(s.id); });
+          (childrenMap[id] || []).forEach(function (cid) { if (!visited[cid])  queue.push(cid); });
+          (parentsMap[id]  || []).forEach(function (pid) { if (!visited[pid])  queue.push(pid); });
         }
         return Object.keys(visited);
       }
@@ -1581,10 +1586,16 @@
             container.appendChild(widget);
             createWidget(nav, root.id);
           });
+          container.classList.add('visible');
         })
-        .catch(function () {
+        .catch(function (err) {
           var el = document.getElementById('tree-container');
-          if (el) el.innerHTML = '<p style="text-align:center;opacity:0.45;font-style:italic;padding:2rem">Family tree data could not be loaded. Please serve this page from a web server.</p>';
+          var msg = err ? (err.message || String(err)) : 'Unknown error';
+          console.error('Family tree error:', err);
+          if (el) {
+            el.innerHTML = '<p style="text-align:center;opacity:0.45;font-style:italic;padding:2rem">Family tree error: ' + msg + '</p>';
+            el.classList.add('visible');
+          }
         });
     }());
   </script>
