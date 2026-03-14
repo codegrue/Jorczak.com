@@ -609,16 +609,19 @@
       padding: 0;
       margin: 0;
     }
+    .ftree-list,
     .ftree-children {
       padding-left: 0.9rem;
       margin-left: 0.95rem;
       border-left: 1px solid rgba(201,168,76,0.18);
     }
 
-    /* Horizontal connector from left-border to each child row */
+    /* Horizontal connector from left-border to each row */
+    .ftree-list > .ftree-node,
     .ftree-children > .ftree-node {
       position: relative;
     }
+    .ftree-list > .ftree-node::before,
     .ftree-children > .ftree-node::before {
       content: '';
       position: absolute;
@@ -729,6 +732,13 @@
       line-height: 1.4;
       margin-top: 0.18rem;
     }
+    .ftree-card-bio {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      line-clamp: 2;
+      overflow: hidden;
+    }
     .ftree-card-link {
       display: inline-block;
       margin-top: 0.28rem;
@@ -742,6 +752,11 @@
     }
     .ftree-card-link:hover { opacity: 1; border-color: var(--gold); }
 
+    /* Spouse group: sep + spouse card as a unit */
+    .ftree-spouse-group {
+      display: contents; /* transparent in the flex row by default */
+    }
+
     /* "m." / "div." separator between cards */
     .ftree-sep {
       font-family: 'EB Garamond', serif;
@@ -750,6 +765,67 @@
       flex-shrink: 0;
       margin-top: 0.65rem;
     }
+
+    /* ── Toolbar (search + expand/collapse) ─────────────────── */
+    .ftree-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1.1rem;
+      flex-wrap: wrap;
+    }
+    .ftree-search-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex: 1;
+      min-width: 160px;
+    }
+    .ftree-search {
+      flex: 1;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid rgba(201,168,76,0.28);
+      border-radius: 3px;
+      color: var(--parchment);
+      padding: 0.32rem 0.6rem;
+      font-family: 'EB Garamond', serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .ftree-search:focus { border-color: var(--gold); }
+    .ftree-search::placeholder { color: rgba(244,237,224,0.28); }
+    .ftree-match-count {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.72rem;
+      font-style: italic;
+      color: rgba(244,237,224,0.38);
+      white-space: nowrap;
+    }
+    .ftree-toolbar-btns { display: flex; gap: 0.4rem; }
+    .ftree-btn {
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.28);
+      border-radius: 3px;
+      color: var(--gold);
+      padding: 0.3rem 0.7rem;
+      font-family: 'EB Garamond', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .ftree-btn:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); }
+
+    /* Search match highlight */
+    .ftree-card.is-match {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.1);
+      box-shadow: 0 0 0 1px rgba(201,168,76,0.25);
+    }
+    .ftree-card.is-match .ftree-card-name { color: var(--gold); }
 
     .tree-disclaimer {
       margin-top: 2.5rem;
@@ -797,6 +873,20 @@
       .etymology-chain { flex-direction: column; align-items: flex-start; }
       .etym-arrow { transform: rotate(90deg); }
       .etym-step { width: 100%; }
+    }
+
+    @media (max-width: 580px) {
+      /* Spouse groups wrap to their own line below the primary card */
+      .ftree-row { flex-wrap: wrap; }
+      .ftree-spouse-group {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        flex-basis: 100%;
+        padding-left: 1.45rem; /* align with primary card edge */
+        margin-top: 0.1rem;
+      }
+      .ftree-spouse-group .ftree-sep { margin-top: 0; }
     }
   </style>
 </head>
@@ -1330,7 +1420,7 @@
         if (p.nickname)   lines.push('\u201c' + p.nickname + '\u201d');
         lines.push((p.birth || 'unknown') + ' \u2013 ' + (p.death || 'living'));
         if (!isSpouse && p.location) lines.push(p.location);
-        if (!isSpouse && p.bio)      lines.push(p.bio);
+        if (!isSpouse && p.bio)      lines.push('<span class="ftree-card-bio">' + p.bio + '</span>');
         var det = lines.join('<br>');
 
         var cls = 'ftree-card'
@@ -1367,7 +1457,7 @@
         var isDeceased = !!person.death;
         var uid = 'ftn-' + personId.replace(/[^a-z0-9]/gi, '-');
 
-        var h = '<li class="ftree-node' + (isDeceased ? ' is-deceased' : '') + '">';
+        var h = '<li class="ftree-node' + (isDeceased ? ' is-deceased' : '') + '" data-pid="' + personId + '">';
         h += '<div class="ftree-row">';
 
         if (hasKids) {
@@ -1384,8 +1474,10 @@
         }).forEach(function (s) {
           var sp = peopleMap[s.id];
           if (!sp) return;
-          h += '<span class="ftree-sep">' + (s.status === 'divorced' ? 'div.' : 'm.') + '</span>';
-          h += makeCard(sp, true, false);
+          h += '<span class="ftree-spouse-group">'
+            + '<span class="ftree-sep">' + (s.status === 'divorced' ? 'div.' : 'm.') + '</span>'
+            + makeCard(sp, true, false)
+            + '</span>';
         });
 
         h += '</div>';
@@ -1434,16 +1526,49 @@
             if (maxW > 0) cards.forEach(function (c) { c.style.minWidth = maxW + 'px'; });
           }
 
-          // Single unified list — all roots at the top level
+          // ── Toolbar ─────────────────────────────────────────────
+          var toolbar = document.createElement('div');
+          toolbar.className = 'ftree-toolbar';
+          toolbar.innerHTML =
+            '<div class="ftree-search-wrap">'
+            + '<input class="ftree-search" type="search" placeholder="Search names\u2026" aria-label="Search family tree">'
+            + '<span class="ftree-match-count"></span>'
+            + '</div>'
+            + '<div class="ftree-toolbar-btns">'
+            + '<button class="ftree-btn" id="ftbtn-expand">Expand All</button>'
+            + '<button class="ftree-btn" id="ftbtn-collapse">Collapse All</button>'
+            + '</div>';
+          container.appendChild(toolbar);
+
+          // ── Tree list ────────────────────────────────────────────
           var list = document.createElement('ul');
           list.className = 'ftree-list';
-          roots.forEach(function (root) {
-            list.innerHTML += buildNodeHTML(root.id);
-          });
+          roots.forEach(function (root) { list.innerHTML += buildNodeHTML(root.id); });
           container.appendChild(list);
           equalizeLevel(list);
 
-          // Single delegated click handler for all [+]/[−] toggles
+          // ── Expand / Collapse All ────────────────────────────────
+          function expandAll() {
+            container.querySelectorAll('.ftree-children').forEach(function (ul) {
+              if (ul.hidden) {
+                ul.hidden = false;
+                var btn = container.querySelector('[data-target="' + ul.id + '"]');
+                if (btn) { btn.setAttribute('aria-expanded', 'true'); btn.textContent = '\u2212'; }
+              }
+            });
+            container.querySelectorAll('.ftree-list, .ftree-children').forEach(equalizeLevel);
+          }
+          function collapseAll() {
+            container.querySelectorAll('.ftree-children').forEach(function (ul) {
+              ul.hidden = true;
+              var btn = container.querySelector('[data-target="' + ul.id + '"]');
+              if (btn) { btn.setAttribute('aria-expanded', 'false'); btn.textContent = '+'; }
+            });
+          }
+          document.getElementById('ftbtn-expand').addEventListener('click', expandAll);
+          document.getElementById('ftbtn-collapse').addEventListener('click', collapseAll);
+
+          // ── Toggle click (expand/collapse individual node) ───────
           container.addEventListener('click', function (e) {
             var btn = e.target.closest ? e.target.closest('.ftree-toggle') : null;
             if (!btn) return;
@@ -1455,6 +1580,55 @@
             btn.textContent = expanded ? '+' : '\u2212';
             childList.hidden = expanded;
             if (!expanded) { equalizeLevel(childList); }
+          });
+
+          // ── Search ───────────────────────────────────────────────
+          function expandPathTo(personId) {
+            var seen = {}, queue = (parentsMap[personId] || []).slice();
+            while (queue.length) {
+              var pid = queue.shift();
+              if (seen[pid]) continue;
+              seen[pid] = true;
+              (parentsMap[pid] || []).forEach(function (gp) { if (!seen[gp]) queue.push(gp); });
+              var uid = 'ftn-' + pid.replace(/[^a-z0-9]/gi, '-');
+              var ul = document.getElementById(uid);
+              if (ul && ul.hidden) {
+                ul.hidden = false;
+                var tbtn = container.querySelector('[data-target="' + uid + '"]');
+                if (tbtn) { tbtn.setAttribute('aria-expanded', 'true'); tbtn.textContent = '\u2212'; }
+                equalizeLevel(ul);
+              }
+            }
+          }
+
+          var searchInput = toolbar.querySelector('.ftree-search');
+          var matchCount  = toolbar.querySelector('.ftree-match-count');
+          searchInput.addEventListener('input', function () {
+            var q = this.value.trim().toLowerCase();
+            container.querySelectorAll('.ftree-card.is-match').forEach(function (el) {
+              el.classList.remove('is-match');
+            });
+            if (!q) { matchCount.textContent = ''; return; }
+
+            var matched = Object.keys(peopleMap).filter(function (id) {
+              return peopleMap[id].name.toLowerCase().indexOf(q) !== -1;
+            });
+            matchCount.textContent = matched.length ? matched.length + ' found' : 'no matches';
+            if (!matched.length) return;
+
+            matched.forEach(function (id) {
+              expandPathTo(id);
+              var li = container.querySelector('[data-pid="' + id + '"]');
+              if (!li) return;
+              var card = null;
+              Array.prototype.forEach.call(li.querySelector('.ftree-row').children, function (c) {
+                if (!card && c.classList.contains('ftree-card') && !c.classList.contains('ftree-spouse-card')) card = c;
+              });
+              if (card) card.classList.add('is-match');
+            });
+
+            var first = container.querySelector('.ftree-card.is-match');
+            if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
           });
 
           container.classList.add('visible');
