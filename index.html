@@ -1419,8 +1419,9 @@
         if (p.maidenName) lines.push('<em>n\u00e9e</em>\u00a0' + p.maidenName);
         if (p.nickname)   lines.push('\u201c' + p.nickname + '\u201d');
         lines.push((p.birth || 'unknown') + ' \u2013 ' + (p.death || 'living'));
-        if (!isSpouse && p.location) lines.push(p.location);
-        if (!isSpouse && p.bio)      lines.push('<span class="ftree-card-bio">' + p.bio + '</span>');
+        if (!isSpouse && p.birthplace) lines.push('b.\u00a0' + p.birthplace);
+        if (!isSpouse && p.location)   lines.push(p.location);
+        if (!isSpouse && p.bio)        lines.push('<span class="ftree-card-bio">' + p.bio + '</span>');
         var det = lines.join('<br>');
 
         var cls = 'ftree-card'

@@ -2,6 +2,7 @@
   "permissions": {
     "allow": [
       "WebSearch",
+      "WebFetch(domain:*)",
       "WebFetch(domain:www.familysearch.org)",
       "WebFetch(domain:namecensus.com)",
       "WebFetch(domain:en.geneanet.org)",
@@ -25,7 +26,12 @@
       "Bash(node -e \":*)",
       "Bash(node validate.js)",
       "Bash(node -e \"var d=require\\(''./family-tree.json''\\); console.log\\(JSON.stringify\\(d.marriages[0]\\)\\); console.log\\(JSON.stringify\\(d.parentage[0]\\)\\);\")",
-      "Bash(node -e \"require\\(''./family-tree.json''\\); console.log\\(''JSON valid''\\)\")"
+      "Bash(node -e \"require\\(''./family-tree.json''\\); console.log\\(''JSON valid''\\)\")",
+      "WebFetch(domain:www.findagrave.com)",
+      "WebFetch(domain:obituaries.goshennews.com)",
+      "WebFetch(domain:www.rrefh.com)",
+      "WebFetch(domain:www.myheritage.com)",
+      "WebFetch(domain:www.instantcheckmate.com)"
     ]
   }
 }

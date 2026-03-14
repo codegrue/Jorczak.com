@@ -137,6 +137,8 @@
     {
       "id": "joseph",
       "name": "Joseph Stanley Jorczak",
+      "birth": "1911",
+      "death": "1993",
       "location": "Trenton, New Jersey",
       "gender": "m"
     },
@@ -150,7 +152,7 @@
     {
       "id": "nancy-1948",
       "name": "Nancy Jorczak",
-      "birth": "1948",
+      "birth": "Mar 4, 1948",
       "location": "Trenton, New Jersey",
       "bio": "History educator, Fulbright Scholar 1981",
       "link": "https://prabook.com/web/nancy.jorczak/1666584",
@@ -170,6 +172,7 @@
       "birth": "Nov 16, 1919",
       "death": "Aug 17, 1992",
       "maidenName": "Cwiertnia",
+      "birthplace": "Bielsko-Biała, Poland",
       "location": "Chicopee, Massachusetts",
       "gender": "f"
     },
@@ -177,6 +180,7 @@
       "id": "raymond-1944",
       "name": "Raymond J Jorczak",
       "birth": "Apr 14, 1944",
+      "birthplace": "Chicopee, Massachusetts",
       "location": "Palm Harbor, Florida",
       "gender": "m"
     },
@@ -192,7 +196,7 @@
       "id": "robert-1950",
       "name": "Robert Jorczak",
       "birth": "Apr 24, 1950",
-      "death": "XXX 00, 0000",
+      "birthplace": "Chicopee, Massachusetts",
       "gender": "m"
     },
     {
@@ -424,6 +428,7 @@
       "birth": "Nov 6, 1934",
       "death": "Aug 17, 2018",
       "maidenName": "Leith",
+      "birthplace": "Norwich, Connecticut",
       "location": "Brooklyn, Connecticut",
       "gender": "f"
     },
@@ -753,8 +758,8 @@
     {
       "id": "walter-1940",
       "name": "Walter P Jorczak",
-      "birth": "1940",
-      "death": "1998",
+      "birth": "Sep 11, 1939",
+      "death": "Apr 14, 1998",
       "location": "Norwich, Connecticut",
       "gender": "m"
     },
