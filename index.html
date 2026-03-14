@@ -1468,6 +1468,72 @@
         return m ? m[0] : str;
       }
 
+      function parseExactDate(str) {
+        if (!str) return null;
+        var match = str.match(/^([A-Za-z]+)\s+(\d{1,2}),\s+(\d{4})$/);
+        if (!match) return null;
+
+        var monthNames = {
+          jan: 0,
+          january: 0,
+          feb: 1,
+          february: 1,
+          mar: 2,
+          march: 2,
+          apr: 3,
+          april: 3,
+          may: 4,
+          jun: 5,
+          june: 5,
+          jul: 6,
+          july: 6,
+          aug: 7,
+          august: 7,
+          sep: 8,
+          sept: 8,
+          september: 8,
+          oct: 9,
+          october: 9,
+          nov: 10,
+          november: 10,
+          dec: 11,
+          december: 11
+        };
+
+        var month = monthNames[match[1].toLowerCase()];
+        if (month === undefined) return null;
+
+        var day = parseInt(match[2], 10);
+        var year = parseInt(match[3], 10);
+        var parsed = new Date(Date.UTC(year, month, day));
+
+        if (parsed.getUTCFullYear() !== year || parsed.getUTCMonth() !== month || parsed.getUTCDate() !== day) {
+          return null;
+        }
+
+        return parsed;
+      }
+
+      function getAgeText(person) {
+        var birthDate = parseExactDate(person.birth);
+        if (!birthDate) return null;
+
+        var endDate = person.death ? parseExactDate(person.death) : (function () {
+          var now = new Date();
+          return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+        }());
+        if (!endDate) return null;
+
+        var age = endDate.getUTCFullYear() - birthDate.getUTCFullYear();
+        var monthDelta = endDate.getUTCMonth() - birthDate.getUTCMonth();
+        var dayDelta = endDate.getUTCDate() - birthDate.getUTCDate();
+
+        if (monthDelta < 0 || (monthDelta === 0 && dayDelta < 0)) age -= 1;
+        if (age < 0) return null;
+
+        return 'Age ' + age;
+      }
+
       // Build a card for one person (primary or spouse)
       function makeCard(p, isSpouse, isUnknown) {
         var lines = [];
@@ -1476,6 +1542,8 @@
                   : p.birth            ? 'b.\u00a0' + p.birth
                   : p.death            ? 'd.\u00a0' + p.death
                   : null;
+        var ageText = getAgeText(p);
+        if (dates && ageText) dates += ' (' + ageText + ')';
         if (dates) lines.push(dates);
         if (!isSpouse && p.birthplace) lines.push('b.\u00a0' + p.birthplace);
         if (!isSpouse && p.location)   lines.push(p.location);
