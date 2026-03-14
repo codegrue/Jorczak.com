@@ -818,6 +818,7 @@
       padding: 0.3rem 0.7rem;
       font-family: 'EB Garamond', serif;
       font-size: 0.68rem;
+      text-decoration: none;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       cursor: pointer;
@@ -1430,7 +1431,11 @@
       function makeCard(p, isSpouse, isUnknown) {
         var lines = [];
         if (p.maidenName) lines.push('<em>n\u00e9e</em>\u00a0' + p.maidenName);
-        lines.push((p.birth || 'unknown') + ' \u2013 ' + (p.death || 'living'));
+        var dates = p.birth && p.death ? p.birth + ' \u2013 ' + p.death
+                  : p.birth            ? 'b.\u00a0' + p.birth
+                  : p.death            ? 'd.\u00a0' + p.death
+                  : null;
+        if (dates) lines.push(dates);
         if (!isSpouse && p.birthplace) lines.push('b.\u00a0' + p.birthplace);
         if (!isSpouse && p.location)   lines.push(p.location);
         if (!isSpouse && p.bio)        lines.push('<span class="ftree-card-bio">' + p.bio + '</span>');
@@ -1557,6 +1562,7 @@
             + '<div class="ftree-toolbar-btns">'
             + '<button class="ftree-btn" id="ftbtn-expand">Expand All</button>'
             + '<button class="ftree-btn" id="ftbtn-collapse">Collapse All</button>'
+            + '<a class="ftree-btn" href="mailto:jeff@jorczak.com?subject=Suggested%20Addition%20to%20Jorczak%20Genealogy">Suggest Additions</a>'
             + '</div>';
           container.appendChild(toolbar);
 

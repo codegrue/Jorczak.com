@@ -524,7 +524,7 @@
     },
     {
       "id": "unknown-father-don",
-      "name": "Donald's Unknown Father",
+      "name": "Unknown Ancester",
       "root": true,
       "gender": "m"
     },
@@ -773,7 +773,6 @@
       "id": "john-father",
       "name": "John Jorczak",
       "birthplace": "Poland",
-      "death": "Unknown",
       "location": "Chicopee, Massachusetts",
       "root": true,
       "gender": "m"
@@ -801,7 +800,7 @@
     },
     {
       "id": "unknown-father-adam",
-      "name": "Unknown Father",
+      "name": "Unknown Ancestor",
       "root": true,
       "gender": "m"
     },
