@@ -49,6 +49,25 @@
       "gender": "f"
     },
     {
+      "id": "david-florence",
+      "name": "David Jorczak",
+      "location": "Florence, Massachusetts",
+      "bio": "Engineer; later lived in Florence, Massachusetts",
+      "gender": "m"
+    },
+    {
+      "id": "elizabeth-florence",
+      "name": "Elizabeth Jorczak",
+      "nickname": "Betty",
+      "location": "Florence, Massachusetts",
+      "gender": "f"
+    },
+    {
+      "id": "kevin-david-j",
+      "name": "Kevin David Jorczak",
+      "gender": "m"
+    },
+    {
       "id": "edward-j",
       "name": "Edward Jorczak",
       "gender": "m"
@@ -918,17 +937,38 @@
       "gender": "f"
     },
     {
-      "id": "eugene-j",
-      "name": "Eugene Jorczak",
+      "id": "walter-anthony-1909",
+      "name": "Walter Anthony Jorczak",
+      "birth": "1909",
+      "death": "1968",
+      "root": true,
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GLN3-6NC",
+      "gender": "m"
+    },
+    {
+      "id": "eleanor-cross-1910",
+      "name": "Eleanor Jorczak",
+      "birth": "1910",
       "death": "1990",
+      "maidenName": "Cross",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GLN3-98D",
+      "gender": "f"
+    },
+    {
+      "id": "eugene-j",
+      "name": "Eugene Edward Jorczak",
+      "birth": "May 29, 1930",
+      "death": "1990",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GLN3-XS6",
       "gender": "m"
     },
     {
       "id": "imagene-p",
       "name": "Imagene Jorczak",
-      "maidenName": "Peterson",
+      "maidenName": "Gillette",
       "death": "Oct 23, 2023",
       "location": "Mesa, Arizona",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GB39-7VC",
       "gender": "f"
     },
     {
@@ -992,12 +1032,14 @@
       "death": "1974",
       "location": "North Judson, Indiana",
       "bio": "WWII veteran; Town &amp; Country Mobile Home Sales",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GHC2-WZ4",
       "gender": "m"
     },
     {
       "id": "eleanore-muldoon",
       "name": "Eleanore J Jorczak",
       "maidenName": "Muldoon",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GDYP-C1S",
       "location": "North Judson, Indiana",
       "gender": "f"
     },
@@ -1068,10 +1110,32 @@
       "gender": "f"
     },
     {
+      "id": "joseph-f-palmer",
+      "name": "Joseph F Jorczak",
+      "birth": "1881",
+      "birthplace": "Austria",
+      "location": "Bondsville, Palmer, Massachusetts",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/KLZD-Q7M",
+      "root": true,
+      "gender": "m"
+    },
+    {
+      "id": "madeline-tarnowiecka",
+      "name": "Madeline Jorczak",
+      "birth": "1885",
+      "maidenName": "Tarnowiecka",
+      "location": "Bondsville, Palmer, Massachusetts",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GTZQ-85P",
+      "gender": "f"
+    },
+    {
       "id": "john-1915",
-      "name": "John J Jorczak",
-      "birth": "1915",
-      "location": "Massachusetts",
+      "name": "John Joseph Jorczak",
+      "birth": "Jan 1, 1915",
+      "birthplace": "Bondsville, Palmer, Hampden, Massachusetts, United States",
+      "death": "Feb 3, 1976",
+      "location": "Bondsville, Palmer, Massachusetts",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GYWP-Z22",
       "gender": "m"
     },
     {
@@ -1191,9 +1255,21 @@
       "status": "married"
     },
     {
+      "id": "m-david-florence",
+      "spouseA": "david-florence",
+      "spouseB": "elizabeth-florence",
+      "status": "married"
+    },
+    {
       "id": "m1",
       "spouseA": "joseph-1911",
       "spouseB": "phyllis",
+      "status": "married"
+    },
+    {
+      "id": "m-joseph-f-palmer",
+      "spouseA": "joseph-f-palmer",
+      "spouseB": "madeline-tarnowiecka",
       "status": "married"
     },
     {
@@ -1383,6 +1459,12 @@
       "status": "married"
     },
     {
+      "id": "m-walter-anthony-1909",
+      "spouseA": "walter-anthony-1909",
+      "spouseB": "eleanor-cross-1910",
+      "status": "married"
+    },
+    {
       "id": "m-eugene-j",
       "spouseA": "eugene-j",
       "spouseB": "imagene-p",
@@ -1566,12 +1648,33 @@
       ]
     },
     {
+      "child": "eugene-j",
+      "parents": [
+        "walter-anthony-1909",
+        "eleanor-cross-1910"
+      ]
+    },
+    {
       "child": "leonard-j-1933",
       "parents": [
         "stanislaw-1895",
         "stella-1907"
       ]
     },
+      {
+        "child": "stanley-1930",
+        "parents": [
+          "stanislaw-1895",
+          "stella-1907"
+        ]
+      },
+      {
+        "child": "david-florence",
+        "parents": [
+          "stanislaw-1895",
+          "stella-1907"
+        ]
+      },
     {
       "child": "victoria-1897",
       "parents": [
@@ -1697,6 +1800,13 @@
       ]
     },
     {
+      "child": "kevin-david-j",
+      "parents": [
+        "david-florence",
+        "elizabeth-florence"
+      ]
+    },
+    {
       "child": "hannah",
       "parents": [ "michael", "colleen" ]
     },
@@ -1800,14 +1910,12 @@
     { "child": "mary-beth-j",    "parents": ["edwin-1922", "eleanore-muldoon"] },
     { "child": "nick-ta",        "parents": ["thomas-alan", "sherry-1953"] },
     { "child": "ed-ta",          "parents": ["thomas-alan", "sherry-1953"] },
-    { "child": "edwin-1922",        "parents": ["john-father", "mary-mroz"] },
     { "child": "edward-j",       "parents": ["john-father", "mary-mroz"] },
-    { "child": "john-1915",      "parents": ["john-father", "mary-mroz"] },
-    { "child": "stanley-1930",   "parents": ["john-father", "mary-mroz"] },
-    { "child": "sophie-kusek",   "parents": ["john-father", "mary-mroz"] },
-    { "child": "eugene-j",       "parents": ["john-father", "mary-mroz"] },
+    { "child": "john-1915",      "parents": ["joseph-f-palmer", "madeline-tarnowiecka"] },
+    { "child": "sophie-kusek",   "parents": ["joseph-f-palmer", "madeline-tarnowiecka"] },
     { "child": "adam-j",         "parents": ["john-j-chicago", "veronica-karmolovich"] },
     { "child": "harry-j",        "parents": ["john-j-chicago", "veronica-karmolovich"] },
+    { "child": "edwin-1922",     "parents": ["john-j-chicago", "veronica-karmolovich"] },
     { "child": "rudy-j",         "parents": ["john-j-chicago", "veronica-karmolovich"] }
   ]
 }

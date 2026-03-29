@@ -684,7 +684,7 @@
       background: rgba(255,255,255,0.55);
       border: 1px solid rgba(26,58,42,0.16);
       border-radius: 4px;
-      padding: 0.42rem 0.75rem 0.42rem 0.9rem;
+      padding: 0.42rem 2rem 1.15rem 0.9rem;
       position: relative;
       transition: background 0.2s, border-color 0.2s;
     }
@@ -768,6 +768,46 @@
       transition: opacity 0.15s;
     }
     .ftree-card-link:hover { opacity: 1; border-color: var(--crimson); }
+    .ftree-card-descendants {
+      position: absolute;
+      right: 0.55rem;
+      bottom: 0.34rem;
+      font-family: 'EB Garamond', serif;
+      font-size: 0.68rem;
+      color: rgba(26,58,42,0.56);
+      font-style: italic;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .ftree-card-extlink {
+      position: absolute;
+      top: 0.38rem;
+      right: 0.5rem;
+      width: 1rem;
+      height: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--crimson);
+      opacity: 0.72;
+      text-decoration: none;
+      border-radius: 999px;
+      transition: opacity 0.15s, background 0.15s;
+    }
+    .ftree-card-extlink:hover {
+      opacity: 1;
+      background: rgba(139,26,26,0.08);
+    }
+    .ftree-card-extlink svg {
+      width: 0.78rem;
+      height: 0.78rem;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      pointer-events: none;
+    }
 
     /* Spouse group: sep + spouse card as a unit */
     .ftree-spouse-group {
@@ -1391,8 +1431,10 @@
     (function () {
       var data;
       var peopleMap = {}, childrenMap = {}, parentsMap = {}, spousesMap = {};
+      var descendantCountCache = {};
 
       function buildMaps() {
+        descendantCountCache = {};
         data.people.forEach(function (p) { peopleMap[p.id] = p; });
         data.parentage.forEach(function (r) {
           parentsMap[r.child] = r.parents;
@@ -1438,9 +1480,7 @@
             var rKids    = (childrenMap[r.id]    || []).length;
             var bestKids = (childrenMap[best.id] || []).length;
             if (rKids !== bestKids) return rKids > bestKids ? r : best;
-            var bestYear = best.birth ? parseInt(best.birth.match(/\d{4}/)[0]) : Infinity;
-            var rYear    = r.birth    ? parseInt(r.birth.match(/\d{4}/)[0])    : Infinity;
-            return rYear < bestYear ? r : best;
+            return comparePeopleByBirth(r, best) < 0 ? r : best;
           });
           representatives.push(rep);
         });
@@ -1514,6 +1554,32 @@
         return parsed;
       }
 
+      function getBirthSortValue(person) {
+        if (!person || !person.birth) return Infinity;
+
+        var exact = parseExactDate(person.birth);
+        if (exact) return exact.getTime();
+
+        var year = parseInt(yr(person.birth), 10);
+        if (!isNaN(year)) return Date.UTC(year, 0, 1);
+
+        return Infinity;
+      }
+
+      function comparePeopleByBirth(a, b) {
+        var aSort = getBirthSortValue(a);
+        var bSort = getBirthSortValue(b);
+        if (aSort !== bSort) return aSort - bSort;
+
+        var aName = a && a.name ? a.name : '';
+        var bName = b && b.name ? b.name : '';
+        if (aName !== bName) return aName.localeCompare(bName);
+
+        var aId = a && a.id ? a.id : '';
+        var bId = b && b.id ? b.id : '';
+        return aId.localeCompare(bId);
+      }
+
       function getAgeText(person) {
         var birthDate = parseExactDate(person.birth);
         if (!birthDate) return null;
@@ -1532,6 +1598,26 @@
         if (age < 0) return null;
 
         return 'Age ' + age;
+      }
+
+      function getDescendantCount(personId) {
+        if (descendantCountCache[personId] !== undefined) {
+          return descendantCountCache[personId];
+        }
+
+        var visited = {};
+
+        function walk(id) {
+          (childrenMap[id] || []).forEach(function (childId) {
+            if (visited[childId]) return;
+            visited[childId] = true;
+            walk(childId);
+          });
+        }
+
+        walk(personId);
+        descendantCountCache[personId] = Object.keys(visited).length;
+        return descendantCountCache[personId];
       }
 
       // Build a card for one person (primary or spouse)
@@ -1560,6 +1646,19 @@
             + ' class="ftree-card-link" onclick="event.stopPropagation()">\u2197 biography</a>'
           : '';
 
+        var fsLink = p.familySearchUrl
+          ? '<a href="' + p.familySearchUrl + '" target="_blank" rel="noopener"'
+            + ' class="ftree-card-extlink" onclick="event.stopPropagation()"'
+            + ' aria-label="Open FamilySearch record for ' + p.name + '"'
+            + ' title="Open FamilySearch record">'
+            + '<svg viewBox="0 0 16 16" aria-hidden="true">'
+            + '<path d="M6 3h7v7"></path>'
+            + '<path d="M13 3L5 11"></path>'
+            + '<path d="M13 9v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h3"></path>'
+            + '</svg>'
+            + '</a>'
+          : '';
+
         var displayName;
         if (p.nickname) {
           var nameParts = p.name.split(' ');
@@ -1572,10 +1671,14 @@
           displayName = p.name;
         }
 
+        var descendantCount = getDescendantCount(p.id);
+
         return '<div class="' + cls + '">'
+          + fsLink
           + '<div class="ftree-card-name">' + displayName + '</div>'
           + (det ? '<div class="ftree-card-detail">' + det + '</div>' : '')
           + lnk
+          + '<div class="ftree-card-descendants" aria-label="' + descendantCount + ' total descendants">(' + descendantCount + ')</div>'
           + '</div>';
       }
 
@@ -1585,10 +1688,7 @@
         if (!person) return '';
 
         var children = (childrenMap[personId] || []).slice().sort(function (a, b) {
-          var ap = peopleMap[a], bp = peopleMap[b];
-          var ay = ap && ap.birth ? (parseInt(yr(ap.birth)) || Infinity) : Infinity;
-          var by2 = bp && bp.birth ? (parseInt(yr(bp.birth)) || Infinity) : Infinity;
-          return ay - by2;
+          return comparePeopleByBirth(peopleMap[a], peopleMap[b]);
         });
         var spouses   = spousesMap[personId] || [];
         var hasKids   = children.length > 0;
@@ -1641,18 +1741,8 @@
           var container = document.getElementById('tree-container');
           container.innerHTML = '';
 
-          // Sort roots: known birth years ascending; unknown birth with children first (ancestors),
-          // unknown birth with no children last; unknown-* placeholder nodes always at bottom
-          roots.sort(function (a, b) {
-            var aUnk = a.id.indexOf('unknown') === 0 ? 1 : 0;
-            var bUnk = b.id.indexOf('unknown') === 0 ? 1 : 0;
-            if (aUnk !== bUnk) return aUnk - bUnk;
-            var aKids = (childrenMap[a.id] || []).length;
-            var bKids = (childrenMap[b.id] || []).length;
-            var ay = a.birth ? (parseInt(yr(a.birth)) || 50000) : (aKids > 0 ? -1 : 50000);
-            var by2 = b.birth ? (parseInt(yr(b.birth)) || 50000) : (bKids > 0 ? -1 : 50000);
-            return ay - by2;
-          });
+          // Sort roots by earliest known birth date; unknown births stay at the bottom.
+          roots.sort(comparePeopleByBirth);
 
           // Equalize primary card widths within one UL level to the widest natural size
           function equalizeLevel(ul) {
