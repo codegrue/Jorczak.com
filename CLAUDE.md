@@ -88,13 +88,10 @@ The tree renderer (`findRoots()`) uses a **two-pass algorithm**:
 | ID | Name | Branch |
 |----|------|--------|
 | `john-father` | John Jorczak | Chicopee MA patriarch — six children: Edward J, John (1915), Edwin (1922), Stanley (1930), Sophie Kusek, Eugene |
-| `symon-1866` | Symon Jorczak | Chicopee MA immigrant patriarch — Symon & Julia Markiewicz → ten known children, including Francis Joseph and Joseph Stanley |
+| `francis-1840` | Francis Jorczak | FamilySearch-backed ancestor of Symon, Joseph (1881), and Anthony (1885) |
 | `edward-1919` | Edward Joseph Jorczak | West Palm Beach FL — Edward & Marie → Edward Jr, Michael |
-| `louis-1916` | Louis J Jorczak | Holyoke MA — Louis & Mary Laptas → Eloise, Linda |
 | `stanley-j-2000` | Stanley J Jorczak | Connecticut — Stanley J & Vivienne → Glen, Jodi, Keith |
-| `unknown-father-don` | Donald's Unknown Father | Indiana cluster — Donald (1939, TX), Alan, Paul, Nancy; donald-1939 → Bruce, Ann, Jay |
-| `unknown-father-adam` | Unknown Father | Illinois/Indiana cluster — Adam (San Pierre IN), Harry, Rudy (both Chicago IL) |
-| `phyllis-1913` | Phyllis G Jorczak | Isolated individual — no known connections in the data |
+| `john-j-chicago` | John Jorczak | Chicago / Indiana cluster — father of Adam (San Pierre IN), Harry (Chicago IL), and Rudy/Rudolph (Chicago IL) |
 
 ---
 
@@ -111,9 +108,14 @@ The tree renderer (`findRoots()`) uses a **two-pass algorithm**:
 ## Provenance Notes
 
 - `karl-j` matches the FamilySearch record for Karl Alfred Jorczak (`L1BQ-NQ9`) as a son of Jan Szymon Jorczak and Genoefa Baranowska.
+- `symon-1866` is now traced one generation higher in FamilySearch: Symon, Joseph (`GLHM-C5D`), and Anthony (`L1BQ-JR6`) appear as children of Francis / Frank Jorczak (`L1BQ-75X`) and Mary Kutron (`L1BQ-9N2`).
 - The `karl-j` descendant line through `sophie-sokol`, `paul-1945`, and `john-j-lv` is retained as locally curated data and is not currently confirmed by that FamilySearch record.
 - The `francis-1904` local branch is retained as curated data: FamilySearch record `GLHD-F3S` currently shows only one child (`Robert F Jorczak`, 1942–2006), while the local tree has `raymond-1944` and `robert-1950` with further descendants.
-- The `joseph-1911` local branch is retained as curated data: FamilySearch record `GL42-YL6` shows spouse Filomena/Phyllis Grotkowski but no children, while the local tree includes `nancy-1948` as their daughter.
+- The `joseph-1911` branch now has FamilySearch record support for children beyond `nancy-1948`: the 1940 and 1950 U.S. censuses show Donald, Alan, Paul, and Nancy as children of Joseph S Jorczak and Phyllis, and Alan David Jorczak's 1963 Virginia marriage certificate names parents Joseph Stanley Jorczak and Phyllis Grotkowski. Family Tree profile `GL42-YL6` still does not currently list those children.
+- The `louis-1916` Holyoke branch can now be attached to Symon's parents through Symon's brother Anthony: Family Tree profile `L1BQ-JR6` lists Louis Joseph Jorczak (`GJFM-XC5`) as a son of Anthony Jorczak and Kartarzyna / Kate Wadas (`GJFM-NNC`), matching the local Louis branch by name, year, spouse surname, and Holyoke death record.
+- The `adam-j` / `harry-j` / `rudy-j` cluster is now linked by both FamilySearch records and Family Tree profiles to parents Jon Jorczak (`GHC2-9WB`) and Veronica Karmilowicz (`GHCK-CB9`). Adam's 1954 Indiana marriage record names parents John Jorczak and Voronica Karmilovitz, Harry's NUMIDENT record names John Jorczak and Veronica Karmolovich, and Rudolph's 1930 census entry places him in the same Chicago household with parents John and Veronica plus siblings Adam and Harry; the Family Tree couple currently carries children Adam (`GHC2-6Y8`), Harry (`GHC2-914`), and Rudolph (`GHC2-33G`) under the same parent pair.
+- The remaining disconnected roots do not yet have enough evidence to tie them to Francis / Mary Kutron. In particular, the Chicopee `john-father` branch still overlaps geographically with the Symon family but does not yet have a verified FamilySearch profile or record set strong enough to attach it above or beside Symon.
+- The `stanley-j-2000` / `vivienne-1934` Connecticut branch now has FamilySearch record support but not a matching Family Tree profile. Stanley is supported by Connecticut death index record `VZPG-G8Y`, which links a spouse stub `V647-ZVP` (`VIVIA`). Vivienne is directly supported by obituary record `61XK-KKDZ`, which names Stanley and children Glen, Keith, and Jodi Gromek; that record appears to misindex her birthplace as `Norwich, Hampden, Massachusetts, United States` even though the local data and earlier census records point to Norwich, Connecticut.
 
 ---
 
