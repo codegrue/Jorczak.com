@@ -142,7 +142,7 @@
       "birth": "Oct 1, 1911",
       "death": "Oct 9, 1993",
       "location": "Trenton, New Jersey",
-      "root": true,
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GL42-YL6",
       "gender": "m"
     },
     {
@@ -150,6 +150,7 @@
       "name": "Phyllis Jorczak",
       "maidenName": "Grotkowski",
       "location": "Trenton, New Jersey",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GLH4-HBN",
       "gender": "f"
     },
     {
@@ -162,24 +163,252 @@
       "gender": "f"
     },
     {
+      "id": "symon-1866",
+      "name": "Symon Jorczak",
+      "birth": "1866",
+      "birthplace": "Austria",
+      "location": "Chicopee, Massachusetts",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/9X2V-T8B",
+      "root": true,
+      "gender": "m"
+    },
+    {
+      "id": "julia-1871",
+      "name": "Julia Jorczak",
+      "birth": "1871",
+      "maidenName": "Markiewicz",
+      "birthplace": "Austria",
+      "location": "Chicopee, Massachusetts",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/KL7K-PJV",
+      "gender": "f"
+    },
+    {
+      "id": "wanda-1891",
+      "name": "Wanda Jorczak",
+      "birth": "1891",
+      "death": "1891",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/KGGG-94H",
+      "gender": "f"
+    },
+    {
+      "id": "jan-szymon-1892",
+      "name": "Jan Szymon Jorczak",
+      "nickname": "John Simon",
+      "birth": "1892",
+      "death": "1945",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/KJGR-XPF",
+      "gender": "m"
+    },
+    {
+      "id": "genoefa-1896",
+      "name": "Genoefa A Jorczak",
+      "nickname": "Genevieve",
+      "birth": "1896",
+      "maidenName": "Baranowska",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GF9W-T3N",
+      "gender": "f"
+    },
+    {
+      "id": "mary-julia-1894",
+      "name": "Mary Julia Jorczak",
+      "birth": "1894",
+      "death": "1967",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/9X2V-T8T",
+      "gender": "f"
+    },
+    {
+      "id": "jan-lichwala-1889",
+      "name": "Jan Lichwala Sr.",
+      "birth": "1889",
+      "death": "1973",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GJS2-VCX",
+      "gender": "m"
+    },
+    {
+      "id": "stanislaw-1895",
+      "name": "Stanislaw Francis Jorczak",
+      "nickname": "Stanley",
+      "birth": "1895",
+      "death": "1966",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/L1BQ-Q32",
+      "gender": "m"
+    },
+    {
+      "id": "victoria-1897",
+      "name": "Victoria L Jorczak",
+      "birth": "1897",
+      "death": "1991",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/9VD3-J4L",
+      "gender": "f"
+    },
+    {
+      "id": "anthony-markey-1897",
+      "name": "Anthony Francis Markey",
+      "birth": "1897",
+      "death": "1948",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GF1B-FZM",
+      "gender": "m"
+    },
+    {
+      "id": "lizzie-1901",
+      "name": "Lizzie Jorczak",
+      "birth": "1901",
+      "death": "1901",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GLHD-GKP",
+      "gender": "f"
+    },
+    {
+      "id": "anna-1902",
+      "name": "Anna Jorczak",
+      "birth": "1902",
+      "death": "1998",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GKTJ-TL8",
+      "gender": "f"
+    },
+    {
+      "id": "stephen-szymanski-1901",
+      "name": "Stephen S Szymanski Sr.",
+      "birth": "1901",
+      "death": "1962",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GKTJ-D14",
+      "gender": "m"
+    },
+    {
       "id": "francis-1904",
       "name": "Francis Joseph Jorczak",
       "nickname": "Frank",
       "birth": "Jul 31, 1904",
       "death": "Dec 4, 1994",
       "location": "Chicopee, Massachusetts",
-      "root": true,
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GLHD-F3S",
+      "gender": "m"
+    },
+    {
+      "id": "helena-1908",
+      "name": "Helena Jorczak",
+      "birth": "1908",
+      "death": "1910",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GLHD-X16",
+      "gender": "f"
+    },
+    {
+      "id": "alfred-1918",
+      "name": "Alfred Stanley Jorczak",
+      "birth": "1918",
+      "death": "1918",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/L1BQ-HQC",
+      "gender": "m"
+    },
+    {
+      "id": "john-stanley-1919",
+      "name": "John Stanley Jorczak",
+      "birth": "1919",
+      "death": "1922",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/L1BQ-7FG",
+      "gender": "m"
+    },
+    {
+      "id": "frank-jan",
+      "name": "Frank Jorczak",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GF9L-ZCT",
+      "gender": "m"
+    },
+    {
+      "id": "stanley-f-jan",
+      "name": "Stanley F Jorczak",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GF9L-KM5",
+      "gender": "m"
+    },
+    {
+      "id": "helen-lichwell-1916",
+      "name": "Helen Genevieve Lichwell",
+      "birth": "1916",
+      "death": "2001",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GJS2-VCN",
+      "gender": "f"
+    },
+    {
+      "id": "julia-lichwell-1919",
+      "name": "Julia C Lichwell",
+      "birth": "1919",
+      "death": "2012",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GJS2-Y8M",
+      "gender": "f"
+    },
+    {
+      "id": "alice-lichwell-1926",
+      "name": "Alice May Lichwell",
+      "birth": "1926",
+      "death": "2008",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GLH8-ZYJ",
+      "gender": "f"
+    },
+    {
+      "id": "john-francis-lichwell-1928",
+      "name": "John Francis Lichwell Jr.",
+      "birth": "1928",
+      "death": "1995",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GLH8-BZ1",
+      "gender": "m"
+    },
+    {
+      "id": "frances-szymanski-1929",
+      "name": "Frances Szymanski",
+      "birth": "1929",
+      "death": "2008",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GKTJ-3KW",
+      "gender": "f"
+    },
+    {
+      "id": "stanley-markey-1928",
+      "name": "Stanley R Markey",
+      "birth": "1928",
+      "death": "1946",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GL4Y-RSX",
+      "gender": "m"
+    },
+    {
+      "id": "edward-markey-1925",
+      "name": "Edward Anthony Markey",
+      "birth": "1925",
+      "death": "2019",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GL4Y-CBP",
+      "gender": "m"
+    },
+    {
+      "id": "anthony-markey-jr-1926",
+      "name": "Anthony Francis Markey Jr",
+      "birth": "1926",
+      "death": "1966",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GL4Y-YHS",
+      "gender": "m"
+    },
+    {
+      "id": "leonard-j-1933",
+      "name": "Leonard J Jorczak",
+      "birth": "1933",
+      "death": "1974",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GLHD-29T",
+      "gender": "m"
+    },
+    {
+      "id": "stephen-szymanski-jr-1937",
+      "name": "Stephen S Szymanski Jr.",
+      "birth": "1937",
+      "death": "2004",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/LBH4-RY6",
       "gender": "m"
     },
     {
       "id": "casimiera-1919",
-      "name": "Casimiera V Jorczak",
+      "name": "Casimiera Victoria Jorczak",
       "nickname": "Cassie",
       "birth": "Nov 16, 1919",
       "death": "Aug 17, 1992",
       "maidenName": "Cwiertnia",
       "birthplace": "Bielsko-Biała, Poland",
       "location": "Chicopee, Massachusetts",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GLH6-QKY",
       "gender": "f"
     },
     {
@@ -354,9 +583,11 @@
     },
     {
       "id": "karl-j",
-      "name": "Karl Jorczak",
+      "name": "Karl Alfred Jorczak",
+      "birth": "1915",
+      "death": "1970",
       "location": "Springfield, Massachusetts",
-      "root": true,
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/L1BQ-NQ9",
       "gender": "m"
     },
     {
@@ -755,6 +986,7 @@
       "death": "Jul 3, 1973",
       "maidenName": "Pacosa",
       "location": "Chicopee, Massachusetts",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GCDK-ZGZ",
       "gender": "f"
     },
     {
@@ -861,6 +1093,42 @@
       "id": "m1",
       "spouseA": "joseph-1911",
       "spouseB": "phyllis",
+      "status": "married"
+    },
+    {
+      "id": "m-jan-szymon",
+      "spouseA": "jan-szymon-1892",
+      "spouseB": "genoefa-1896",
+      "status": "married"
+    },
+    {
+      "id": "m-mary-julia",
+      "spouseA": "jan-lichwala-1889",
+      "spouseB": "mary-julia-1894",
+      "status": "married"
+    },
+    {
+      "id": "m-stanislaw-1895",
+      "spouseA": "stanislaw-1895",
+      "spouseB": "stella-1907",
+      "status": "married"
+    },
+    {
+      "id": "m-victoria-1897",
+      "spouseA": "anthony-markey-1897",
+      "spouseB": "victoria-1897",
+      "status": "married"
+    },
+    {
+      "id": "m-anna-1902",
+      "spouseA": "stephen-szymanski-1901",
+      "spouseB": "anna-1902",
+      "status": "married"
+    },
+    {
+      "id": "m-symon",
+      "spouseA": "symon-1866",
+      "spouseB": "julia-1871",
       "status": "married"
     },
     {
@@ -1073,10 +1341,185 @@
     { "child": "grace-j",       "parents": ["jennifer-martin"]           },
     { "child": "emma-j",        "parents": ["jennifer-martin"]           },
     {
+      "child": "wanda-1891",
+      "parents": [
+        "symon-1866",
+        "julia-1871"
+      ]
+    },
+    {
+      "child": "jan-szymon-1892",
+      "parents": [
+        "symon-1866",
+        "julia-1871"
+      ]
+    },
+    {
+      "child": "karl-j",
+      "parents": [
+        "jan-szymon-1892",
+        "genoefa-1896"
+      ]
+    },
+    {
+      "child": "alfred-1918",
+      "parents": [
+        "jan-szymon-1892",
+        "genoefa-1896"
+      ]
+    },
+    {
+      "child": "john-stanley-1919",
+      "parents": [
+        "jan-szymon-1892",
+        "genoefa-1896"
+      ]
+    },
+    {
+      "child": "frank-jan",
+      "parents": [
+        "jan-szymon-1892",
+        "genoefa-1896"
+      ]
+    },
+    {
+      "child": "stanley-f-jan",
+      "parents": [
+        "jan-szymon-1892",
+        "genoefa-1896"
+      ]
+    },
+    {
+      "child": "mary-julia-1894",
+      "parents": [
+        "symon-1866",
+        "julia-1871"
+      ]
+    },
+    {
+      "child": "helen-lichwell-1916",
+      "parents": [
+        "jan-lichwala-1889",
+        "mary-julia-1894"
+      ]
+    },
+    {
+      "child": "julia-lichwell-1919",
+      "parents": [
+        "jan-lichwala-1889",
+        "mary-julia-1894"
+      ]
+    },
+    {
+      "child": "alice-lichwell-1926",
+      "parents": [
+        "jan-lichwala-1889",
+        "mary-julia-1894"
+      ]
+    },
+    {
+      "child": "john-francis-lichwell-1928",
+      "parents": [
+        "jan-lichwala-1889",
+        "mary-julia-1894"
+      ]
+    },
+    {
+      "child": "stanislaw-1895",
+      "parents": [
+        "symon-1866",
+        "julia-1871"
+      ]
+    },
+    {
+      "child": "leonard-j-1933",
+      "parents": [
+        "stanislaw-1895",
+        "stella-1907"
+      ]
+    },
+    {
+      "child": "victoria-1897",
+      "parents": [
+        "symon-1866",
+        "julia-1871"
+      ]
+    },
+    {
+      "child": "edward-markey-1925",
+      "parents": [
+        "anthony-markey-1897",
+        "victoria-1897"
+      ]
+    },
+    {
+      "child": "anthony-markey-jr-1926",
+      "parents": [
+        "anthony-markey-1897",
+        "victoria-1897"
+      ]
+    },
+    {
+      "child": "stanley-markey-1928",
+      "parents": [
+        "anthony-markey-1897",
+        "victoria-1897"
+      ]
+    },
+    {
+      "child": "lizzie-1901",
+      "parents": [
+        "symon-1866",
+        "julia-1871"
+      ]
+    },
+    {
+      "child": "anna-1902",
+      "parents": [
+        "symon-1866",
+        "julia-1871"
+      ]
+    },
+    {
+      "child": "frances-szymanski-1929",
+      "parents": [
+        "stephen-szymanski-1901",
+        "anna-1902"
+      ]
+    },
+    {
+      "child": "stephen-szymanski-jr-1937",
+      "parents": [
+        "stephen-szymanski-1901",
+        "anna-1902"
+      ]
+    },
+    {
+      "child": "joseph-1911",
+      "parents": [
+        "symon-1866",
+        "julia-1871"
+      ]
+    },
+    {
       "child": "nancy-1948",
       "parents": [
         "joseph-1911",
         "phyllis"
+      ]
+    },
+    {
+      "child": "francis-1904",
+      "parents": [
+        "symon-1866",
+        "julia-1871"
+      ]
+    },
+    {
+      "child": "helena-1908",
+      "parents": [
+        "symon-1866",
+        "julia-1871"
       ]
     },
     {

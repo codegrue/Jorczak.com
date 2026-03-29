@@ -34,6 +34,7 @@ Three top-level arrays:
   "location":   "City, State",         // optional — last known / burial location
   "bio":        "Short description",   // optional — shown truncated to 2 lines; use &amp; for &
   "link":       "https://...",         // optional — opens as "↗ biography" link on the card
+  "familySearchUrl": "https://...",    // optional — source metadata only; not rendered on the card
   "gender":     "m",                   // required — "m" or "f"
   "root":       true                   // optional — mark explicit root of a family branch (see below)
 }
@@ -87,9 +88,7 @@ The tree renderer (`findRoots()`) uses a **two-pass algorithm**:
 | ID | Name | Branch |
 |----|------|--------|
 | `john-father` | John Jorczak | Chicopee MA patriarch — six children: Edward J, John (1915), Edwin (1922), Stanley (1930), Sophie Kusek, Eugene |
-| `francis-1904` | Francis Joseph Jorczak | Chicopee MA — Francis & Casimiera → Raymond, Robert |
-| `joseph-1911` | Joseph Stanley Jorczak | Trenton NJ — Joseph & Phyllis → Nancy |
-| `karl-j` | Karl Jorczak | Springfield MA — Karl & Sophie → Paul (1945), John LV |
+| `symon-1866` | Symon Jorczak | Chicopee MA immigrant patriarch — Symon & Julia Markiewicz → ten known children, including Francis Joseph and Joseph Stanley |
 | `edward-1919` | Edward Joseph Jorczak | West Palm Beach FL — Edward & Marie → Edward Jr, Michael |
 | `louis-1916` | Louis J Jorczak | Holyoke MA — Louis & Mary Laptas → Eloise, Linda |
 | `stanley-j-2000` | Stanley J Jorczak | Connecticut — Stanley J & Vivienne → Glen, Jodi, Keith |
@@ -108,6 +107,13 @@ The tree renderer (`findRoots()`) uses a **two-pass algorithm**:
 - Deceased people get class `is-deceased` (slight dimming).
 - `unknown-*` IDs get `is-unknown` styling (italic, low opacity name).
 - The toolbar has search (highlights + expands path to match) and Expand/Collapse All.
+
+## Provenance Notes
+
+- `karl-j` matches the FamilySearch record for Karl Alfred Jorczak (`L1BQ-NQ9`) as a son of Jan Szymon Jorczak and Genoefa Baranowska.
+- The `karl-j` descendant line through `sophie-sokol`, `paul-1945`, and `john-j-lv` is retained as locally curated data and is not currently confirmed by that FamilySearch record.
+- The `francis-1904` local branch is retained as curated data: FamilySearch record `GLHD-F3S` currently shows only one child (`Robert F Jorczak`, 1942–2006), while the local tree has `raymond-1944` and `robert-1950` with further descendants.
+- The `joseph-1911` local branch is retained as curated data: FamilySearch record `GL42-YL6` shows spouse Filomena/Phyllis Grotkowski but no children, while the local tree includes `nancy-1948` as their daughter.
 
 ---
 
