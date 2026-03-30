@@ -431,6 +431,7 @@
         "birth": "May 5, 1919",
       "birthplace": "Middletown, Hartford, Connecticut, United States",
         "death": "Jan 8, 2012",
+          "location": "Boston, Massachusetts",
       "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GJS2-Y8M",
       "gender": "f"
     },
@@ -505,6 +506,7 @@
         "birth": "Jan 25, 1925",
       "birthplace": "Norwich, New London, Connecticut, United States",
         "death": "Jun 20, 2019",
+          "location": "Portland, Connecticut",
       "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GL4Y-CBP",
       "gender": "m"
     },
@@ -837,6 +839,7 @@
       "id": "donald-1939",
       "name": "Donald Francis Jorczak",
       "birth": "Jun 29, 1939",
+        "birthplace": "Massachusetts, United States",
       "death": "Oct 25, 2016",
       "location": "Montgomery, Texas",
       "bio": "Metallurgical Engineering, RPI; Worthington &amp; Dresser Rand",
@@ -875,18 +878,24 @@
     },
     {
       "id": "alan-j-don",
-      "name": "Alan Jorczak",
+        "name": "Alan David Jorczak",
+        "birth": "Mar 22, 1941",
+        "birthplace": "Massachusetts, United States",
         "familySearchUrl": "https://www.familysearch.org/ark:/61903/1:1:QK9X-MVTT?lang=en",
       "gender": "m"
     },
     {
       "id": "ceil-alan",
-      "name": "Ceil Jorczak",
+        "name": "Cecelia Jorczak",
+        "nickname": "Ceil",
+        "maidenName": "Lang",
       "gender": "f"
     },
     {
       "id": "paul-j-don",
       "name": "Paul Jorczak",
+        "birth": "1944",
+        "birthplace": "New Jersey, United States",
         "familySearchUrl": "https://www.familysearch.org/ark:/61903/1:1:6FSM-7WQX?lang=en",
       "gender": "m"
     },
