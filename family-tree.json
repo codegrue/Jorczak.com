@@ -799,11 +799,24 @@
       "gender": "f"
     },
     {
+      "id": "stanley-a-jorczak",
+      "name": "Stanley A Jorczak",
+      "root": true,
+      "gender": "m"
+    },
+    {
+      "id": "stella-tetreault",
+      "name": "Stella Jorczak",
+      "maidenName": "Tetreault",
+      "gender": "f"
+    },
+    {
       "id": "stanley-j-2000",
       "name": "Stanley J Jorczak",
+      "birth": "Mar 28, 1928",
+      "birthplace": "Versailles, Connecticut, United States",
       "death": "Jul 16, 2000",
       "familySearchUrl": "https://www.familysearch.org/ark:/61903/1:1:VZPG-G8Y?lang=en",
-      "root": true,
       "gender": "m"
     },
     {
@@ -909,10 +922,10 @@
       "id": "edward-1919",
       "name": "Edward Joseph Jorczak",
       "birth": "1919",
+      "birthplace": "Illinois, United States",
       "death": "Aug 18, 2011",
       "location": "West Palm Beach, Florida",
       "bio": "US military veteran",
-      "root": true,
       "gender": "m"
     },
     {
@@ -976,11 +989,30 @@
       "gender": "f"
     },
     {
+      "id": "casimer-1874",
+      "name": "Casimer Jorczak",
+      "birth": "Mar 3, 1874",
+      "birthplace": "Poland",
+      "death": "Jul 12, 1948",
+      "location": "Chicago, Illinois",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GVT9-Q4S",
+      "root": true,
+      "gender": "m"
+    },
+    {
+      "id": "caroline-zielinski-1881",
+      "name": "Caroline Jorczak",
+      "birth": "1881",
+      "birthplace": "Poland",
+      "maidenName": "Zielinski",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GVT9-ZTH",
+      "gender": "f"
+    },
+    {
       "id": "walter-anthony-1909",
       "name": "Walter Anthony Jorczak",
       "birth": "1909",
       "death": "1968",
-      "root": true,
       "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GLN3-6NC",
       "gender": "m"
     },
@@ -1068,7 +1100,7 @@
       "id": "edwin-1922",
       "name": "Edwin Jorczak",
       "birth": "Sep 9, 1922",
-      "death": "1974",
+      "death": "October 17, 1974",
       "location": "North Judson, Indiana",
       "bio": "WWII veteran; Town &amp; Country Mobile Home Sales",
       "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GHC2-WZ4",
@@ -1215,9 +1247,24 @@
       "gender": "m"
     },
     {
-      "id": "john-j-chicago",
-      "name": "John Jorczak",
+      "id": "john-jurczak-parent",
+      "name": "John Jurczak",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GHXW-47V",
       "root": true,
+      "gender": "m"
+    },
+    {
+      "id": "rose-wengrerski",
+      "name": "Rose Jurczak",
+      "maidenName": "Wengrerski",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GHXW-47J",
+      "gender": "f"
+    },
+    {
+      "id": "john-j-chicago",
+      "name": "Jon Jorczak",
+      "birth": "Jun 24, 1877",
+      "death": "Jun 16, 1950",
       "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GHC2-9WB",
       "gender": "m"
     },
@@ -1438,6 +1485,12 @@
       "status": "married"
     },
     {
+      "id": "m-stanley-a-jorczak",
+      "spouseA": "stanley-a-jorczak",
+      "spouseB": "stella-tetreault",
+      "status": "married"
+    },
+    {
       "id": "m-stanley-viv",
       "spouseA": "stanley-j-2000",
       "spouseB": "vivienne-1934",
@@ -1498,6 +1551,12 @@
       "status": "married"
     },
     {
+      "id": "m-casimer-1874",
+      "spouseA": "casimer-1874",
+      "spouseB": "caroline-zielinski-1881",
+      "status": "married"
+    },
+    {
       "id": "m-walter-anthony-1909",
       "spouseA": "walter-anthony-1909",
       "spouseB": "eleanor-cross-1910",
@@ -1555,6 +1614,12 @@
       "id": "m-john-father",
       "spouseA": "john-father",
       "spouseB": "mary-mroz",
+      "status": "married"
+    },
+    {
+      "id": "m-john-jurczak-parent",
+      "spouseA": "john-jurczak-parent",
+      "spouseB": "rose-wengrerski",
       "status": "married"
     },
     {
@@ -1921,6 +1986,7 @@
     { "child": "jennifer-pd",   "parents": ["paul-1945", "lois-soja"] },
     { "child": "paul-jr-j",     "parents": ["paul-1945", "lois-soja"] },
     { "child": "joseph-1981",  "parents": ["paul-1945", "lois-soja"] },
+    { "child": "stanley-j-2000", "parents": ["stanley-a-jorczak", "stella-tetreault"] },
     { "child": "glen-j",        "parents": ["stanley-j-2000", "vivienne-1934"] },
     { "child": "jodi-gromek",   "parents": ["stanley-j-2000", "vivienne-1934"] },
     { "child": "keith-j-viv",   "parents": ["stanley-j-2000", "vivienne-1934"] },
@@ -1930,11 +1996,13 @@
     { "child": "donald-1939",   "parents": ["joseph-1911", "phyllis"] },
     { "child": "alan-j-don",    "parents": ["joseph-1911", "phyllis"] },
     { "child": "paul-j-don",    "parents": ["joseph-1911", "phyllis"] },
+    { "child": "edward-1919",   "parents": ["casimer-1874", "caroline-zielinski-1881"] },
     { "child": "edward-jr-ej",  "parents": ["edward-1919", "marie-ej"] },
     { "child": "michael-ej",    "parents": ["edward-1919", "marie-ej"] },
     { "child": "louis-1916",    "parents": ["anthony-1885", "kate-wadas"] },
     { "child": "eloise-atkinson","parents": ["louis-1916", "mary-laptus"] },
     { "child": "linda-mayuski", "parents": ["louis-1916", "mary-laptus"] },
+    { "child": "walter-anthony-1909", "parents": ["casimer-1874", "caroline-zielinski-1881"] },
     { "child": "rick-1951",     "parents": ["eugene-j", "imagene-p"] },
     { "child": "robert-je",     "parents": ["eugene-j", "imagene-p"] },
     { "child": "russell-j",     "parents": ["eugene-j", "imagene-p"] },
@@ -1952,6 +2020,7 @@
     { "child": "edward-j",       "parents": ["john-father", "mary-mroz"] },
     { "child": "john-1915",      "parents": ["joseph-f-palmer", "madeline-tarnowiecka"] },
     { "child": "sophie-kusek",   "parents": ["joseph-f-palmer", "madeline-tarnowiecka"] },
+    { "child": "john-j-chicago", "parents": ["john-jurczak-parent", "rose-wengrerski"] },
     { "child": "adam-j",         "parents": ["john-j-chicago", "veronica-karmolovich"] },
     { "child": "harry-j",        "parents": ["john-j-chicago", "veronica-karmolovich"] },
     { "child": "edwin-1922",     "parents": ["john-j-chicago", "veronica-karmolovich"] },
