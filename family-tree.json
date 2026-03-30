@@ -1109,7 +1109,10 @@
     {
       "id": "eleanore-muldoon",
       "name": "Eleanore J Jorczak",
+      "birth": "May 31, 1920",
+      "death": "Apr 16, 1984",
       "maidenName": "Muldoon",
+      "birthplace": "Ireland",
       "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GDYP-C1S",
       "location": "North Judson, Indiana",
       "gender": "f"
@@ -1265,36 +1268,98 @@
       "name": "Jon Jorczak",
       "birth": "Jun 24, 1877",
       "death": "Jun 16, 1950",
+      "birthplace": "Poland",
+      "location": "Chicago, Cook, Illinois, United States",
       "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GHC2-9WB",
       "gender": "m"
     },
     {
       "id": "veronica-karmolovich",
       "name": "Veronica Jorczak",
+      "birth": "1885",
+      "death": "1967",
       "maidenName": "Karmolovich",
+      "birthplace": "Warsaw, Warsaw, Poland",
       "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GHCK-CB9",
       "gender": "f"
     },
     {
+      "id": "jean-1907",
+      "name": "Johanna Jorczak",
+      "nickname": "Jean",
+      "birth": "1907",
+      "death": "1976",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GSQQ-M3V",
+      "gender": "f"
+    },
+    {
+      "id": "steven-1908",
+      "name": "Steven Jorczak",
+      "birth": "1908",
+      "death": "1984",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GHC2-MPR",
+      "gender": "m"
+    },
+    {
       "id": "adam-j",
       "name": "Adam Jorczak",
+      "birth": "May 24, 1910",
+      "death": "Oct 28, 1989",
+      "birthplace": "Chicago, Cook, Illinois, United States",
       "location": "San Pierre, Indiana",
-        "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GHC2-6Y8",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GHC2-6Y8",
       "gender": "m"
     },
     {
       "id": "harry-j",
       "name": "Harry Jorczak",
+      "birth": "Feb 24, 1913",
+      "death": "Dec 4, 1990",
+      "birthplace": "Illinois, United States",
       "location": "Chicago, Illinois",
-        "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GHC2-914",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GHC2-914",
       "gender": "m"
+    },
+    {
+      "id": "mildred-1916",
+      "name": "Mildred Jorczak",
+      "birth": "1916",
+      "death": "1975",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GHC2-CS3",
+      "gender": "f"
     },
     {
       "id": "rudy-j",
       "name": "Rudy Jorczak",
+      "birth": "Sep 20, 1919",
+      "death": "Mar 12, 1978",
+      "birthplace": "Illinois, United States",
       "location": "Chicago, Illinois",
-        "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GHC2-33G",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GHC2-33G",
       "gender": "m"
+    },
+    {
+      "id": "gene-didzerakis-1920",
+      "name": "Gene Jorczak",
+      "birth": "1920",
+      "maidenName": "Didzerakis",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GH2F-YM9",
+      "gender": "f"
+    },
+    {
+      "id": "edwin-robert-1946",
+      "name": "Edwin Robert Jorczak",
+      "birth": "1946",
+      "death": "2006",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/PCGN-1GQ",
+      "gender": "m"
+    },
+    {
+      "id": "evelyn-1924",
+      "name": "Evelyn Jorczak",
+      "birth": "1924",
+      "familySearchUrl": "https://www.familysearch.org/en/tree/person/details/GHC2-DYQ",
+      "gender": "f"
     }
   ],
   "marriages": [
@@ -1584,6 +1649,18 @@
       "id": "m-catherine-1951",
       "spouseA": "catherine-1951",
       "spouseB": "dennis-vendl",
+      "status": "married"
+    },
+    {
+      "id": "m-john-j-chicago",
+      "spouseA": "john-j-chicago",
+      "spouseB": "veronica-karmolovich",
+      "status": "married"
+    },
+    {
+      "id": "m-rudy-j",
+      "spouseA": "rudy-j",
+      "spouseB": "gene-didzerakis-1920",
       "status": "married"
     },
     {
@@ -2021,9 +2098,14 @@
     { "child": "john-1915",      "parents": ["joseph-f-palmer", "madeline-tarnowiecka"] },
     { "child": "sophie-kusek",   "parents": ["joseph-f-palmer", "madeline-tarnowiecka"] },
     { "child": "john-j-chicago", "parents": ["john-jurczak-parent", "rose-wengrerski"] },
+    { "child": "jean-1907",      "parents": ["john-j-chicago", "veronica-karmolovich"] },
+    { "child": "steven-1908",    "parents": ["john-j-chicago", "veronica-karmolovich"] },
     { "child": "adam-j",         "parents": ["john-j-chicago", "veronica-karmolovich"] },
     { "child": "harry-j",        "parents": ["john-j-chicago", "veronica-karmolovich"] },
+    { "child": "mildred-1916",   "parents": ["john-j-chicago", "veronica-karmolovich"] },
     { "child": "edwin-1922",     "parents": ["john-j-chicago", "veronica-karmolovich"] },
-    { "child": "rudy-j",         "parents": ["john-j-chicago", "veronica-karmolovich"] }
+    { "child": "rudy-j",         "parents": ["john-j-chicago", "veronica-karmolovich"] },
+    { "child": "evelyn-1924",    "parents": ["john-j-chicago", "veronica-karmolovich"] },
+    { "child": "edwin-robert-1946", "parents": ["rudy-j", "gene-didzerakis-1920"] }
   ]
 }
