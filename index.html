@@ -1872,8 +1872,9 @@
     </footer>
 
     <script>
-      // ── Set year ──────────────────────────────────────────────
-      document.getElementById("year").textContent = new Date().getFullYear();
+      // ── Build-time stamped date (updated via stamp-updated-date.js) ──
+      const BUILD_UPDATED_DATE = "April 2, 2026";
+      document.getElementById("year").textContent = BUILD_UPDATED_DATE;
 
       // ── Scroll reveal ────────────────────────────────────────
       const revealEls = document.querySelectorAll(".reveal");

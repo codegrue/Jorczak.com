@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -e
+
+node stamp-updated-date.js
+
+git add index.html
