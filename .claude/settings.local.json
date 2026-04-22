@@ -1,4 +1,9 @@
 {
+  "sandbox": {
+    "network": {
+      "allowedDomains": ["discord.com"]
+    }
+  },
   "permissions": {
     "allow": [
       "WebSearch",
