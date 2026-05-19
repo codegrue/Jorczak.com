@@ -1,0 +1,1010 @@
+/* ============================================================
+   ANTIQUE ATLAS — parchment, sepia ink, cartouche framing
+   Inspired by 16th-c. Ortelius hand-coloured chart of the
+   Strait of Magellan.
+   ============================================================ */
+
+:root {
+  /* parchment */
+  --paper:        #ecdcb0;   /* primary page surface */
+  --paper-soft:   #f1e4be;   /* slightly lighter — card surfaces */
+  --paper-deep:   #d9c388;   /* darker — recessed surfaces, tables */
+  --paper-edge:   #b89858;   /* browned edges, stains */
+  --paper-stain:  #8a6a30;   /* deep age spots */
+
+  /* sepia ink */
+  --ink:          #2e1d0a;   /* heaviest ink — headings, key numbers */
+  --ink-body:     #4a3217;   /* body copy */
+  --ink-soft:     #6b5230;   /* secondary text */
+  --ink-faded:    #927a52;   /* captions, dim labels */
+  --ink-ghost:    #b8a378;   /* very faint — dividers on light bg */
+
+  /* hand-coloured pigments (from the map) */
+  --jade:         #4a7a6e;   /* faded teal — cartouche frames */
+  --jade-deep:    #2f5e54;
+  --forest:       #4d6638;   /* deep green — accents */
+  --coral:        #a04a30;   /* faded coral red — emphasis */
+  --coral-deep:   #7a2f1d;   /* brick */
+  --gold:         #b8932e;   /* antique gold */
+  --gold-light:   #d4ad42;
+  --indigo:       #4a6480;   /* faded sea blue */
+  --rose:         #a86a72;   /* faded rose */
+  --olive:        #7a7338;   /* olive ink */
+
+  /* line work */
+  --rule:         rgba(46, 29, 10, 0.18);
+  --rule-strong:  rgba(46, 29, 10, 0.34);
+  --rule-faint:   rgba(46, 29, 10, 0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+
+body {
+  background-color: var(--paper);
+  color: var(--ink-body);
+  font-family: 'EB Garamond', 'Playfair Display', Georgia, serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.55;
+  min-height: 100vh;
+  overflow-x: hidden;
+  /* layered parchment — radial warm spots, edge browning, paper grain */
+  background-image:
+    /* paper grain — tiny dot field */
+    radial-gradient(circle at 1px 1px, rgba(110, 80, 30, 0.06) 1px, transparent 1.5px),
+    /* age stain top-left */
+    radial-gradient(ellipse 50% 38% at 12% 18%, rgba(138, 106, 48, 0.20), transparent 70%),
+    /* age stain bottom-right */
+    radial-gradient(ellipse 60% 45% at 88% 88%, rgba(138, 106, 48, 0.22), transparent 70%),
+    /* horizontal fold-line darkening */
+    linear-gradient(180deg, transparent 46%, rgba(110, 80, 30, 0.10) 49%, rgba(110, 80, 30, 0.04) 51%, transparent 54%),
+    /* edge vignette — browned border all around */
+    radial-gradient(ellipse 130% 110% at 50% 50%, transparent 55%, rgba(110, 70, 22, 0.28) 100%);
+  background-size: 6px 6px, auto, auto, auto, auto;
+  background-attachment: fixed;
+}
+
+/* very faint fixed compass-line rhumb pattern across the whole page */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(60deg, transparent 49.7%, rgba(74, 50, 23, 0.06) 49.85%, rgba(74, 50, 23, 0.06) 50.15%, transparent 50.3%),
+    linear-gradient(-60deg, transparent 49.7%, rgba(74, 50, 23, 0.05) 49.85%, rgba(74, 50, 23, 0.05) 50.15%, transparent 50.3%),
+    linear-gradient(0deg, transparent 49.7%, rgba(74, 50, 23, 0.04) 49.85%, rgba(74, 50, 23, 0.04) 50.15%, transparent 50.3%);
+  background-size: 280px 280px, 280px 280px, 280px 280px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+}
+
+.wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 56px 32px 80px;
+}
+
+/* ============================================================
+   HEADER — title cartouche + compass rose
+   ============================================================ */
+
+header {
+  margin-bottom: 36px;
+  padding-bottom: 30px;
+  border-bottom: 1px double var(--rule-strong);
+  position: relative;
+}
+
+.compass {
+  display: inline-block;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--coral-deep);
+  margin-bottom: 14px;
+}
+.compass::before, .compass::after {
+  content: '✦';
+  margin: 0 10px;
+  color: var(--gold);
+  font-style: normal;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(34px, 5.5vw, 60px);
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.02;
+  color: var(--ink);
+  margin-bottom: 14px;
+  letter-spacing: -0.5px;
+  text-shadow: 0 1px 0 rgba(255, 245, 215, 0.5);
+}
+h1 em {
+  font-style: italic;
+  color: var(--coral-deep);
+  font-weight: 700;
+}
+
+.subtitle {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 17px;
+  color: var(--ink-soft);
+  max-width: 740px;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+.spec-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 20px;
+  margin-top: 16px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  letter-spacing: 0.2px;
+}
+.chip::before {
+  content: '◈';
+  color: var(--coral);
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+/* compass rose decorative SVG */
+.compass-rose {
+  position: absolute;
+  top: 6px;
+  right: 0;
+  width: 96px;
+  height: 96px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+@media (max-width: 720px) {
+  .compass-rose { width: 64px; height: 64px; top: -6px; opacity: 0.4; }
+}
+
+/* ============================================================
+   INSURANCE CALLOUT — wax-seal style banner
+   ============================================================ */
+.callout {
+  background:
+    linear-gradient(180deg, rgba(160, 74, 48, 0.10), rgba(184, 147, 46, 0.06)),
+    var(--paper-soft);
+  border: 1px solid var(--coral);
+  border-left: 5px solid var(--coral-deep);
+  border-radius: 4px;
+  padding: 18px 22px;
+  margin-bottom: 28px;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  box-shadow: 0 1px 0 rgba(255, 245, 215, 0.6) inset, 0 2px 12px rgba(110, 70, 22, 0.10);
+}
+.callout-icon {
+  font-size: 30px;
+  flex-shrink: 0;
+  filter: sepia(0.6) saturate(0.8);
+}
+.callout-body { flex: 1; }
+.callout-title {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 17px;
+  color: var(--coral-deep);
+  margin-bottom: 4px;
+  letter-spacing: 0.2px;
+}
+.callout-text {
+  font-family: 'EB Garamond', serif;
+  font-size: 14.5px;
+  color: var(--ink-body);
+  line-height: 1.55;
+}
+.callout-text strong { color: var(--coral-deep); font-weight: 700; }
+
+/* ============================================================
+   SUMMARY TILES — cartouche cards
+   ============================================================ */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 30px;
+}
+.tile {
+  background: var(--paper-soft);
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+  padding: 18px 20px 16px;
+  position: relative;
+  box-shadow: 0 1px 0 rgba(255, 245, 215, 0.6) inset;
+}
+/* corner ornaments — tiny diamond ticks at the corners */
+.tile::before, .tile::after {
+  content: '';
+  position: absolute;
+  width: 8px; height: 8px;
+  border: 1px solid var(--ink-faded);
+  background: var(--paper);
+  transform: rotate(45deg);
+}
+.tile::before { top: -5px; left: -5px; }
+.tile::after  { bottom: -5px; right: -5px; }
+
+.tile.main {
+  background:
+    linear-gradient(180deg, rgba(184, 147, 46, 0.12), transparent 60%),
+    var(--paper-soft);
+  border: 2px solid var(--gold);
+  box-shadow:
+    0 0 0 1px var(--paper-soft) inset,
+    0 0 0 2px var(--gold) inset,
+    0 0 0 3px var(--paper-soft) inset,
+    0 1px 0 rgba(255, 245, 215, 0.6) inset;
+  padding: 22px 22px 18px;
+}
+
+.t-lbl {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  margin-bottom: 8px;
+}
+.t-val {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: clamp(22px, 2.8vw, 32px);
+  line-height: 1;
+  color: var(--ink);
+}
+.t-val.gold { color: var(--coral-deep); }    /* main 3-yr total — most important */
+.t-val.teal { color: var(--jade-deep); }
+.t-val.warn { color: var(--coral); }
+.t-val.pink { color: var(--rose); }
+.t-val.blue { color: var(--indigo); }
+.t-sub {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin-top: 8px;
+}
+
+/* ============================================================
+   TABS — illuminated manuscript ribbon
+   ============================================================ */
+.tabs {
+  display: flex;
+  gap: 0;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+  padding: 3px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  box-shadow: 0 1px 0 rgba(255, 245, 215, 0.5) inset;
+}
+.tab {
+  padding: 11px 20px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+  white-space: nowrap;
+  flex: 1 1 auto;
+  text-align: center;
+}
+.tab:hover {
+  color: var(--ink);
+  background: rgba(255, 245, 215, 0.4);
+}
+.tab.active {
+  background: var(--paper-soft);
+  color: var(--coral-deep);
+  border-color: var(--gold);
+  box-shadow: 0 1px 0 rgba(255, 245, 215, 0.7) inset, 0 1px 4px rgba(110, 70, 22, 0.15);
+}
+
+/* ============================================================
+   YEAR PANEL HEADER
+   ============================================================ */
+.panel { display: none; }
+.panel.active { display: block; animation: fade 0.3s ease-out; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+.year-hdr {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 22px;
+  padding: 20px 24px;
+  background: var(--paper-soft);
+  border: 1px solid var(--rule-strong);
+  border-top: 3px double var(--jade);
+  border-bottom: 3px double var(--jade);
+  border-radius: 2px;
+  position: relative;
+  box-shadow: 0 1px 0 rgba(255, 245, 215, 0.5) inset;
+}
+.year-title {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 26px;
+  color: var(--ink);
+  letter-spacing: 0.3px;
+}
+.year-route {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin-top: 5px;
+  line-height: 1.55;
+  max-width: 820px;
+}
+.year-total {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  text-align: right;
+  white-space: nowrap;
+}
+.year-total .yt-big {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--coral-deep);
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
+}
+
+/* ============================================================
+   MONTH SUBTABS — small ribbon
+   ============================================================ */
+.month-subtabs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding: 5px;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+}
+.mtab {
+  padding: 7px 11px;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.15s, color 0.15s;
+}
+.mtab:hover { background: rgba(255, 245, 215, 0.5); color: var(--ink); }
+.mtab.active {
+  background: var(--paper-soft);
+  color: var(--coral-deep);
+  border-color: var(--gold);
+  font-weight: 700;
+}
+.mtab.tab-home        { border-bottom: 2px solid var(--gold); }
+.mtab.tab-haul        { border-bottom: 2px solid var(--coral); }
+.mtab.tab-passage     { border-bottom: 2px solid var(--jade); }
+.mtab.tab-quarantine  { border-bottom: 2px solid var(--rose); }
+.mtab.tab-celebration { background: rgba(184, 147, 46, 0.12); border-bottom: 2px solid var(--gold-light); }
+.mtab .mtab-flag { font-size: 14px; filter: sepia(0.25); }
+.mtab .mtab-num { font-weight: 700; color: inherit; font-family: 'Playfair Display', serif; font-size: 12px; }
+
+/* ============================================================
+   MONTH PANEL — full cartouche
+   ============================================================ */
+.month-panel {
+  background: var(--paper-soft);
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+  padding: 26px 28px 28px;
+  margin-bottom: 26px;
+  position: relative;
+  box-shadow:
+    0 1px 0 rgba(255, 245, 215, 0.6) inset,
+    0 4px 18px rgba(110, 70, 22, 0.10);
+}
+/* decorative inner double-line frame */
+.month-panel::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--ink-ghost);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.month-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--rule);
+  flex-wrap: wrap;
+  position: relative;
+}
+.month-hero::after {
+  /* hand-drawn rule ornament */
+  content: '✦';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--paper-soft);
+  padding: 0 12px;
+  color: var(--gold);
+  font-size: 14px;
+}
+.month-hero-l { flex: 1 1 480px; }
+.month-mark {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 2.2px;
+  color: var(--ink-faded);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.month-loc {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(24px, 3.4vw, 36px);
+  color: var(--ink);
+  line-height: 1.15;
+  letter-spacing: -0.3px;
+}
+.month-loc .month-flag {
+  margin-right: 14px;
+  font-size: 0.82em;
+  vertical-align: -2px;
+  filter: sepia(0.2);
+}
+.month-region {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
+.month-summary {
+  font-family: 'EB Garamond', serif;
+  font-size: 15px;
+  color: var(--ink-body);
+  margin-top: 14px;
+  line-height: 1.65;
+  max-width: 740px;
+  padding-left: 12px;
+  border-left: 2px solid var(--gold);
+}
+.month-summary::first-letter {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1.5em;
+  color: var(--coral-deep);
+}
+.month-badges { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.badge {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: lowercase;
+  padding: 3px 10px;
+  border-radius: 2px;
+  border: 1px solid;
+  background: var(--paper);
+}
+.badge-home         { color: var(--gold); border-color: var(--gold); }
+.badge-haul         { color: var(--coral-deep); border-color: var(--coral); }
+.badge-passage      { color: var(--jade-deep); border-color: var(--jade); }
+.badge-quarantine   { color: var(--rose); border-color: var(--rose); }
+.badge-celebration  { color: var(--coral-deep); border-color: var(--gold); background: rgba(184, 147, 46, 0.15); }
+
+.month-hero-r {
+  text-align: right;
+  min-width: 190px;
+  padding: 14px 18px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  position: relative;
+}
+.month-hero-r::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid var(--ink-ghost);
+  border-radius: 2px;
+  pointer-events: none;
+}
+.month-total-lbl {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 10.5px;
+  letter-spacing: 2.4px;
+  color: var(--ink-faded);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.month-total {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+.month-total.tier-lo { color: var(--forest); }
+.month-total.tier-md { color: var(--gold); }
+.month-total.tier-hi { color: var(--coral); }
+.month-total.tier-vh { color: var(--coral-deep); }
+.month-range {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin-top: 10px;
+}
+
+/* ============================================================
+   CATEGORY SECTIONS
+   ============================================================ */
+.cats { display: flex; flex-direction: column; gap: 9px; }
+.cat {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+.cat:hover { border-color: var(--rule-strong); }
+.cat.open { background: var(--paper-soft); border-color: var(--ink-faded); }
+
+.cat-head {
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+.cat-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+  border: 1px solid var(--rule);
+  filter: sepia(0.2) saturate(0.85);
+}
+.cat-name {
+  flex: 1;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink);
+  font-weight: 400;
+}
+.cat-count {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-faded);
+  margin-left: 8px;
+}
+.cat-subtotal {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.cat-chev {
+  color: var(--ink-faded);
+  font-size: 11px;
+  transition: transform 0.2s;
+  margin-left: 10px;
+}
+.cat.open .cat-chev { transform: rotate(90deg); }
+.cat-body {
+  display: none;
+  border-top: 1px solid var(--rule);
+  background: rgba(255, 245, 215, 0.4);
+}
+.cat.open .cat-body { display: block; }
+
+/* desaturated, antique-tinted category swatches */
+.ic-blue   { background: rgba(74, 100, 128, 0.18); }
+.ic-green  { background: rgba(77, 102, 56, 0.20); }
+.ic-red    { background: rgba(160, 74, 48, 0.18); }
+.ic-teal   { background: rgba(74, 122, 110, 0.20); }
+.ic-warn   { background: rgba(184, 100, 50, 0.20); }
+.ic-gold   { background: rgba(184, 147, 46, 0.22); }
+.ic-purple { background: rgba(120, 90, 130, 0.20); }
+.ic-sand   { background: rgba(180, 150, 100, 0.22); }
+.ic-pink   { background: rgba(168, 106, 114, 0.20); }
+
+.ct-blue   { color: var(--indigo); }
+.ct-green  { color: var(--forest); }
+.ct-red    { color: var(--coral-deep); }
+.ct-teal   { color: var(--jade-deep); }
+.ct-warn   { color: var(--coral); }
+.ct-gold   { color: var(--gold); }
+.ct-purple { color: #6a5380; }
+.ct-sand   { color: var(--olive); }
+.ct-pink   { color: var(--rose); }
+
+/* ============================================================
+   LINE ITEMS TABLE
+   ============================================================ */
+.items {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'EB Garamond', serif;
+  font-size: 14.5px;
+}
+.items th {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  padding: 12px 16px 9px;
+  text-align: right;
+  border-bottom: 1px solid var(--rule);
+}
+.items th:first-child { text-align: left; }
+.items td {
+  padding: 9px 16px;
+  border-bottom: 1px dotted var(--rule);
+  text-align: right;
+  color: var(--ink-body);
+  vertical-align: top;
+}
+.items tr:last-child td { border-bottom: none; }
+.items td:first-child { text-align: left; color: var(--ink); }
+.items .item-name { color: var(--ink); }
+.items .item-note {
+  display: block;
+  font-size: 12.5px;
+  color: var(--ink-faded);
+  font-style: italic;
+  margin-top: 2px;
+}
+.items .recurring-row td { background: rgba(74, 122, 110, 0.06); }
+.items .recurring-row td:first-child::after {
+  content: 'recurs';
+  display: inline-block;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 9.5px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--jade-deep);
+  margin-left: 10px;
+  padding: 1px 6px;
+  border: 1px solid var(--jade);
+  border-radius: 2px;
+  background: var(--paper);
+  vertical-align: 2px;
+}
+.items .col-lo { color: var(--ink-faded); font-size: 13px; }
+.items .col-mid {
+  color: var(--ink);
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 15px;
+}
+.items .col-hi { color: var(--ink-faded); font-size: 13px; }
+
+/* ============================================================
+   MONTH FOOTER
+   ============================================================ */
+.month-foot {
+  margin-top: 20px;
+  padding: 16px 20px;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule-strong);
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  box-shadow: 0 1px 0 rgba(255, 245, 215, 0.6) inset;
+}
+.foot-l { display: flex; flex-direction: column; }
+.foot-lbl {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 10.5px;
+  letter-spacing: 2.2px;
+  color: var(--ink-faded);
+  text-transform: uppercase;
+}
+.foot-perday {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-body);
+  margin-top: 4px;
+}
+.foot-r { display: flex; gap: 26px; align-items: baseline; }
+.foot-r .ft { display: flex; flex-direction: column; align-items: flex-end; }
+.foot-r .ft-lbl {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 10.5px;
+  letter-spacing: 1.5px;
+  color: var(--ink-faded);
+  text-transform: uppercase;
+}
+.foot-r .ft-val {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.foot-r .ft-val.mid {
+  font-size: 26px;
+  color: var(--coral-deep);
+}
+
+/* ============================================================
+   ROLLUP — sboxes
+   ============================================================ */
+.sbox {
+  background: var(--paper-soft);
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+  padding: 24px 26px;
+  margin-bottom: 22px;
+  overflow-x: auto;
+  position: relative;
+  box-shadow: 0 1px 0 rgba(255, 245, 215, 0.6) inset;
+}
+.stitle {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 16px;
+  padding-bottom: 11px;
+  border-bottom: 1px double var(--rule-strong);
+  letter-spacing: 0.2px;
+}
+.sbox table { width: 100%; border-collapse: collapse; font-family: 'EB Garamond', serif; font-size: 14px; }
+.sbox th {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  padding: 0 14px 11px;
+  text-align: right;
+  border-bottom: 1px solid var(--rule-strong);
+}
+.sbox th:first-child { text-align: left; }
+.sbox td {
+  padding: 10px 14px;
+  border-bottom: 1px dotted var(--rule);
+  text-align: right;
+  color: var(--ink-body);
+}
+.sbox td:first-child {
+  text-align: left;
+  color: var(--ink);
+}
+.sbox tr:last-child td { border-bottom: none; }
+.sbox tr.ttr td {
+  border-top: 2px double var(--rule-strong);
+  color: var(--coral-deep);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 15px;
+  padding-top: 13px;
+}
+.sbox tr.ttr td:first-child { color: var(--coral-deep); }
+.clo { color: var(--forest); }
+.chi { color: var(--coral); }
+.cvh { color: var(--coral-deep); }
+
+/* ============================================================
+   CASH FLOW CHART
+   ============================================================ */
+.cfchart .cf-grid {
+  display: flex;
+  gap: 3px;
+  align-items: flex-end;
+  height: 160px;
+  margin-top: 16px;
+  padding: 12px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+}
+.cf-bar {
+  flex: 1;
+  border-radius: 2px 2px 0 0;
+  min-width: 0;
+  position: relative;
+  cursor: default;
+  transition: opacity 0.15s, filter 0.15s;
+  border-top: 1px solid rgba(46, 29, 10, 0.25);
+}
+.cf-bar:hover { filter: brightness(1.1); }
+.cf-bar:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 2px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+  border: 1px solid var(--gold);
+}
+.cf-labels { display: flex; gap: 3px; margin-top: 8px; padding: 0 12px; }
+.cf-lbl {
+  flex: 1;
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-faded);
+  text-align: center;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.cf-legend { display: flex; gap: 22px; margin-top: 18px; flex-wrap: wrap; }
+.cf-leg-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-body);
+}
+.cf-leg-dot { width: 13px; height: 13px; border-radius: 2px; flex-shrink: 0; border: 1px solid var(--ink-faded); }
+
+/* ============================================================
+   PLANNING NOTES
+   ============================================================ */
+.notes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 14px;
+  margin-bottom: 4px;
+}
+.nc {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--jade);
+  border-radius: 2px;
+  padding: 15px 18px;
+  font-family: 'EB Garamond', serif;
+  font-size: 14px;
+  color: var(--ink-body);
+  line-height: 1.6;
+}
+.nc strong {
+  color: var(--ink);
+  display: block;
+  margin-bottom: 7px;
+  font-size: 15px;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 700;
+}
+.nc.warn { border-left-color: var(--coral); }
+.nc.gold { border-left-color: var(--gold); }
+.nc.red  { border-left-color: var(--coral-deep); background: rgba(160, 74, 48, 0.05); }
+.nc.pink { border-left-color: var(--rose); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  text-align: center;
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 12.5px;
+  color: var(--ink-faded);
+  letter-spacing: 1.2px;
+  margin-top: 48px;
+  padding-top: 22px;
+  border-top: 1px double var(--rule);
+}
+
+/* ============================================================
+   LOADING
+   ============================================================ */
+.loading {
+  padding: 80px 0;
+  text-align: center;
+  color: var(--ink-soft);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 920px) {
+  .tiles { grid-template-columns: repeat(3, 1fr); }
+  .wrapper { padding: 36px 20px 60px; }
+}
+@media (max-width: 600px) {
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .month-total { font-size: 30px; }
+  .wrapper { padding: 28px 14px 50px; }
+  .year-hdr { padding: 16px 18px; }
+  .month-panel { padding: 18px 18px 20px; }
+  .month-panel::before { inset: 4px; }
+}

@@ -1,0 +1,771 @@
+{
+  "meta": {
+    "title": "Jeff & Missy · 36-Month Circumnavigation",
+    "vessel": "40' catamaran · 2015 build",
+    "crew": "2 adults (65 & 56) + 1 dog",
+    "targetDeparture": "2034",
+    "dockageSplit": "30% anchor · 30% mooring · 30% slip · 10% passage",
+    "homeTripsPerYear": 4,
+    "boardingNightsPerTrip": 8,
+    "haulOutsPerYear": 1
+  },
+  "categories": {
+    "marina":   { "name": "Marina & Dockage",            "icon": "⚓",  "color": "blue"   },
+    "prov":     { "name": "Provisioning & Dining",       "icon": "🛒",  "color": "green"  },
+    "health":   { "name": "Health Insurance",            "icon": "🏥",  "color": "red"    },
+    "vessel":   { "name": "Vessel Insurance",            "icon": "🛡️",  "color": "teal"   },
+    "maint":    { "name": "Maintenance & Repairs",       "icon": "🔧",  "color": "warn"   },
+    "fuel":     { "name": "Fuel & Energy",               "icon": "⛽",  "color": "gold"   },
+    "comms":    { "name": "Communications & Nav",        "icon": "📡",  "color": "purple" },
+    "customs":  { "name": "Customs & Port Fees",         "icon": "🛂",  "color": "sand"   },
+    "dog":      { "name": "Dog Expenses",                "icon": "🐾",  "color": "pink"   },
+    "personal": { "name": "Personal & Lifestyle",        "icon": "👤",  "color": "sand"   },
+    "admin":    { "name": "Admin & Banking",             "icon": "📋",  "color": "sand"   },
+    "flights":  { "name": "Flights Home + Boat Watch",   "icon": "✈️",  "color": "gold"   },
+    "haul":     { "name": "Haul-Out & Bottom Work",      "icon": "🏗️",  "color": "warn"   },
+    "buffer":   { "name": "Cape Horn Emergency Buffer",  "icon": "⚠️",  "color": "warn"   },
+    "celeb":    { "name": "Circumnavigation Celebration","icon": "🎉",  "color": "gold"   }
+  },
+  "loHiRanges": {
+    "health":   [0.95, 1.10],
+    "vessel":   [0.90, 1.15],
+    "comms":    [0.85, 1.20],
+    "marina":   [0.75, 1.40],
+    "prov":     [0.80, 1.30],
+    "fuel":     [0.75, 1.40],
+    "customs":  [0.80, 1.30],
+    "maint":    [0.70, 1.50],
+    "dog":      [0.85, 1.25],
+    "personal": [0.75, 1.40],
+    "admin":    [0.90, 1.20],
+    "flights":  [0.80, 1.30],
+    "haul":     [0.85, 1.40],
+    "buffer":   [0.50, 2.00],
+    "celeb":    [0.60, 1.50]
+  },
+  "recurring": [
+    { "cat": "health", "name": "Cigna Global / GeoBlue — Jeff (65)", "note": "Medicare does not cover international", "mid": 917 },
+    { "cat": "health", "name": "International plan — Missy (56)",    "note": "expat / liveaboard policy", "mid": 483 },
+    { "cat": "health", "name": "MEDEVAC evacuation rider",            "note": "MedjetAssist or similar", "mid": 150 },
+    { "cat": "vessel", "name": "Bluewater hull & liability",          "note": "global cruising endorsement", "mid": 300 },
+    { "cat": "comms",  "name": "Starlink Roam + Iridium GO",          "note": "global data + offshore safety", "mid": 175 }
+  ],
+  "notes": [
+    {
+      "tone": "red",
+      "title": "🏥 Age-65 Insurance Cliff",
+      "body": "Medicare does not travel. Shop GeoBlue Xplorer Premier or Cigna Global Platinum 6 months before departure. The age-65 premium is roughly double the age-56 premium — combined coverage runs ~$1,550/month including a MEDEVAC rider, and is the single largest non-haul cost in the budget."
+    },
+    {
+      "tone": "warn",
+      "title": "🐕 NZ + AU Dog Quarantine",
+      "body": "Combined ~$6,700 lands in M20–M21. Start the rabies titer blood draw in Tonga (M16) — Australia requires 180 days minimum between titer and arrival. Skip this and the dog flies home alone, or you skip both countries."
+    },
+    {
+      "tone": "gold",
+      "title": "💡 Year 3 Is The Cheapest",
+      "body": "Sri Lanka, Philippines, India, and the Maldives pull Year 3's monthly average below Years 1 and 2 by ~$400/mo. Plan for the Indian Ocean to be where you rebuild any reserve drawn down by Pacific dockage."
+    },
+    {
+      "tone": "warn",
+      "title": "🏗️ Three Haul-Outs, Three Strategies",
+      "body": "Ushuaia (M10) — cheapest yard, pre-Horn imperative. Cairns / Whitsundays (M21) — expensive but the only safe option before Asia. Richards Bay or Durban (M33) — best quality yards on the route. Avoid hauling in French Polynesia at all costs."
+    },
+    {
+      "tone": "warn",
+      "title": "⚠️ Cape Horn Buffer — Non-Negotiable",
+      "body": "The $2,000 in M11 covers weather-window holds, channel beacon damage, sail repair, or a forced retreat. Skipping this buffer is the single most common rookie planning error for southern-route circumnavigators."
+    },
+    {
+      "tone": "red",
+      "title": "🔴 East Africa Routing",
+      "body": "Never route through the Gulf of Aden. Hug the East African coast south — Kenya, Tanzania, Mozambique — and round at Durban. Time the Cape Town departure for April/May before Southern Ocean winter. The Agulhas Current is fast and rough; wait for your window."
+    },
+    {
+      "tone": "pink",
+      "title": "🐾 Dog Boarding Abroad",
+      "body": "Cruiser Facebook groups are the best resource. Book 2+ weeks ahead. Europe and Japan are easy; SE Asia and East Africa require legwork. South American marinas often have staff who'll watch the dog for cash. Bring health records to every booking."
+    },
+    {
+      "tone": "gold",
+      "title": "📋 $30K Emergency Reserve",
+      "body": "Hold $30,000 entirely outside the monthly operating budget. Three years of bluewater sailing will stress every system multiple times — watermaker, sails, engines, dinghy, electronics. The chance of a major unplanned expense over 36 months is effectively 100%."
+    }
+  ],
+  "months": [
+    {
+      "id": "m01", "year": 1, "num": "M01", "label": "Jun", "calMonth": "June", "yearLabel": "YR1",
+      "flag": "🇪🇸", "location": "Western Mediterranean", "region": "Spain · Balearics · Málaga",
+      "badges": ["home"],
+      "summary": "Departure month. Peak Med season — dockage is expensive but the cruising is unbeatable. First home trip uses up most of the discretionary budget.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina berth", "note": "peak summer — Costa Brava / Balearics", "mid": 2900 },
+        { "cat": "prov",     "name": "Provisioning & dining out", "note": "2× restaurants/week", "mid": 1400 },
+        { "cat": "fuel",     "name": "Diesel & shore power", "note": "Med calms — frequent motoring", "mid": 700 },
+        { "cat": "customs",  "name": "EU entry & marina port fees", "mid": 350 },
+        { "cat": "maint",    "name": "Routine systems maintenance", "mid": 900 },
+        { "cat": "personal", "name": "Excursions, laundry, misc", "mid": 250 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 400 },
+        { "cat": "dog",      "name": "Boarding — 8 nights @ home trip", "mid": 580 },
+        { "cat": "flights",  "name": "Flight — Jeff (round-trip)", "mid": 1100 },
+        { "cat": "flights",  "name": "Flight — Missy (round-trip)", "mid": 1100 },
+        { "cat": "flights",  "name": "Ground transport both ends", "mid": 200 },
+        { "cat": "flights",  "name": "Travel insurance", "mid": 100 },
+        { "cat": "flights",  "name": "Misc home expenses", "mid": 200 },
+        { "cat": "flights",  "name": "Boat watch — 1 week", "mid": 250 }
+      ]
+    },
+    {
+      "id": "m02", "year": 1, "num": "M02", "label": "Jul", "calMonth": "July", "yearLabel": "YR1",
+      "flag": "🇭🇷", "location": "Eastern Mediterranean", "region": "Croatia · Montenegro · Kotor",
+      "badges": [],
+      "summary": "Adriatic coast in high season. Bays and historic harbors. Croatian marina prices ease somewhat compared to Spain.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina + mooring buoys", "note": "Adriatic stern-to", "mid": 2100 },
+        { "cat": "prov",     "name": "Provisioning & dining", "mid": 1250 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 550 },
+        { "cat": "customs",  "name": "Croatia + Montenegro port fees", "mid": 400 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 800 },
+        { "cat": "personal", "name": "Shore excursions — old cities", "mid": 600 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 400 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 }
+      ]
+    },
+    {
+      "id": "m03", "year": 1, "num": "M03", "label": "Aug", "calMonth": "August", "yearLabel": "YR1",
+      "flag": "🇬🇷", "location": "Greece — Ionian & Aegean", "region": "Corfu · Lefkada · Santorini · Rhodes",
+      "badges": [],
+      "summary": "Greek cruising at peak. Stern-to anchoring at islands, archeological day trips. Meltemi winds add fuel costs.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina + stern-to fees", "mid": 2200 },
+        { "cat": "prov",     "name": "Provisioning & dining (tavernas)", "mid": 1350 },
+        { "cat": "fuel",     "name": "Diesel — meltemi tacking", "mid": 550 },
+        { "cat": "customs",  "name": "Greek port police TEPAI fees", "mid": 300 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 800 },
+        { "cat": "personal", "name": "Excursions, historic sites", "mid": 700 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 400 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 }
+      ]
+    },
+    {
+      "id": "m04", "year": 1, "num": "M04", "label": "Sep", "calMonth": "September", "yearLabel": "YR1",
+      "flag": "🇹🇷", "location": "Turkey & East Aegean", "region": "Bodrum · Marmaris · Kos",
+      "badges": ["home"],
+      "summary": "Turkey is the sweet spot of the eastern Med — full-service marinas at half the EU price. Second home trip.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina — Turkish coast", "note": "excellent value", "mid": 1400 },
+        { "cat": "prov",     "name": "Provisioning & dining", "note": "affordable Turkish lira", "mid": 1100 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 500 },
+        { "cat": "customs",  "name": "Turkey transit log + customs", "mid": 400 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 800 },
+        { "cat": "personal", "name": "Excursions — Ephesus, Cappadocia", "mid": 700 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 400 },
+        { "cat": "dog",      "name": "Boarding — 8 nights", "mid": 580 },
+        { "cat": "flights",  "name": "Flight — Jeff (round-trip)", "mid": 1100 },
+        { "cat": "flights",  "name": "Flight — Missy (round-trip)", "mid": 1100 },
+        { "cat": "flights",  "name": "Ground transport", "mid": 200 },
+        { "cat": "flights",  "name": "Travel insurance", "mid": 100 },
+        { "cat": "flights",  "name": "Misc home expenses", "mid": 200 },
+        { "cat": "flights",  "name": "Boat watch — 1 week", "mid": 250 }
+      ]
+    },
+    {
+      "id": "m05", "year": 1, "num": "M05", "label": "Oct", "calMonth": "October", "yearLabel": "YR1",
+      "flag": "🇪🇸", "location": "Gibraltar → Morocco → Canaries", "region": "Atlantic prep · Las Palmas provisioning",
+      "badges": [],
+      "summary": "Reposition west and provision for the Atlantic crossing. Las Palmas is the global pre-crossing waypoint — every cruiser stops here.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina — Las Palmas", "mid": 1200 },
+        { "cat": "prov",     "name": "Bulk offshore provisioning", "note": "3 weeks of stores", "mid": 1300 },
+        { "cat": "fuel",     "name": "Full tanks for Atlantic", "mid": 950 },
+        { "cat": "customs",  "name": "Morocco + Canaries port fees", "mid": 300 },
+        { "cat": "maint",    "name": "Pre-passage maintenance & gear check", "mid": 1500 },
+        { "cat": "personal", "name": "Shore time — Morocco day trip", "mid": 400 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 350 },
+        { "cat": "comms",    "name": "S. Atlantic charts & nav software", "mid": 400 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 }
+      ]
+    },
+    {
+      "id": "m06", "year": 1, "num": "M06", "label": "Nov", "calMonth": "November", "yearLabel": "YR1",
+      "flag": "🌊", "location": "South Atlantic Crossing", "region": "Canaries → Cape Verde → Brazil",
+      "badges": ["passage"],
+      "summary": "The classic trade-wind milk run. ~3,000 nm. Stop in Cape Verde for fuel and fresh produce. Doldrums band requires motoring.",
+      "lines": [
+        { "cat": "marina",   "name": "Cape Verde anchorage & marina", "mid": 700 },
+        { "cat": "prov",     "name": "Underway provisioning", "note": "fresh in Cape Verde, dry stores last", "mid": 600 },
+        { "cat": "fuel",     "name": "Diesel — doldrums motoring", "mid": 700 },
+        { "cat": "customs",  "name": "Cape Verde + Brazil clearance + agent", "mid": 850 },
+        { "cat": "maint",    "name": "Underway maintenance & repairs", "mid": 800 },
+        { "cat": "personal", "name": "Crew comforts, books, downtime", "mid": 200 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 350 },
+        { "cat": "comms",    "name": "Iridium heavy use + weather routing", "mid": 350 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 300 }
+      ]
+    },
+    {
+      "id": "m07", "year": 1, "num": "M07", "label": "Dec", "calMonth": "December", "yearLabel": "YR1",
+      "flag": "🇧🇷", "location": "Brazil — Northeast Coast", "region": "Recife · Salvador · Abrolhos",
+      "badges": ["home"],
+      "summary": "Atlantic landfall. Salvador is the cultural capital. Holiday season — third home trip.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina + anchorage", "mid": 900 },
+        { "cat": "prov",     "name": "Provisioning & dining + holiday meals", "mid": 1450 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 450 },
+        { "cat": "customs",  "name": "Brazil despachante + port fees", "mid": 550 },
+        { "cat": "maint",    "name": "Post-crossing systems check", "mid": 1100 },
+        { "cat": "personal", "name": "Salvador excursions, capoeira, music", "mid": 500 },
+        { "cat": "dog",      "name": "Food, vet, Brazil import cert", "mid": 350 },
+        { "cat": "dog",      "name": "Boarding — 8 nights", "mid": 580 },
+        { "cat": "flights",  "name": "Flight — Jeff (round-trip)", "mid": 1100 },
+        { "cat": "flights",  "name": "Flight — Missy (round-trip)", "mid": 1100 },
+        { "cat": "flights",  "name": "Ground transport", "mid": 200 },
+        { "cat": "flights",  "name": "Travel insurance", "mid": 100 },
+        { "cat": "flights",  "name": "Misc home expenses", "mid": 200 },
+        { "cat": "flights",  "name": "Boat watch — 1 week", "mid": 250 }
+      ]
+    },
+    {
+      "id": "m08", "year": 1, "num": "M08", "label": "Jan", "calMonth": "January", "yearLabel": "YR1",
+      "flag": "🇧🇷", "location": "Brazil — Rio & South", "region": "Ilha Grande · Rio · Florianópolis",
+      "badges": [],
+      "summary": "Rio in summer. Glória marina or Ilha Grande anchorages. Brazilian summer extends through February.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina — Glória or Rio yacht clubs", "mid": 1100 },
+        { "cat": "prov",     "name": "Provisioning & dining", "mid": 1000 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 450 },
+        { "cat": "customs",  "name": "Brazil port fees", "mid": 300 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 900 },
+        { "cat": "personal", "name": "Rio sightseeing, beaches", "mid": 500 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 400 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 250 }
+      ]
+    },
+    {
+      "id": "m09", "year": 1, "num": "M09", "label": "Feb", "calMonth": "February", "yearLabel": "YR1",
+      "flag": "🇺🇾", "location": "Uruguay & N. Argentina", "region": "Punta del Este · Buenos Aires",
+      "badges": [],
+      "summary": "Río de la Plata transit. Buenos Aires is a great urban stop — affordable beef, tango, and steakhouses.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina — Buenos Aires YC", "mid": 900 },
+        { "cat": "prov",     "name": "Provisioning & dining (cheap beef)", "mid": 900 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 450 },
+        { "cat": "customs",  "name": "Uruguay + Argentina clearance", "mid": 450 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 900 },
+        { "cat": "personal", "name": "Tango, steakhouses, city excursions", "mid": 500 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 400 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 }
+      ]
+    },
+    {
+      "id": "m10", "year": 1, "num": "M10", "label": "Mar", "calMonth": "March", "yearLabel": "YR1",
+      "flag": "🇦🇷", "location": "Patagonia — Ushuaia", "region": "Annual haul-out #1 · Cape Horn staging",
+      "badges": ["haul"],
+      "summary": "Haul-out #1 in the southernmost yard on earth. Refit before Drake Passage. Cheapest of the three haul-outs.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina + boatyard slip", "mid": 1500 },
+        { "cat": "prov",     "name": "Drake passage stores", "note": "frozen and dry — 6 weeks", "mid": 800 },
+        { "cat": "fuel",     "name": "Full tanks", "mid": 700 },
+        { "cat": "customs",  "name": "Argentina customs + zarpe", "mid": 400 },
+        { "cat": "maint",    "name": "Cape Horn safety gear & rigging check", "mid": 900 },
+        { "cat": "personal", "name": "Tierra del Fuego excursions", "mid": 300 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 400 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 250 },
+        { "cat": "haul",     "name": "Travel lift — catamaran (wide beam)", "mid": 2000 },
+        { "cat": "haul",     "name": "Bottom paint — 2 hulls × 2 coats", "mid": 2800 },
+        { "cat": "haul",     "name": "Zincs, shaft seals, hull survey", "mid": 700 },
+        { "cat": "haul",     "name": "Yard blocking & storage", "mid": 600 }
+      ]
+    },
+    {
+      "id": "m11", "year": 1, "num": "M11", "label": "Apr", "calMonth": "April", "yearLabel": "YR1",
+      "flag": "🌊", "location": "Cape Horn & Patagonian Channels", "region": "Drake Passage · Chilean fjords",
+      "badges": ["passage", "home"],
+      "summary": "The legendary rounding. Then weeks of channel cruising through one of the world's last great wildernesses. Fourth home trip — long flights.",
+      "lines": [
+        { "cat": "marina",   "name": "Channel anchorages (mostly free)", "mid": 200 },
+        { "cat": "prov",     "name": "Provisioning — channels resupply", "mid": 800 },
+        { "cat": "fuel",     "name": "Diesel — heavy channels motoring", "mid": 1400 },
+        { "cat": "customs",  "name": "Chile zarpe + Armada notifications", "mid": 500 },
+        { "cat": "maint",    "name": "Southern Ocean rigging wear", "mid": 1800 },
+        { "cat": "personal", "name": "Patagonia hiking, glacier views", "mid": 200 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 400 },
+        { "cat": "dog",      "name": "Boarding — 8 nights", "mid": 580 },
+        { "cat": "comms",    "name": "Iridium heavy + weather router service", "mid": 400 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 250 },
+        { "cat": "flights",  "name": "Flight — Jeff (long routing Patagonia)", "mid": 1300 },
+        { "cat": "flights",  "name": "Flight — Missy (long routing)", "mid": 1300 },
+        { "cat": "flights",  "name": "Ground transport (multi-leg)", "mid": 300 },
+        { "cat": "flights",  "name": "Travel insurance", "mid": 100 },
+        { "cat": "flights",  "name": "Misc home expenses", "mid": 200 },
+        { "cat": "flights",  "name": "Boat watch — 1 week", "mid": 250 },
+        { "cat": "buffer",   "name": "Cape Horn emergency reserve", "note": "weather delays · channel repair · sail damage", "mid": 2000 }
+      ]
+    },
+    {
+      "id": "m12", "year": 1, "num": "M12", "label": "May", "calMonth": "May", "yearLabel": "YR1",
+      "flag": "🇨🇱", "location": "Chile North — Puerto Montt to Valparaíso", "region": "Chiloé · Valdivia · Pacific prep",
+      "badges": [],
+      "summary": "Northbound in the Chilean autumn. Provision and stage for the leap across the Pacific to Easter Island.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina — Valparaíso / Puerto Montt", "mid": 900 },
+        { "cat": "prov",     "name": "Provisioning & dining", "mid": 900 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 600 },
+        { "cat": "customs",  "name": "Chile port fees", "mid": 300 },
+        { "cat": "maint",    "name": "Post-Horn maintenance backlog", "mid": 1400 },
+        { "cat": "personal", "name": "Lake district excursions, volcanoes", "mid": 500 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 350 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 }
+      ]
+    },
+    {
+      "id": "m13", "year": 2, "num": "M13", "label": "Jun", "calMonth": "June", "yearLabel": "YR2",
+      "flag": "🗿", "location": "Easter Island (Rapa Nui)", "region": "Valparaíso → Hanga Roa",
+      "badges": [],
+      "summary": "1,600 nm leap to the most remote inhabited island on earth. Anchor off Hanga Roa with the moai in view. Diesel is gold here.",
+      "lines": [
+        { "cat": "marina",   "name": "Anchorage / mooring — Hanga Roa", "mid": 400 },
+        { "cat": "prov",     "name": "Offshore stores (very limited resupply)", "mid": 1200 },
+        { "cat": "fuel",     "name": "Diesel — costly on Easter Is.", "mid": 1000 },
+        { "cat": "customs",  "name": "Chile / Easter Is. clearance + park", "mid": 550 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 900 },
+        { "cat": "personal", "name": "Moai tours, dive sites", "mid": 700 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 350 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 }
+      ]
+    },
+    {
+      "id": "m14", "year": 2, "num": "M14", "label": "Jul", "calMonth": "July", "yearLabel": "YR2",
+      "flag": "🇵🇫", "location": "Marquesas — French Polynesia", "region": "Nuku Hiva · Hiva Oa · Fatu Hiva",
+      "badges": ["home"],
+      "summary": "Landfall at Hiva Oa is one of cruising's great moments. FP imposes a cruising bond. Fifth home trip via Tahiti.",
+      "lines": [
+        { "cat": "marina",   "name": "Anchorage + mooring fees", "mid": 900 },
+        { "cat": "prov",     "name": "Provisioning & dining (FP premium)", "mid": 1500 },
+        { "cat": "fuel",     "name": "Diesel (FP premium pricing)", "mid": 1000 },
+        { "cat": "customs",  "name": "FP cruising bond + customs", "mid": 750 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 900 },
+        { "cat": "personal", "name": "Marquesas hikes, petroglyphs", "mid": 500 },
+        { "cat": "dog",      "name": "Food, vet, FP import inspection", "mid": 400 },
+        { "cat": "dog",      "name": "Boarding — 8 nights", "mid": 580 },
+        { "cat": "flights",  "name": "Flight — Jeff (via Tahiti)", "mid": 1300 },
+        { "cat": "flights",  "name": "Flight — Missy (via Tahiti)", "mid": 1300 },
+        { "cat": "flights",  "name": "Ground transport", "mid": 200 },
+        { "cat": "flights",  "name": "Travel insurance", "mid": 100 },
+        { "cat": "flights",  "name": "Misc home expenses", "mid": 200 },
+        { "cat": "flights",  "name": "Boat watch — 1 week", "mid": 250 }
+      ]
+    },
+    {
+      "id": "m15", "year": 2, "num": "M15", "label": "Aug", "calMonth": "August", "yearLabel": "YR2",
+      "flag": "🇵🇫", "location": "Society Islands", "region": "Bora Bora · Moorea · Huahine · Raiatea",
+      "badges": [],
+      "summary": "Postcard French Polynesia. Mooring fields in Bora Bora are mandatory and expensive. Diving and snorkeling at world-class sites.",
+      "lines": [
+        { "cat": "marina",   "name": "Mooring — Society Islands (mandatory)", "mid": 1300 },
+        { "cat": "prov",     "name": "Provisioning & dining (FP)", "mid": 1500 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 900 },
+        { "cat": "customs",  "name": "FP port fees", "mid": 300 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 800 },
+        { "cat": "personal", "name": "Diving, snorkeling, atoll excursions", "mid": 700 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 400 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 }
+      ]
+    },
+    {
+      "id": "m16", "year": 2, "num": "M16", "label": "Sep", "calMonth": "September", "yearLabel": "YR2",
+      "flag": "🇨🇰", "location": "Cook Islands → Tonga", "region": "Rarotonga · Ha'apai · Vava'u",
+      "badges": [],
+      "summary": "Tonga whale season. CRITICAL: draw rabies titer blood here for NZ/AU quarantine in M20–M21.",
+      "lines": [
+        { "cat": "marina",   "name": "Mooring + anchorage", "mid": 800 },
+        { "cat": "prov",     "name": "Provisioning & dining", "mid": 1100 },
+        { "cat": "fuel",     "name": "Diesel (Tonga prices high)", "mid": 1000 },
+        { "cat": "customs",  "name": "Cook Is. + Tonga clearance", "mid": 550 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 800 },
+        { "cat": "personal", "name": "Whale swims, village visits", "mid": 600 },
+        { "cat": "dog",      "name": "Food, vet, rabies titer draw", "note": "180-day lead time for AU entry", "mid": 550 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 }
+      ]
+    },
+    {
+      "id": "m17", "year": 2, "num": "M17", "label": "Oct", "calMonth": "October", "yearLabel": "YR2",
+      "flag": "🇼🇸", "location": "Samoa & American Samoa", "region": "Apia · Pago Pago · Niue",
+      "badges": ["home"],
+      "summary": "Pago Pago is the cheap-fuel waypoint of the South Pacific. Sixth home trip via Hawai'i.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina + mooring", "mid": 800 },
+        { "cat": "prov",     "name": "Provisioning & dining", "mid": 1000 },
+        { "cat": "fuel",     "name": "Diesel — Pago Pago bargain", "mid": 700 },
+        { "cat": "customs",  "name": "Samoa + Am. Samoa + Niue clearance", "mid": 400 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 800 },
+        { "cat": "personal", "name": "Niue cave snorkeling, hikes", "mid": 400 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 350 },
+        { "cat": "dog",      "name": "Boarding — 8 nights", "mid": 580 },
+        { "cat": "flights",  "name": "Flight — Jeff (via Honolulu)", "mid": 1200 },
+        { "cat": "flights",  "name": "Flight — Missy (via Honolulu)", "mid": 1200 },
+        { "cat": "flights",  "name": "Ground transport", "mid": 200 },
+        { "cat": "flights",  "name": "Travel insurance", "mid": 100 },
+        { "cat": "flights",  "name": "Misc home expenses", "mid": 200 },
+        { "cat": "flights",  "name": "Boat watch — 1 week", "mid": 280 }
+      ]
+    },
+    {
+      "id": "m18", "year": 2, "num": "M18", "label": "Nov", "calMonth": "November", "yearLabel": "YR2",
+      "flag": "🇫🇯", "location": "Fiji — Yasawa & Lau Groups", "region": "Savusavu · Suva · Beqa lagoon",
+      "badges": [],
+      "summary": "Fiji has the South Pacific's best diving. Yasawas and Lau group are remote and pristine. Sevusevu kava ceremonies at every village.",
+      "lines": [
+        { "cat": "marina",   "name": "Mooring + anchorage", "mid": 900 },
+        { "cat": "prov",     "name": "Provisioning & dining", "mid": 1100 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 650 },
+        { "cat": "customs",  "name": "Fiji customs + cruising permit", "mid": 650 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 800 },
+        { "cat": "personal", "name": "Diving, village sevusevu (kava)", "mid": 750 },
+        { "cat": "dog",      "name": "Food, vet, Fiji import (strict)", "mid": 400 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 }
+      ]
+    },
+    {
+      "id": "m19", "year": 2, "num": "M19", "label": "Dec", "calMonth": "December", "yearLabel": "YR2",
+      "flag": "🇻🇺", "location": "Vanuatu", "region": "Port Vila · Espiritu Santo · Tanna",
+      "badges": [],
+      "summary": "Tanna's active Mount Yasur volcano — sail up at sunset, watch lava bombs at the rim. Holiday season aboard.",
+      "lines": [
+        { "cat": "marina",   "name": "Mooring + anchorage", "mid": 600 },
+        { "cat": "prov",     "name": "Provisioning, dining, holiday meals", "mid": 1450 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 600 },
+        { "cat": "customs",  "name": "Vanuatu clearance + cruising permit", "mid": 450 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 800 },
+        { "cat": "personal", "name": "Yasur volcano, WWII diving", "mid": 600 },
+        { "cat": "dog",      "name": "Food, vet, Vanuatu cert", "mid": 300 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 }
+      ]
+    },
+    {
+      "id": "m20", "year": 2, "num": "M20", "label": "Jan", "calMonth": "January", "yearLabel": "YR2",
+      "flag": "🇳🇿", "location": "New Zealand — Bay of Islands", "region": "Whangarei · Auckland · Marlborough",
+      "badges": ["home", "quarantine"],
+      "summary": "Strict biosecurity. Dog enters 10-day quarantine. Seventh home trip via Auckland. NZ marina rates are first-world.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina — Whangarei / Auckland", "mid": 2300 },
+        { "cat": "prov",     "name": "Provisioning & dining (NZ pricey)", "mid": 1600 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 700 },
+        { "cat": "customs",  "name": "NZ biosecurity + customs", "mid": 400 },
+        { "cat": "maint",    "name": "NZ quality boatwork — long list", "mid": 1200 },
+        { "cat": "personal", "name": "South Island excursions", "mid": 500 },
+        { "cat": "dog",      "name": "NZ quarantine — 10 days facility", "mid": 3200 },
+        { "cat": "dog",      "name": "Titer paperwork + USDA cert", "mid": 800 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 300 },
+        { "cat": "dog",      "name": "Boarding — 8 nights (post-quarantine)", "mid": 580 },
+        { "cat": "flights",  "name": "Flight — Jeff (Auckland routing)", "mid": 1300 },
+        { "cat": "flights",  "name": "Flight — Missy (Auckland routing)", "mid": 1300 },
+        { "cat": "flights",  "name": "Ground transport", "mid": 200 },
+        { "cat": "flights",  "name": "Travel insurance", "mid": 100 },
+        { "cat": "flights",  "name": "Misc home expenses", "mid": 200 },
+        { "cat": "flights",  "name": "Boat watch — 1 week", "mid": 300 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 250 }
+      ]
+    },
+    {
+      "id": "m21", "year": 2, "num": "M21", "label": "Feb", "calMonth": "February", "yearLabel": "YR2",
+      "flag": "🇦🇺", "location": "Australia — Cairns / Whitsundays", "region": "GBR · Airlie Beach · Haul-out #2",
+      "badges": ["haul", "quarantine"],
+      "summary": "Haul-out #2 in Cairns. Dog enters 10-day AU quarantine. Most expensive single month of the entire trip.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina — Cairns / Coral Sea", "mid": 2000 },
+        { "cat": "prov",     "name": "Provisioning & dining (AU pricey)", "mid": 1400 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 700 },
+        { "cat": "customs",  "name": "AU biosecurity + GBR marine permits", "mid": 800 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 700 },
+        { "cat": "personal", "name": "GBR diving, Daintree rainforest", "mid": 500 },
+        { "cat": "dog",      "name": "AU quarantine — 10 days facility", "mid": 3500 },
+        { "cat": "dog",      "name": "AU import permit + vet entry", "mid": 600 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 300 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 },
+        { "cat": "haul",     "name": "Travel lift — catamaran", "mid": 2300 },
+        { "cat": "haul",     "name": "Bottom paint — 2 hulls × 2 coats", "mid": 3200 },
+        { "cat": "haul",     "name": "Zincs, seals, osmosis check", "mid": 800 }
+      ]
+    },
+    {
+      "id": "m22", "year": 2, "num": "M22", "label": "Mar", "calMonth": "March", "yearLabel": "YR2",
+      "flag": "🇦🇺", "location": "Australia — Darwin & Kimberley", "region": "Torres Strait · Darwin · Indonesia prep",
+      "badges": [],
+      "summary": "Sail across the top of Australia via Torres Strait. Darwin is the staging port for Indonesia. Kakadu day trip from Darwin.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina — Darwin", "mid": 1600 },
+        { "cat": "prov",     "name": "Provisioning & dining", "mid": 1400 },
+        { "cat": "fuel",     "name": "Full tanks for Indonesia", "mid": 800 },
+        { "cat": "customs",  "name": "AU port fees + Indonesia CAIT prep", "mid": 500 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 1200 },
+        { "cat": "personal", "name": "Kakadu, Litchfield NP excursions", "mid": 600 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 400 },
+        { "cat": "comms",    "name": "SE Asia charts & nav software", "mid": 400 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 }
+      ]
+    },
+    {
+      "id": "m23", "year": 2, "num": "M23", "label": "Apr", "calMonth": "April", "yearLabel": "YR2",
+      "flag": "🇮🇩", "location": "Indonesia — Komodo & Bali", "region": "Darwin → Lombok → Komodo → Bali",
+      "badges": [],
+      "summary": "Indonesia is fantastic value. Komodo dragons, Bali culture. CAIT permit gets you 3 months.",
+      "lines": [
+        { "cat": "marina",   "name": "Anchorage + marina (cheap)", "mid": 600 },
+        { "cat": "prov",     "name": "Provisioning & dining (affordable)", "mid": 850 },
+        { "cat": "fuel",     "name": "Diesel (reasonable)", "mid": 500 },
+        { "cat": "customs",  "name": "Indonesia CAIT permit + clearance", "mid": 700 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 750 },
+        { "cat": "personal", "name": "Komodo NP, Bali culture & temples", "mid": 750 },
+        { "cat": "dog",      "name": "Food, vet, Indonesia import cert", "mid": 350 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 }
+      ]
+    },
+    {
+      "id": "m24", "year": 2, "num": "M24", "label": "May", "calMonth": "May", "yearLabel": "YR2",
+      "flag": "🇮🇩", "location": "Indonesia — Java & Raja Ampat", "region": "Surabaya · Banda Sea · Raja Ampat",
+      "badges": ["home"],
+      "summary": "Raja Ampat — the global epicenter of marine biodiversity. Eighth home trip via Jakarta or Bali.",
+      "lines": [
+        { "cat": "marina",   "name": "Anchorage + dockage", "mid": 600 },
+        { "cat": "prov",     "name": "Provisioning & dining", "mid": 850 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 600 },
+        { "cat": "customs",  "name": "Indonesia port fees + Raja Ampat permit", "mid": 700 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 750 },
+        { "cat": "personal", "name": "Raja Ampat diving (world-class)", "mid": 800 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 350 },
+        { "cat": "dog",      "name": "Boarding — 8 nights", "mid": 580 },
+        { "cat": "flights",  "name": "Flight — Jeff (via Jakarta)", "mid": 1100 },
+        { "cat": "flights",  "name": "Flight — Missy (via Jakarta)", "mid": 1100 },
+        { "cat": "flights",  "name": "Ground transport", "mid": 200 },
+        { "cat": "flights",  "name": "Travel insurance", "mid": 100 },
+        { "cat": "flights",  "name": "Misc home expenses", "mid": 200 },
+        { "cat": "flights",  "name": "Boat watch — 1 week", "mid": 280 }
+      ]
+    },
+    {
+      "id": "m25", "year": 3, "num": "M25", "label": "Jun", "calMonth": "June", "yearLabel": "YR3",
+      "flag": "🇵🇭", "location": "Philippines — Palawan", "region": "El Nido · Coron · Puerto Princesa",
+      "badges": [],
+      "summary": "Palawan limestone karsts and turquoise water. Cheapest cruising of the entire trip starts here.",
+      "lines": [
+        { "cat": "marina",   "name": "Anchorage + dockage", "mid": 600 },
+        { "cat": "prov",     "name": "Provisioning & dining (very affordable)", "mid": 850 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 550 },
+        { "cat": "customs",  "name": "Philippines clearance + cruising permit", "mid": 450 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 750 },
+        { "cat": "personal", "name": "El Nido island hopping, Coron wrecks", "mid": 700 },
+        { "cat": "dog",      "name": "Food, vet, Philippines cert", "mid": 300 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 }
+      ]
+    },
+    {
+      "id": "m26", "year": 3, "num": "M26", "label": "Jul", "calMonth": "July", "yearLabel": "YR3",
+      "flag": "🇵🇭", "location": "Philippines → Taiwan", "region": "Manila · Boracay · Kaohsiung transit",
+      "badges": ["home"],
+      "summary": "Transit north to Taiwan staging for Japan. Ninth home trip via Manila or Taipei.",
+      "lines": [
+        { "cat": "marina",   "name": "Dockage + marina", "mid": 800 },
+        { "cat": "prov",     "name": "Provisioning & dining", "mid": 950 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 600 },
+        { "cat": "customs",  "name": "Philippines exit + Taiwan entry", "mid": 500 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 800 },
+        { "cat": "personal", "name": "Manila, Boracay, Kaohsiung night markets", "mid": 600 },
+        { "cat": "dog",      "name": "Food, vet, Taiwan cert", "mid": 400 },
+        { "cat": "dog",      "name": "Boarding — 8 nights", "mid": 580 },
+        { "cat": "flights",  "name": "Flight — Jeff (Asia routing)", "mid": 1300 },
+        { "cat": "flights",  "name": "Flight — Missy (Asia routing)", "mid": 1300 },
+        { "cat": "flights",  "name": "Ground transport", "mid": 200 },
+        { "cat": "flights",  "name": "Travel insurance", "mid": 100 },
+        { "cat": "flights",  "name": "Misc home expenses", "mid": 200 },
+        { "cat": "flights",  "name": "Boat watch — 1 week", "mid": 280 }
+      ]
+    },
+    {
+      "id": "m27", "year": 3, "num": "M27", "label": "Aug", "calMonth": "August", "yearLabel": "YR3",
+      "flag": "🇯🇵", "location": "Japan — Okinawa & Kyushu", "region": "Ryukyu Islands · Nagasaki · Fukuoka",
+      "badges": [],
+      "summary": "Cruise the Ryukyu chain north into Kyushu. Japanese cruising culture is extremely welcoming. Diesel and marinas pricier than Asia.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina — Japan", "mid": 1700 },
+        { "cat": "prov",     "name": "Provisioning & dining (Japan mid-high)", "mid": 1300 },
+        { "cat": "fuel",     "name": "Diesel (Japan expensive)", "mid": 850 },
+        { "cat": "customs",  "name": "Japan port fees + customs", "mid": 600 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 800 },
+        { "cat": "personal", "name": "Nagasaki, Hiroshima, Kyushu hot springs", "mid": 700 },
+        { "cat": "dog",      "name": "Food, vet, Japan import cert + titer", "mid": 500 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 250 }
+      ]
+    },
+    {
+      "id": "m28", "year": 3, "num": "M28", "label": "Sep", "calMonth": "September", "yearLabel": "YR3",
+      "flag": "🇯🇵", "location": "Japan — Inland Sea & Tokyo", "region": "Osaka · Kobe · Yokohama departure",
+      "badges": ["home"],
+      "summary": "Seto Inland Sea is a hidden gem. Final position in Tokyo Bay before the long leap to Sri Lanka. Tenth home trip.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina — Tokyo Bay", "mid": 1900 },
+        { "cat": "prov",     "name": "Offshore stores for Indian Ocean", "mid": 1100 },
+        { "cat": "fuel",     "name": "Full tanks", "mid": 950 },
+        { "cat": "customs",  "name": "Japan port fees", "mid": 400 },
+        { "cat": "maint",    "name": "Pre-passage maintenance + spares", "mid": 1400 },
+        { "cat": "personal", "name": "Tokyo, Kyoto temples, bullet trains", "mid": 700 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 400 },
+        { "cat": "dog",      "name": "Boarding — 8 nights", "mid": 580 },
+        { "cat": "flights",  "name": "Flight — Jeff (Tokyo nonstop)", "mid": 1200 },
+        { "cat": "flights",  "name": "Flight — Missy (Tokyo nonstop)", "mid": 1200 },
+        { "cat": "flights",  "name": "Ground transport", "mid": 200 },
+        { "cat": "flights",  "name": "Travel insurance", "mid": 100 },
+        { "cat": "flights",  "name": "Misc home expenses", "mid": 200 },
+        { "cat": "flights",  "name": "Boat watch — 1 week", "mid": 300 }
+      ]
+    },
+    {
+      "id": "m29", "year": 3, "num": "M29", "label": "Oct", "calMonth": "October", "yearLabel": "YR3",
+      "flag": "🇱🇰", "location": "Sri Lanka", "region": "Galle · Trincomalee · Colombo",
+      "badges": [],
+      "summary": "Galle fort marina is the iconic Indian Ocean waypoint. Cheapest month of the entire trip — provisioning and dining are pennies.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina — Galle fort", "mid": 600 },
+        { "cat": "prov",     "name": "Provisioning & dining (very cheap)", "mid": 750 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 500 },
+        { "cat": "customs",  "name": "Sri Lanka clearance + cruising permit", "mid": 450 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 750 },
+        { "cat": "personal", "name": "Temples, tea country, safaris", "mid": 700 },
+        { "cat": "dog",      "name": "Food, vet, Sri Lanka cert", "mid": 300 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 }
+      ]
+    },
+    {
+      "id": "m30", "year": 3, "num": "M30", "label": "Nov", "calMonth": "November", "yearLabel": "YR3",
+      "flag": "🇲🇻", "location": "Maldives", "region": "Malé atolls · Addu · Indian Ocean",
+      "badges": [],
+      "summary": "Atoll cruising in the Indian Ocean. Cruising permit covers the whole archipelago. Diving and snorkeling everywhere.",
+      "lines": [
+        { "cat": "marina",   "name": "Anchorage + mooring", "mid": 700 },
+        { "cat": "prov",     "name": "Provisioning & dining", "mid": 900 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 500 },
+        { "cat": "customs",  "name": "Maldives clearance + cruising permit", "mid": 500 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 750 },
+        { "cat": "personal", "name": "Diving, snorkeling, atoll hopping", "mid": 900 },
+        { "cat": "dog",      "name": "Food, vet, Maldives cert", "mid": 300 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 }
+      ]
+    },
+    {
+      "id": "m31", "year": 3, "num": "M31", "label": "Dec", "calMonth": "December", "yearLabel": "YR3",
+      "flag": "🇮🇳", "location": "India — Goa & Kerala", "region": "Panaji · Kochi · Arabian Sea",
+      "badges": ["home"],
+      "summary": "India customs are notoriously complex — hire an agent. Backwaters of Kerala. Eleventh home trip via Mumbai or Delhi. Holiday season.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina — Goa / Kochi", "mid": 700 },
+        { "cat": "prov",     "name": "Provisioning, dining, holiday meals", "mid": 1200 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 500 },
+        { "cat": "customs",  "name": "India customs (complex — use agent)", "mid": 700 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 800 },
+        { "cat": "personal", "name": "Kerala backwaters, Goa, ayurveda", "mid": 700 },
+        { "cat": "dog",      "name": "Food, vet, India cert", "mid": 350 },
+        { "cat": "dog",      "name": "Boarding — 8 nights", "mid": 580 },
+        { "cat": "flights",  "name": "Flight — Jeff (India routing)", "mid": 1500 },
+        { "cat": "flights",  "name": "Flight — Missy (India routing)", "mid": 1500 },
+        { "cat": "flights",  "name": "Ground transport", "mid": 200 },
+        { "cat": "flights",  "name": "Travel insurance", "mid": 100 },
+        { "cat": "flights",  "name": "Misc home expenses", "mid": 200 },
+        { "cat": "flights",  "name": "Boat watch — 1 week", "mid": 280 }
+      ]
+    },
+    {
+      "id": "m32", "year": 3, "num": "M32", "label": "Jan", "calMonth": "January", "yearLabel": "YR3",
+      "flag": "🇸🇨", "location": "Seychelles", "region": "Mahé · Praslin · La Digue",
+      "badges": [],
+      "summary": "Granite islands, giant tortoises, and crystalline anchorages. The transition zone between Indian Ocean and East Africa.",
+      "lines": [
+        { "cat": "marina",   "name": "Anchorage + marina", "mid": 900 },
+        { "cat": "prov",     "name": "Provisioning & dining", "mid": 950 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 600 },
+        { "cat": "customs",  "name": "Seychelles clearance + cruising permit", "mid": 450 },
+        { "cat": "maint",    "name": "Routine maintenance", "mid": 900 },
+        { "cat": "personal", "name": "Diving, beaches, Vallée de Mai", "mid": 800 },
+        { "cat": "dog",      "name": "Food, vet, Seychelles cert", "mid": 300 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 }
+      ]
+    },
+    {
+      "id": "m33", "year": 3, "num": "M33", "label": "Feb", "calMonth": "February", "yearLabel": "YR3",
+      "flag": "🇰🇪", "location": "East Africa — Kenya to South Africa", "region": "Mombasa · Dar es Salaam · Richards Bay haul-out #3",
+      "badges": ["haul"],
+      "summary": "Sail down the East African coast — Kenya, Tanzania, Mozambique — and haul in Richards Bay or Durban. Best yards of the trip. Hug the coast; the Agulhas Current is fierce.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina — Mombasa / Dar / Richards Bay", "mid": 900 },
+        { "cat": "prov",     "name": "Provisioning & dining (variable)", "mid": 950 },
+        { "cat": "fuel",     "name": "Diesel — long coastal legs", "mid": 950 },
+        { "cat": "customs",  "name": "Kenya + Tanzania + Mozambique + SA", "mid": 800 },
+        { "cat": "maint",    "name": "Pre-haul prep + spares purchase", "mid": 900 },
+        { "cat": "personal", "name": "Safari day trip, Stone Town tour", "mid": 600 },
+        { "cat": "dog",      "name": "Food, vet, multi-country certs", "mid": 500 },
+        { "cat": "comms",    "name": "Offshore security awareness service", "mid": 200 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 200 },
+        { "cat": "haul",     "name": "Travel lift — Richards Bay yard", "mid": 2000 },
+        { "cat": "haul",     "name": "Bottom paint — 2 hulls × 2 coats", "mid": 2800 },
+        { "cat": "haul",     "name": "Zincs, seals, final systems survey", "mid": 700 }
+      ]
+    },
+    {
+      "id": "m34", "year": 3, "num": "M34", "label": "Mar", "calMonth": "March", "yearLabel": "YR3",
+      "flag": "🇿🇦", "location": "South Africa — Cape Town", "region": "Royal Cape YC · V&A Waterfront · Cape of Good Hope",
+      "badges": ["home"],
+      "summary": "Cape Town is the great waypoint of the southern circuit. Provision for the final ocean leg. Twelfth home trip — longest routing of the year.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina — Royal Cape YC / V&A", "mid": 1600 },
+        { "cat": "prov",     "name": "Provisioning & dining (good value)", "mid": 1200 },
+        { "cat": "fuel",     "name": "Full tanks for S. Atlantic", "mid": 1000 },
+        { "cat": "customs",  "name": "South Africa clearance + port fees", "mid": 400 },
+        { "cat": "maint",    "name": "Pre-Atlantic final prep", "mid": 1500 },
+        { "cat": "personal", "name": "Winelands, Cape Peninsula, Robben Island", "mid": 800 },
+        { "cat": "dog",      "name": "Food, vet, grooming", "mid": 300 },
+        { "cat": "dog",      "name": "Boarding — 8 nights", "mid": 580 },
+        { "cat": "flights",  "name": "Flight — Jeff (Cape Town routing)", "mid": 1700 },
+        { "cat": "flights",  "name": "Flight — Missy (Cape Town routing)", "mid": 1700 },
+        { "cat": "flights",  "name": "Ground transport", "mid": 200 },
+        { "cat": "flights",  "name": "Travel insurance", "mid": 100 },
+        { "cat": "flights",  "name": "Misc home expenses", "mid": 200 },
+        { "cat": "flights",  "name": "Boat watch — 1 week", "mid": 300 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 250 }
+      ]
+    },
+    {
+      "id": "m35", "year": 3, "num": "M35", "label": "Apr", "calMonth": "April", "yearLabel": "YR3",
+      "flag": "🌊", "location": "St. Helena → Ascension → Brazil", "region": "South Atlantic trade-wind crossing",
+      "badges": ["passage"],
+      "summary": "The closing ocean. Hop St. Helena and Ascension for fuel and a swim. Trade winds carry you back toward South America.",
+      "lines": [
+        { "cat": "marina",   "name": "St. Helena + Ascension anchorage fees", "mid": 700 },
+        { "cat": "prov",     "name": "Offshore passage stores", "mid": 1200 },
+        { "cat": "fuel",     "name": "Diesel — passage + island top-ups", "mid": 900 },
+        { "cat": "customs",  "name": "St. Helena + Ascension + Brazil clearance", "mid": 600 },
+        { "cat": "maint",    "name": "Underway maintenance & repairs", "mid": 1000 },
+        { "cat": "personal", "name": "Jamestown, Ascension turtle beaches", "mid": 300 },
+        { "cat": "dog",      "name": "Food, vet, island certs", "mid": 350 },
+        { "cat": "comms",    "name": "Iridium heavy use + weather routing", "mid": 350 },
+        { "cat": "admin",    "name": "Wire fees, banking", "mid": 300 }
+      ]
+    },
+    {
+      "id": "m36", "year": 3, "num": "M36", "label": "May", "calMonth": "May", "yearLabel": "YR3",
+      "flag": "🇧🇧", "location": "Caribbean — Barbados → BVI 🎉", "region": "Circumnavigation complete!",
+      "badges": ["celebration"],
+      "summary": "Landfall in Barbados closes the loop. Sail up the chain to the BVI. Friends and family fly in to celebrate three years of sailing around the world.",
+      "lines": [
+        { "cat": "marina",   "name": "Marina + mooring — Barbados → BVI", "mid": 1600 },
+        { "cat": "prov",     "name": "Provisioning & celebration dining", "mid": 1600 },
+        { "cat": "fuel",     "name": "Diesel", "mid": 500 },
+        { "cat": "customs",  "name": "Caribbean clearance (Barbados + chain + BVI)", "mid": 450 },
+        { "cat": "maint",    "name": "Post-circumnavigation systems check", "mid": 1500 },
+        { "cat": "personal", "name": "Island excursions, beach time", "mid": 800 },
+        { "cat": "dog",      "name": "Food, vet, Caribbean entry", "mid": 300 },
+        { "cat": "admin",    "name": "Final documentation, photo book costs", "mid": 350 },
+        { "cat": "celeb",    "name": "Circumnavigation celebration party", "mid": 1000 },
+        { "cat": "celeb",    "name": "Friends & family sail-in gifts", "mid": 800 }
+      ]
+    }
+  ]
+}
