@@ -377,7 +377,7 @@ function renderRollupNotes() {
 // NAVIGATION
 // ============================================================
 
-function showYear(yearOrRollup) {
+function showYear(yearOrRollup, opts = {}) {
   $$('.panel').forEach(p => p.classList.remove('active'));
   $$('.tab').forEach(t => t.classList.remove('active'));
 
@@ -392,7 +392,7 @@ function showYear(yearOrRollup) {
     renderMonthSubtabs(y);
     renderMonthPanel(y);
   }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (!opts.noScroll) window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ============================================================
@@ -434,6 +434,24 @@ async function boot() {
   $$('.tab').forEach(t => {
     t.addEventListener('click', () => showYear(t.dataset.year));
   });
+
+  // URL hash deep-link: #m05 opens that month directly
+  handleHash();
+  window.addEventListener('hashchange', handleHash);
+}
+
+function handleHash() {
+  const hash = (window.location.hash || '').replace('#', '').toLowerCase();
+  if (!hash) return;
+  const month = STATE.data.months.find(m => m.id === hash);
+  if (!month) return;
+  STATE.currentMonth[month.year] = month.id;
+  showYear(String(month.year), { noScroll: true });
+  // brief delay so the year panel is visible before scrolling
+  setTimeout(() => {
+    const host = $(`[data-host-for="${month.year}"]`);
+    if (host) host.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 60);
 }
 
 boot();

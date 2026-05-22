@@ -5,6 +5,7 @@
     }
   },
   "permissions": {
+    "mode": "allow_all",
     "allow": [
       "WebSearch",
       "WebFetch(domain:*)",
