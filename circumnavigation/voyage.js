@@ -324,11 +324,20 @@ function groupColor(gi, total) {
   return `hsl(${hue}, 55%, 38%)`;
 }
 
+function segmentModeColor(seg) {
+  const crossingIds = new Set(["midAtlantic", "nAtlantic", "antarctica", "sPacific", "indian", "sAtlantic", "oceanic"]);
+  const name = (seg.name || "").toLowerCase();
+  const isCrossing = crossingIds.has(seg.id) || name.includes("crossing") || name.includes("oceanic");
+  return isCrossing ? "#3b6f93" : "#4d6638";
+}
+
 function renderRouteMap() {
   const groups = buildGroups(STATE.groupBy);
   const N = groups.length;
   const monthById = new Map((VOYAGE.months || []).map((m) => [m.id, m]));
   const segmentById = new Map((VOYAGE.segments || []).map((s) => [s.id, s]));
+  const monthIndexById = new Map((VOYAGE.months || []).map((m, i) => [m.id, i]));
+  const segmentIndexById = new Map((VOYAGE.segments || []).map((s, i) => [s.id, i]));
   // Backward-compat shim so existing template code keeps working
   const segments = groups.map((g) => ({
     id: g.key,
@@ -338,6 +347,7 @@ function renderRouteMap() {
   }));
 
   let routePaths = "";
+  let routeTags = "";
   let waypointDots = "";
   let startMarker = "";
 
@@ -345,12 +355,35 @@ function renderRouteMap() {
   // last waypoint so the colored segments connect (no visible gaps at month boundaries).
   let prevLast = null;
   segments.forEach((seg, si) => {
-    const color = groupColor(si, N);
+    const color = STATE.groupBy === "month" ? monthColor(monthIndexById.has(seg.id) ? monthIndexById.get(seg.id) : si) : segmentModeColor(seg);
     const ownPts = seg.waypoints.map((w) => project(w.lat, w.lng));
     const linePts = prevLast ? [prevLast, ...ownPts] : ownPts;
     const destCount = seg.waypoints.filter((w) => w.label).length;
     const nmText = seg.nm ? `${seg.nm.toLocaleString()} nm · ` : "";
     routePaths += `<path d="${buildPathDWithWrap(linePts)}" stroke="${color}" class="route-seg" data-seg-id="${seg.id}"><title>${seg.name} · ${nmText}${destCount} destinations</title></path>`;
+
+    if (STATE.groupBy === "month" && linePts.length > 1) {
+      let longest = { d: -1, mx: linePts[0].x, my: linePts[0].y };
+      for (let i = 1; i < linePts.length; i++) {
+        const a = linePts[i - 1];
+        const b = linePts[i];
+        let dx = b.x - a.x;
+        if (Math.abs(dx) > MAP_W / 2) {
+          dx = dx > 0 ? dx - MAP_W : dx + MAP_W;
+        }
+        const dy = b.y - a.y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 > longest.d) {
+          let mx = a.x + dx / 2;
+          if (mx < 0) mx += MAP_W;
+          if (mx > MAP_W) mx -= MAP_W;
+          longest = { d: d2, mx, my: a.y + dy / 2 };
+        }
+      }
+      const monthTag = seg.id ? String(seg.id).toUpperCase() : `M${String(si + 1).padStart(2, "0")}`;
+      routeTags += `<text x="${longest.mx.toFixed(1)}" y="${(longest.my - 6).toFixed(1)}" class="route-tag" text-anchor="middle">${monthTag}</text>`;
+    }
+
     seg.waypoints.forEach((w, wi) => {
       if (!w.label) return;
       const p = ownPts[wi];
@@ -428,6 +461,7 @@ function renderRouteMap() {
       <g class="continents">${continentsHtml}</g>
       <g class="regions">${regionLabels}</g>
       <g class="route" style="overflow:visible">${routePaths}</g>
+      <g class="route-tags">${routeTags}</g>
       <g class="route-wps">${waypointDots}</g>
       <g class="start-marker">${startMarker}</g>
       ${cartouche}

@@ -2024,6 +2024,19 @@ body.route-mode .budget-link-section {
   stroke-width: 2.8;
   opacity: 1;
 }
+.world-map-svg .route-tag {
+  fill: var(--ink);
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  paint-order: stroke;
+  stroke: rgba(241, 228, 190, 0.96);
+  stroke-width: 2.4px;
+  pointer-events: none;
+  opacity: 0.92;
+}
 .world-map-svg .route-wp {
   fill: #2e1d0a;
   stroke: rgba(241, 228, 190, 0.55);
