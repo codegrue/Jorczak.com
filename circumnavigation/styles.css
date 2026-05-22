@@ -2029,13 +2029,17 @@ body.route-mode .budget-link-section {
   font-family: "Playfair Display", serif;
   font-style: italic;
   font-weight: 700;
-  font-size: 11px;
+  font-size: 8.25px;
   letter-spacing: 0.8px;
   paint-order: stroke;
   stroke: rgba(241, 228, 190, 0.96);
   stroke-width: 2.4px;
   pointer-events: none;
   opacity: 0.92;
+}
+.world-map-svg .route-tag-hazard {
+  fill: var(--coral-deep);
+  stroke: rgba(241, 228, 190, 0.98);
 }
 .world-map-svg .route-wp {
   fill: #2e1d0a;
@@ -2046,6 +2050,16 @@ body.route-mode .budget-link-section {
     r 0.15s,
     fill 0.15s,
     filter 0.15s;
+}
+.world-map-svg .route-wp-home {
+  fill: #b8932e;
+  stroke: rgba(46, 29, 10, 0.65);
+  r: 2.4;
+}
+.world-map-svg .route-wp-haul {
+  fill: #a04a30;
+  stroke: rgba(46, 29, 10, 0.65);
+  r: 2.4;
 }
 .world-map-svg .route-wp:hover {
   fill: var(--coral);

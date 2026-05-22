@@ -331,6 +331,32 @@ function segmentModeColor(seg) {
   return isCrossing ? "#3b6f93" : "#4d6638";
 }
 
+function dominantSegmentId(waypoints) {
+  const counts = new Map();
+  for (const w of waypoints) {
+    counts.set(w.segment, (counts.get(w.segment) || 0) + 1);
+  }
+  let best = null;
+  let bestCount = -1;
+  for (const [id, c] of counts.entries()) {
+    if (c > bestCount) {
+      best = id;
+      bestCount = c;
+    }
+  }
+  return best;
+}
+
+function isCycloneRiskMonth(monthMeta, segId) {
+  if (!monthMeta || !segId) return false;
+  if (typeof monthMeta.hurricaneRisk === "boolean") return monthMeta.hurricaneRisk;
+  // Tropical cyclone-prone route basins in this itinerary.
+  const cycloneProne = new Set(["midAtlantic", "nAtlantic", "sAtlantic", "sAmericaNE", "caribbean", "sPacific", "oceanic", "asia", "indian", "africaSouth"]);
+  if (!cycloneProne.has(segId)) return false;
+  // Using hemisphere-aware season from voyage.jsonc: peak risk during summer/autumn.
+  return monthMeta.season === "Summer" || monthMeta.season === "Autumn";
+}
+
 function renderRouteMap() {
   const groups = buildGroups(STATE.groupBy);
   const N = groups.length;
@@ -338,6 +364,14 @@ function renderRouteMap() {
   const segmentById = new Map((VOYAGE.segments || []).map((s) => [s.id, s]));
   const monthIndexById = new Map((VOYAGE.months || []).map((m, i) => [m.id, i]));
   const segmentIndexById = new Map((VOYAGE.segments || []).map((s, i) => [s.id, i]));
+  const specialPortByMonth = new Map(
+    (VOYAGE.months || []).map((m) => {
+      const label = m.label || "";
+      const homeMatch = label.match(/\[.*?home:\s*([^\]|]+).*?\]/i);
+      const haulMatch = label.match(/\[.*?haul-out:\s*([^\]|]+).*?\]/i);
+      return [m.id, { home: homeMatch ? homeMatch[1].trim() : null, haul: haulMatch ? haulMatch[1].trim() : null }];
+    }),
+  );
   // Backward-compat shim so existing template code keeps working
   const segments = groups.map((g) => ({
     id: g.key,
@@ -363,6 +397,9 @@ function renderRouteMap() {
     routePaths += `<path d="${buildPathDWithWrap(linePts)}" stroke="${color}" class="route-seg" data-seg-id="${seg.id}"><title>${seg.name} · ${nmText}${destCount} destinations</title></path>`;
 
     if (STATE.groupBy === "month" && linePts.length > 1) {
+      const domSegId = dominantSegmentId(seg.waypoints);
+      const monthMeta = monthById.get(seg.id) || null;
+      const isRisk = isCycloneRiskMonth(monthMeta, domSegId);
       let longest = { d: -1, mx: linePts[0].x, my: linePts[0].y };
       for (let i = 1; i < linePts.length; i++) {
         const a = linePts[i - 1];
@@ -380,30 +417,43 @@ function renderRouteMap() {
           longest = { d: d2, mx, my: a.y + dy / 2 };
         }
       }
-      const monthTag = seg.id ? String(seg.id).toUpperCase() : `M${String(si + 1).padStart(2, "0")}`;
-      routeTags += `<text x="${longest.mx.toFixed(1)}" y="${(longest.my - 6).toFixed(1)}" class="route-tag" text-anchor="middle">${monthTag}</text>`;
+      const monthNum = Number((seg.id || "").replace(/^m/i, "")) || si + 1;
+      const yearNum = Math.ceil(monthNum / 12);
+      const startYearMatch = String((VOYAGE && VOYAGE.cartouche && VOYAGE.cartouche.sub1) || "").match(/(?:19|20)\d{2}/);
+      const startYear = startYearMatch ? Number(startYearMatch[0]) : 2026;
+      const calendarYear = startYear + Math.floor((monthNum - 1) / 12);
+      const fallbackMonth = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][(monthNum - 1) % 12];
+      const rawMonth = monthMeta && monthMeta.calendarMonth ? String(monthMeta.calendarMonth) : fallbackMonth;
+      const monthShort = `${rawMonth}`.slice(0, 3);
+      const monthTag = `${monthShort.charAt(0).toUpperCase()}${monthShort.slice(1).toLowerCase()}${String(calendarYear).slice(-2)}`;
+      const monthYearTitle = `Month ${monthNum} · Year ${yearNum}`;
+      const tagClass = isRisk ? "route-tag route-tag-hazard" : "route-tag";
+      const tagText = isRisk ? `⚠ ${monthTag}` : monthTag;
+      routeTags += `<text x="${longest.mx.toFixed(1)}" y="${(longest.my - 6).toFixed(1)}" class="${tagClass}" text-anchor="middle">${tagText}<title>${monthYearTitle}</title></text>`;
     }
 
     seg.waypoints.forEach((w, wi) => {
       if (!w.label) return;
       const p = ownPts[wi];
+      const special = specialPortByMonth.get(w.month) || { home: null, haul: null };
+      const wpClass = special.haul === w.label ? "route-wp route-wp-haul" : special.home === w.label ? "route-wp route-wp-home" : "route-wp";
       const monthLabel = (monthById.get(w.month) && monthById.get(w.month).label) || w.month || "Unknown month";
       const courseLabel = (segmentById.get(w.segment) && segmentById.get(w.segment).name) || seg.name || "Unknown course";
       const titleLine1 = w.label;
       const titleLine2 = monthLabel;
       const titleLine3 = courseLabel;
-      waypointDots += `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="1.8" class="route-wp" data-seg-id="${seg.id}"><title>${titleLine1}&#10;${titleLine2}&#10;${titleLine3}</title></circle>`;
+      waypointDots += `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="1.8" class="${wpClass}" data-seg-id="${seg.id}"><title>${titleLine1}&#10;${titleLine2}&#10;${titleLine3}</title></circle>`;
     });
     prevLast = ownPts[ownPts.length - 1];
   });
 
-  // Annapolis start/end marker
+  // Start marker
   const start = segments[0].waypoints[0];
   const sp = project(start.lat, start.lng);
   startMarker = `
     <circle cx="${sp.x.toFixed(1)}" cy="${sp.y.toFixed(1)}" r="11" fill="none" stroke="#b8932e" stroke-width="1.2" opacity="0.7"/>
     <circle cx="${sp.x.toFixed(1)}" cy="${sp.y.toFixed(1)}" r="6" fill="#b8932e" stroke="#2e1d0a" stroke-width="1.4"/>
-    <text x="${sp.x.toFixed(1)}" y="${(sp.y - 13).toFixed(1)}" class="wp-label" text-anchor="middle">⚓ Annapolis</text>
+    <text x="${sp.x.toFixed(1)}" y="${(sp.y - 13).toFixed(1)}" class="wp-label" text-anchor="middle">⚓ Start</text>
   `;
 
   // Continents, graticule, region labels — reused from month mode
