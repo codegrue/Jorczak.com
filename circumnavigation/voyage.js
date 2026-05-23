@@ -485,8 +485,8 @@ function renderRouteMap() {
     })
     .join("");
 
-  // Cartouche — derive totals from current segments
-  const totalNm = segments.reduce((s, x) => s + (x.nm || 0), 0);
+  // Cartouche — totals come from the canonical voyage data so they don't depend on grouping mode
+  const totalNm = (VOYAGE.segments || []).reduce((s, x) => s + (x.nm || 0), 0);
   const totalDest = segments.reduce((s, x) => s + x.waypoints.filter((w) => w.label).length, 0);
   const cartouche = `
     <g transform="translate(820 415)" class="map-cartouche">
