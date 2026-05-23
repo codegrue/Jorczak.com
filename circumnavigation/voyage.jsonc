@@ -84,82 +84,98 @@
     {
       "id": "midAtlantic",
       "name": "Mid Atlantic Crossing",
-      "nm": 4536
+      "nm": 4536,
+      "type": "crossing"
     },
     {
       "id": "baltic",
       "name": "Baltic Sea",
-      "nm": 3213
+      "nm": 3213,
+      "type": "coastal"
     },
     {
       "id": "rhineDanube",
       "name": "Rhein–Main–Danube Waterway",
-      "nm": 1469
+      "nm": 1469,
+      "type": "inland"
     },
     {
       "id": "mediterranean",
       "name": "Mediterranean",
-      "nm": 5981
+      "nm": 5981,
+      "type": "coastal"
     },
     {
       "id": "nAtlantic",
       "name": "North Atlantic Crossing",
-      "nm": 3194
+      "nm": 3194,
+      "type": "crossing"
     },
     {
       "id": "sAmericaSE",
       "name": "Around South America",
-      "nm": 3706
+      "nm": 3706,
+      "type": "coastal"
     },
     {
       "id": "antarctica",
       "name": "Antarctica Crossing",
-      "nm": 1423
+      "nm": 1423,
+      "type": "crossing"
     },
     {
       "id": "sAmericaSW",
       "name": "South America's West Coast",
-      "nm": 5719
+      "nm": 5719,
+      "type": "coastal"
     },
     {
       "id": "sPacific",
       "name": "South Pacific Crossing",
-      "nm": 9766
+      "nm": 9766,
+      "type": "crossing"
     },
     {
       "id": "oceanic",
       "name": "Oceanic",
-      "nm": 5784
+      "nm": 5784,
+      "type": "coastal"
     },
     {
       "id": "asia",
       "name": "Asia",
-      "nm": 11047
+      "nm": 11047,
+      "type": "coastal"
     },
     {
       "id": "indian",
       "name": "Indian Ocean Crossing",
-      "nm": 2966
+      "nm": 2966,
+      "type": "crossing"
     },
     {
       "id": "africaSouth",
       "name": "Around Africa",
-      "nm": 4413
+      "nm": 4413,
+      "type": "coastal"
     },
     {
       "id": "sAtlantic",
       "name": "South Atlantic Crossing",
-      "nm": 3384
+      "nm": 3384,
+      "type": "crossing"
     },
     {
       "id": "sAmericaNE",
       "name": "Northern South America",
-      "nm": 2540
+      "nm": 2540,
+      "type": "coastal"
     },
     {
       "id": "caribbean",
       "name": "Caribbean",
-      "nm": 2723
+      "nm": 2723,
+      "type": "coastal"
     }
   ],
   "months": [
@@ -796,7 +812,7 @@
       "kind": "port",
       "segment": "midAtlantic",
       "month": "m01",
-      "tourStayDays": 3.5,
+      "tourStayDays": 1,
       "tourStayRule": "mainland-country-share:United States",
       "distanceFromPrevNm": 0
     },
@@ -807,7 +823,7 @@
       "kind": "port",
       "segment": "midAtlantic",
       "month": "m01",
-      "tourStayDays": 1,
+      "tourStayDays": 3,
       "tourStayRule": "small-island",
       "distanceFromPrevNm": 697.9
     },
@@ -903,17 +919,6 @@
       "distanceFromPrevNm": 44
     },
     {
-      "lat": 57.895418,
-      "lng": -5.161313,
-      "label": "Scotland NW",
-      "kind": "port",
-      "segment": "baltic",
-      "month": "m04",
-      "tourStayDays": 1,
-      "tourStayRule": "small-island-override",
-      "distanceFromPrevNm": 0
-    },
-    {
       "lat": 58.671308,
       "lng": -2.636373,
       "segment": "baltic",
@@ -930,17 +935,6 @@
       "tourStayDays": 3.5,
       "tourStayRule": "mainland-country-share:Norway",
       "distanceFromPrevNm": 257.1
-    },
-    {
-      "lat": 58.9996746,
-      "lng": 5.6187068,
-      "label": "Stavanger",
-      "kind": "port",
-      "segment": "baltic",
-      "month": "m04",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Norway",
-      "distanceFromPrevNm": 0
     },
     {
       "lat": 57.675262,
@@ -970,17 +964,6 @@
       "tourStayDays": 3.5,
       "tourStayRule": "mainland-country-share:Denmark",
       "distanceFromPrevNm": 261
-    },
-    {
-      "lat": 55.6760968,
-      "lng": 12.5683372,
-      "label": "Copenhagen",
-      "kind": "port",
-      "segment": "baltic",
-      "month": "m05",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Denmark",
-      "distanceFromPrevNm": 0
     },
     {
       "lat": 56.221934,
@@ -1052,17 +1035,6 @@
       "distanceFromPrevNm": 295.4
     },
     {
-      "lat": 54.3520252,
-      "lng": 18.6466384,
-      "label": "Gdańsk",
-      "kind": "port",
-      "segment": "baltic",
-      "month": "m07",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Poland",
-      "distanceFromPrevNm": 0
-    },
-    {
       "lat": 54.555108,
       "lng": 11.309335,
       "segment": "baltic",
@@ -1079,17 +1051,6 @@
       "tourStayDays": 3.5,
       "tourStayRule": "mainland-country-share:Denmark",
       "distanceFromPrevNm": 103.6
-    },
-    {
-      "lat": 56.162939,
-      "lng": 10.203921,
-      "label": "Aarhus",
-      "kind": "port",
-      "segment": "baltic",
-      "month": "m07",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Denmark",
-      "distanceFromPrevNm": 0
     },
     {
       "lat": 57.952127,
@@ -1398,24 +1359,6 @@
       "distanceFromPrevNm": 191.4
     },
     {
-      "lat": 40.444046,
-      "lng": 26.743025,
-      "segment": "mediterranean",
-      "month": "m12",
-      "distanceFromPrevNm": 107.2
-    },
-    {
-      "lat": 41.0082376,
-      "lng": 28.9783589,
-      "label": "Istanbul",
-      "kind": "port",
-      "segment": "mediterranean",
-      "month": "m12",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Turkey",
-      "distanceFromPrevNm": 107.2
-    },
-    {
       "lat": 37.9838096,
       "lng": 23.7275388,
       "label": "Athens",
@@ -1545,17 +1488,6 @@
       "tourStayDays": 1,
       "tourStayRule": "mainland-country-share:Italy",
       "distanceFromPrevNm": 222.7
-    },
-    {
-      "lat": 45.440379,
-      "lng": 12.3159547,
-      "label": "Venice",
-      "kind": "port",
-      "segment": "mediterranean",
-      "month": "m15",
-      "tourStayDays": 1,
-      "tourStayRule": "mainland-country-share:Italy",
-      "distanceFromPrevNm": 0
     },
     {
       "lat": 40.7496576,
@@ -1859,28 +1791,6 @@
       "label": "Ushuaia depart",
       "kind": "port",
       "segment": "antarctica",
-      "month": "m21",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Argentina",
-      "distanceFromPrevNm": 0
-    },
-    {
-      "lat": -54.9352098,
-      "lng": -67.6058537,
-      "label": "Ushuaia depart",
-      "kind": "port",
-      "segment": "antarctica",
-      "month": "m21",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Argentina",
-      "distanceFromPrevNm": 0
-    },
-    {
-      "lat": -54.9352098,
-      "lng": -67.6058537,
-      "label": "Ushuaia depart",
-      "kind": "port",
-      "segment": "antarctica",
       "month": "m22",
       "tourStayDays": 2.5,
       "tourStayRule": "mainland-country-share:Argentina",
@@ -1896,17 +1806,6 @@
       "tourStayDays": 7,
       "tourStayRule": "large-island",
       "distanceFromPrevNm": 527.2
-    },
-    {
-      "lat": -62.9409297,
-      "lng": -60.5553751,
-      "label": "South Shetlands",
-      "kind": "port",
-      "segment": "antarctica",
-      "month": "m23",
-      "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 0
     },
     {
       "lat": -63.3209373,
@@ -1942,17 +1841,6 @@
       "distanceFromPrevNm": 543.1
     },
     {
-      "lat": -55.9652546,
-      "lng": -67.2255579,
-      "label": "Drake return",
-      "kind": "port",
-      "segment": "antarctica",
-      "month": "m24",
-      "tourStayDays": 1,
-      "tourStayRule": "transit-stop-override",
-      "distanceFromPrevNm": 0
-    },
-    {
       "lat": -54.9352098,
       "lng": -67.6058537,
       "label": "Ushuaia depart",
@@ -1962,17 +1850,6 @@
       "tourStayDays": 2.5,
       "tourStayRule": "mainland-country-share:Argentina",
       "distanceFromPrevNm": 63.2
-    },
-    {
-      "lat": -54.9352098,
-      "lng": -67.6058537,
-      "label": "Ushuaia depart",
-      "kind": "port",
-      "segment": "antarctica",
-      "month": "m24",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Argentina",
-      "distanceFromPrevNm": 0
     },
     {
       "lat": -54.997902,
@@ -2081,24 +1958,6 @@
       "tourStayDays": 7,
       "tourStayRule": "mainland-country-share:Ecuador",
       "distanceFromPrevNm": 633.7
-    },
-    {
-      "lat": -5.743423,
-      "lng": -81.715459,
-      "segment": "sAmericaSW",
-      "month": "m27",
-      "distanceFromPrevNm": 217
-    },
-    {
-      "lat": -2.216651,
-      "lng": -80.9230203,
-      "label": "Guayaquil",
-      "kind": "port",
-      "segment": "sAmericaSW",
-      "month": "m27",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Ecuador",
-      "distanceFromPrevNm": 217
     },
     {
       "lat": -2.218103,
@@ -2603,17 +2462,6 @@
       "tourStayDays": 7,
       "tourStayRule": "large-island",
       "distanceFromPrevNm": 185.3
-    },
-    {
-      "lat": -21.115141,
-      "lng": 55.536384,
-      "label": "Réunion",
-      "kind": "port",
-      "segment": "indian",
-      "month": "m47",
-      "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 0
     },
     {
       "lat": -18.1716435,

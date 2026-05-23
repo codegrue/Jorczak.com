@@ -110,11 +110,6 @@ function buildPathDWithWrap(pts) {
   return d;
 }
 
-function segmentColor(si, total) {
-  const hue = Math.round((si * 360) / total) % 360;
-  return `hsl(${hue}, 55%, 38%)`;
-}
-
 // Attach wheel-zoom + drag-pan + double-click-reset to a rendered map SVG.
 // Returns a reset function. Suppresses click events that came from a drag.
 function attachZoomPan(svg) {
@@ -324,11 +319,24 @@ function groupColor(gi, total) {
   return `hsl(${hue}, 55%, 38%)`;
 }
 
+// Type-based segment color — blue for ocean crossings, green for coastal/land,
+// brown for inland waterways. Falls back to green if type is missing.
+const SEGMENT_TYPE_COLOR = {
+  crossing: "#3b6f93", // sea blue
+  coastal: "#7a9c3a", // grass green
+  inland: "#7a4f24", // warm walnut brown
+};
+
+function segmentTypeColor(seg) {
+  return (seg && SEGMENT_TYPE_COLOR[seg.type]) || SEGMENT_TYPE_COLOR.coastal;
+}
+
 function segmentModeColor(seg) {
-  const crossingIds = new Set(["midAtlantic", "nAtlantic", "antarctica", "sPacific", "indian", "sAtlantic", "oceanic"]);
-  const name = (seg.name || "").toLowerCase();
-  const isCrossing = crossingIds.has(seg.id) || name.includes("crossing") || name.includes("oceanic");
-  return isCrossing ? "#3b6f93" : "#4d6638";
+  // `seg` may be a synthetic group (built in buildGroups) that lacks `type`.
+  // Resolve to the canonical segment so the type lookup always works.
+  if (seg && seg.type) return segmentTypeColor(seg);
+  const full = seg && VOYAGE && (VOYAGE.segments || []).find((s) => s.id === seg.id);
+  return segmentTypeColor(full || seg || {});
 }
 
 function dominantSegmentId(waypoints) {
@@ -389,7 +397,10 @@ function renderRouteMap() {
   // last waypoint so the colored segments connect (no visible gaps at month boundaries).
   let prevLast = null;
   segments.forEach((seg, si) => {
-    const color = STATE.groupBy === "month" ? monthColor(monthIndexById.has(seg.id) ? monthIndexById.get(seg.id) : si) : segmentModeColor(seg);
+    // Color encodes segment type (sea blue / forest green / walnut brown), regardless of grouping.
+    const domSegId = STATE.groupBy === "segment" ? seg.id : dominantSegmentId(seg.waypoints);
+    const segMeta = (VOYAGE.segments || []).find((s) => s.id === domSegId);
+    const color = segmentTypeColor(segMeta);
     const ownPts = seg.waypoints.map((w) => project(w.lat, w.lng));
     const linePts = prevLast ? [prevLast, ...ownPts] : ownPts;
     const destCount = seg.waypoints.filter((w) => w.label).length;
@@ -397,7 +408,6 @@ function renderRouteMap() {
     routePaths += `<path d="${buildPathDWithWrap(linePts)}" stroke="${color}" class="route-seg" data-seg-id="${seg.id}"><title>${seg.name} · ${nmText}${destCount} destinations</title></path>`;
 
     if (STATE.groupBy === "month" && linePts.length > 1) {
-      const domSegId = dominantSegmentId(seg.waypoints);
       const monthMeta = monthById.get(seg.id) || null;
       const isRisk = isCycloneRiskMonth(monthMeta, domSegId);
       let longest = { d: -1, mx: linePts[0].x, my: linePts[0].y };
@@ -556,46 +566,206 @@ function renderRouteMap() {
   });
 }
 
+// Avg cruising speed (~126 nm/day) used to estimate leg travel time.
+const NM_PER_DAY = 126;
+
+function formatNm(nm) {
+  const n = Math.round(nm);
+  return n.toLocaleString() + " nm";
+}
+
+function formatTravelTime(nm) {
+  if (!nm || nm <= 0) return "";
+  const hours = (nm / NM_PER_DAY) * 24;
+  if (hours < 24) return Math.round(hours) + "h";
+  const days = nm / NM_PER_DAY;
+  if (days < 10) return days.toFixed(1) + "d";
+  return Math.round(days) + "d";
+}
+
 function renderRouteTimeline() {
   const host = $("#voyage-timeline");
-  const groups = buildGroups(STATE.groupBy);
-  const segs = groups.map((g) => ({ id: g.key, name: g.label, nm: g.nm, waypoints: g.waypoints }));
-  const N = segs.length;
+  // Walk the full waypoints list (including pivots) and bin distances per labeled destination.
+  // For each labeled waypoint, `legDistance` is the cumulative nm since the previous labeled one.
+  const allWps = VOYAGE.waypoints || [];
+  const destinations = [];
+  let cumulative = 0;
+  for (let i = 0; i < allWps.length; i++) {
+    const w = allWps[i];
+    cumulative += w.distanceFromPrevNm || 0;
+    if (w.label) {
+      destinations.push({ ...w, legDistance: destinations.length === 0 ? 0 : cumulative });
+      cumulative = 0;
+    }
+  }
+  const monthById = new Map((VOYAGE.months || []).map((m) => [m.id, m]));
+  const segmentById = new Map((VOYAGE.segments || []).map((s) => [s.id, s]));
+  const monthIndexById = new Map((VOYAGE.months || []).map((m, i) => [m.id, i]));
+  const segmentIndexById = new Map((VOYAGE.segments || []).map((s, i) => [s.id, i]));
 
-  const totalDest = segs.reduce((s, x) => s + x.waypoints.filter((w) => w.label).length, 0);
-  const totalPivot = segs.reduce((s, x) => s + x.waypoints.filter((w) => !w.label).length, 0);
-  const totalNm = segs.reduce((s, x) => s + (x.nm || 0), 0);
-  let html =
+  const startYearMatch = String((VOYAGE && VOYAGE.cartouche && VOYAGE.cartouche.sub1) || "").match(/(?:19|20)\d{2}/);
+  const startYear = startYearMatch ? Number(startYearMatch[0]) : 2034;
+
+  // Compute contiguous runs of identical month / segment so the side cards can
+  // span the rows of every destination they cover.
+  const monthRuns = [];
+  const segmentRuns = [];
+  destinations.forEach((w, i) => {
+    const lm = monthRuns[monthRuns.length - 1];
+    if (lm && lm.id === w.month) lm.end = i;
+    else monthRuns.push({ id: w.month, start: i, end: i });
+    const ls = segmentRuns[segmentRuns.length - 1];
+    if (ls && ls.id === w.segment) ls.end = i;
+    else segmentRuns.push({ id: w.segment, start: i, end: i });
+  });
+
+  const N = destinations.length;
+  const totalNm = (VOYAGE.segments || []).reduce((s, x) => s + (x.nm || 0), 0);
+
+  let html = "";
+  html +=
     '<div class="route-mode-banner">' +
-    '<div class="route-mode-title"><em>Route preview</em> · pre-segmentation</div>' +
+    '<div class="route-mode-title"><em>The Voyage</em> · destination by destination</div>' +
     '<div class="route-mode-sub">' +
-    totalDest +
+    N +
     " destinations · " +
     totalNm.toLocaleString() +
     " nm across " +
-    N +
-    " route segments" +
-    (totalPivot ? " (" + totalPivot + " course pivots curve the line around land — no dots there)" : "") +
-    ". Month bucketing, haul-out port selection, and budget come next.</div>" +
+    monthRuns.length +
+    " months and " +
+    segmentRuns.length +
+    " courses. Months at left, courses at right; each card spans every stop it covers." +
+    "</div>" +
     "</div>";
 
-  segs.forEach((seg, si) => {
-    const color = segmentColor(si, N);
-    const destinations = seg.waypoints.filter((w) => w.label);
-    const pivotCount = seg.waypoints.length - destinations.length;
-    const wpItems = destinations.map((w) => `<span class="route-wp-chip" style="border-color:${color}">${w.label}</span>`).join("");
-    const pivotNote = pivotCount > 0 ? ` · ${pivotCount} course pivot${pivotCount > 1 ? "s" : ""}` : "";
-    html += `
-      <div class="route-block" data-seg-id="${seg.id}">
-        <div class="route-block-head" style="border-left-color:${color}">
-          <div class="route-block-num">Segment ${String(si + 1).padStart(2, "0")}</div>
-          <h3 class="route-block-title">${seg.name}</h3>
-          <div class="route-block-meta">${seg.nm.toLocaleString()} nm · ${destinations.length} destination${destinations.length !== 1 ? "s" : ""}${pivotNote}</div>
-        </div>
-        <div class="route-block-wps">${wpItems}</div>
-      </div>
-    `;
+  html += '<div class="tl3-grid" style="--rows: ' + N + '">';
+  html += '<div class="tl3-head tl3-head-month">Month</div>';
+  html += '<div class="tl3-head tl3-head-stops">Destinations</div>';
+  html += '<div class="tl3-head tl3-head-course">Course</div>';
+
+  html += '<div class="tl3-spine" style="grid-row: 2 / span ' + N + '"></div>';
+
+  monthRuns.forEach((run) => {
+    const meta = monthById.get(run.id) || {};
+    const mi = monthIndexById.has(run.id) ? monthIndexById.get(run.id) : 0;
+    const monthNum = Number(String(run.id).replace(/^m/i, "")) || mi + 1;
+    const calendarYear = startYear + Math.floor((monthNum - 1) / 12);
+    const yearNum = Math.ceil(monthNum / 12);
+    const span = run.end - run.start + 1;
+    const startRow = run.start + 2;
+    const rawLabel = meta.label || "";
+    const cleanTitle = rawLabel.replace(/^Month\s+\d+\s*[-–—]\s*/i, "").replace(/\s*\[.*?\]\s*$/, "");
+    const homeMatch = rawLabel.match(/\[.*?home:\s*([^\]|]+).*?\]/i);
+    const haulMatch = rawLabel.match(/\[.*?haul-out:\s*([^\]|]+).*?\]/i);
+    const badges = [];
+    if (homeMatch) badges.push('<span class="tl3-badge tl3-badge-home">⌂ Home trip</span>');
+    if (haulMatch) badges.push('<span class="tl3-badge tl3-badge-haul">⚓ Haul-out</span>');
+    const color = monthColor(mi);
+    html +=
+      '<div class="tl3-month" style="grid-row: ' +
+      startRow +
+      " / span " +
+      span +
+      "; --accent: " +
+      color +
+      '">' +
+      '<div class="tl3-month-num">Month ' +
+      monthNum +
+      " · Yr " +
+      yearNum +
+      "</div>" +
+      '<div class="tl3-month-cal">' +
+      (meta.calendarMonth || "") +
+      " " +
+      calendarYear +
+      "</div>" +
+      (cleanTitle ? '<div class="tl3-month-title">' + cleanTitle + "</div>" : "") +
+      (meta.season ? '<div class="tl3-month-season">' + meta.season + "</div>" : "") +
+      (badges.length ? '<div class="tl3-month-badges">' + badges.join("") + "</div>" : "") +
+      "</div>";
   });
+
+  destinations.forEach((w, i) => {
+    const row = i + 2;
+    const segMeta = segmentById.get(w.segment) || {};
+    const typeColor = segmentTypeColor(segMeta);
+    const mi = monthIndexById.has(w.month) ? monthIndexById.get(w.month) : 0;
+    const mColor = monthColor(mi);
+    const monthMeta = monthById.get(w.month) || {};
+    const isHome = /\[.*?home:\s*([^\]|]+).*?\]/i.test(monthMeta.label || "") && new RegExp("home:\\s*" + w.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i").test(monthMeta.label || "");
+    const isHaul = /\[.*?haul-out:\s*([^\]|]+).*?\]/i.test(monthMeta.label || "") && new RegExp("haul-out:\\s*" + w.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i").test(monthMeta.label || "");
+    const flagHtml = isHaul
+      ? '<span class="tl3-stop-flag tl3-stop-flag-haul" title="Haul-out">⚓</span>'
+      : isHome
+        ? '<span class="tl3-stop-flag tl3-stop-flag-home" title="Home trip">⌂</span>'
+        : "";
+    const days = w.tourStayDays;
+    const daysText = days != null ? (days % 1 === 0 ? String(days) : days.toFixed(1)) + "d" : "";
+    const daysHtml = daysText ? '<span class="tl3-stop-days" title="Days ashore">' + daysText + "</span>" : "";
+    const stopClass = "tl3-stop" + (isHaul ? " tl3-stop-haul" : isHome ? " tl3-stop-home" : "");
+    const legNm = w.legDistance;
+    const legHtml =
+      legNm > 0
+        ? '<span class="tl3-leg-dist" title="Distance from previous">' +
+          formatNm(legNm) +
+          '</span><span class="tl3-leg-time" title="Travel time at ' +
+          NM_PER_DAY +
+          ' nm/day">' +
+          formatTravelTime(legNm) +
+          "</span>"
+        : "";
+    html +=
+      '<div class="' +
+      stopClass +
+      '" style="grid-row: ' +
+      row +
+      "; --type: " +
+      typeColor +
+      "; --month: " +
+      mColor +
+      '">' +
+      legHtml +
+      flagHtml +
+      '<span class="tl3-stop-label">' +
+      w.label +
+      "</span>" +
+      daysHtml +
+      "</div>";
+  });
+
+  segmentRuns.forEach((run) => {
+    const meta = segmentById.get(run.id) || {};
+    const si = segmentIndexById.has(run.id) ? segmentIndexById.get(run.id) : 0;
+    const color = segmentTypeColor(meta);
+    const span = run.end - run.start + 1;
+    const startRow = run.start + 2;
+    html +=
+      '<div class="tl3-course" style="grid-row: ' +
+      startRow +
+      " / span " +
+      span +
+      "; --accent: " +
+      color +
+      '" data-seg-id="' +
+      run.id +
+      '">' +
+      '<div class="tl3-course-num">Course ' +
+      String(si + 1).padStart(2, "0") +
+      "</div>" +
+      '<div class="tl3-course-name">' +
+      (meta.name || run.id) +
+      "</div>" +
+      '<div class="tl3-course-meta">' +
+      (meta.nm || 0).toLocaleString() +
+      " nm · " +
+      span +
+      " destination" +
+      (span !== 1 ? "s" : "") +
+      "</div>" +
+      "</div>";
+  });
+
+  html += "</div>";
 
   host.innerHTML = html;
 }
