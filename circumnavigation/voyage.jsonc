@@ -5,11 +5,6 @@
     "startYear": 2033,
     "startMonth": "Mar"
   },
-  "cartouche": {
-    "title": "The Voyage Chart",
-    "sub1": "four years · departing 2034",
-    "sub2": "⋆ 38,000 nautical miles ⋆"
-  },
   "mapLabels": [
     {
       "text": "NORTH AMERICA",
@@ -587,8 +582,8 @@
     },
     {
       "id": "deception-island",
-      "lat": -63.3209373,
-      "lng": -57.9000592,
+      "lat": -62.9667,
+      "lng": -60.6500,
       "label": "Deception Island",
       "kind": "port",
       "segment": "antarctica",
@@ -647,8 +642,8 @@
     },
     {
       "id": "valpara-so",
-      "lat": -33.4488897,
-      "lng": -70.6692655,
+      "lat": -33.0458,
+      "lng": -71.6197,
       "label": "Valparaíso",
       "kind": "port",
       "segment": "sAmericaSW",

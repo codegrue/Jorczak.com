@@ -1,9 +1,8 @@
 // Jorczak.com — Circumnavigation Voyage Page
-// World-map route plot + month-by-month voyage timeline.
+// World-map route plot + destination-by-destination timeline.
 //
-// Data sources (loaded in parallel at boot):
-//   months.json — budget + month metadata (shared with budget.html)
-//   voyage.jsonc — waypoints, year copy, map labels, cartouche text
+// Data source (fetched at boot):
+//   voyage.jsonc — waypoints, routes, segments, map labels, cartouche text
 //   continents.js — Natural Earth 110m land polygons (loaded as <script>)
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -21,62 +20,13 @@ function project(lat, lng) {
 
 // CONTINENTS is provided by continents.js (loaded before this script).
 
-let DATA = null; // months.json
 let VOYAGE = null; // voyage.jsonc
-const PASSAGE_MONTHS = new Set();
-const HOME_MONTHS = new Set();
-const HAUL_MONTHS = new Set();
-const QUARANTINE_MONTHS = new Set();
-const CELEBRATION_MONTHS = new Set();
 
-function classifyMonths() {
-  for (const m of DATA.months) {
-    const b = m.badges || [];
-    if (b.includes("passage")) PASSAGE_MONTHS.add(m.id);
-    if (b.includes("home")) HOME_MONTHS.add(m.id);
-    if (b.includes("haul")) HAUL_MONTHS.add(m.id);
-    if (b.includes("quarantine")) QUARANTINE_MONTHS.add(m.id);
-    if (b.includes("celebration")) CELEBRATION_MONTHS.add(m.id);
-  }
-}
-
-// Distinct hue per month — slow rotation around the wheel so adjacent months differ
-// but a year still feels like a color family. Shared by the route lines and the primary dots.
+// Alternating earthy tones per month — even months antique gold, odd months
+// rust — so adjacent month borders contrast strongly while still feeling part
+// of the aged-atlas palette. Values match --gold / --coral in styles.css.
 function monthColor(mi) {
-  const hue = (mi * 10) % 360;
-  return `hsl(${hue}, 55%, 38%)`;
-}
-
-function waypointStyle(monthId, mi) {
-  const fill = monthColor(mi);
-  // Size + ring indicate the type of month; fill color encodes the month identity.
-  if (CELEBRATION_MONTHS.has(monthId)) return { fill, stroke: "#2e1d0a", r: 8, ring: true };
-  if (HAUL_MONTHS.has(monthId)) return { fill, stroke: "#2e1d0a", r: 7 };
-  if (PASSAGE_MONTHS.has(monthId)) return { fill, stroke: "#2e1d0a", r: 7 };
-  if (HOME_MONTHS.has(monthId)) return { fill, stroke: "#2e1d0a", r: 5 };
-  if (QUARANTINE_MONTHS.has(monthId)) return { fill, stroke: "#2e1d0a", r: 5 };
-  return { fill, stroke: "#2e1d0a", r: 4 };
-}
-
-// Inline SVG icons sized to fit inside a primary dot of radius ~6–7.
-function waypointIcon(monthId, p) {
-  if (HAUL_MONTHS.has(monthId)) {
-    // Anchor — vertical shaft, ring at top, crossbar, curved arms at bottom.
-    return `<g transform="translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})" pointer-events="none" class="wp-icon">
-      <circle cx="0" cy="-3.2" r="0.9" fill="none" stroke-width="0.7"/>
-      <line x1="0" y1="-2.3" x2="0" y2="3.2" stroke-width="0.8"/>
-      <line x1="-2" y1="-1.2" x2="2" y2="-1.2" stroke-width="0.7"/>
-      <path d="M -3 1.5 Q 0 4.2 3 1.5" fill="none" stroke-width="0.8" stroke-linecap="round"/>
-    </g>`;
-  }
-  if (PASSAGE_MONTHS.has(monthId)) {
-    // Two stylized waves stacked.
-    return `<g transform="translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})" pointer-events="none" class="wp-icon">
-      <path d="M -3.5 -1.2 q 1.2 -1.6 2.4 0 t 2.4 0 t 2.4 0" fill="none" stroke-width="0.7" stroke-linecap="round"/>
-      <path d="M -3.5 1.4  q 1.2 -1.6 2.4 0 t 2.4 0 t 2.4 0" fill="none" stroke-width="0.7" stroke-linecap="round"/>
-    </g>`;
-  }
-  return "";
+  return mi % 2 ? "#a04a30" : "#b8932e";
 }
 
 // ============================================================
@@ -110,9 +60,17 @@ function buildPathDWithWrap(pts) {
   return d;
 }
 
+// AbortController for the previous attachZoomPan's window listeners. Each new
+// renderRouteMap aborts the previous one so window-level handlers don't accumulate.
+let zoomPanAbort = null;
+
 // Attach wheel-zoom + drag-pan + double-click-reset to a rendered map SVG.
 // Returns a reset function. Suppresses click events that came from a drag.
 function attachZoomPan(svg) {
+  if (zoomPanAbort) zoomPanAbort.abort();
+  zoomPanAbort = new AbortController();
+  const signal = zoomPanAbort.signal;
+
   const initial = { x: 0, y: 0, w: MAP_W, h: MAP_H };
   const minW = 25;
   const maxZoom = initial.w / minW;
@@ -169,42 +127,52 @@ function attachZoomPan(svg) {
       const rect = svg.getBoundingClientRect();
       const mx = (e.clientX - rect.left) / rect.width;
       const my = (e.clientY - rect.top) / rect.height;
-      const px = vb.x + mx * vb.w;
-      const py = vb.y + my * vb.h;
       const factor = e.deltaY < 0 ? 0.8 : 1.25;
       const targetZoom = (initial.w / vb.w) * (factor < 1 ? 1.25 : 0.8);
       // Anchor zoom around cursor position so wheel interaction feels precise.
       setZoom(targetZoom, mx, my);
     },
-    { passive: false },
+    { passive: false, signal },
   );
 
-  svg.addEventListener("mousedown", (e) => {
-    if (e.button !== 0) return;
-    dragging = true;
-    dragMoved = false;
-    dragStart = { x: e.clientX, y: e.clientY, vbx: vb.x, vby: vb.y };
-    svg.style.cursor = "default";
-  });
+  svg.addEventListener(
+    "mousedown",
+    (e) => {
+      if (e.button !== 0) return;
+      dragging = true;
+      dragMoved = false;
+      dragStart = { x: e.clientX, y: e.clientY, vbx: vb.x, vby: vb.y };
+      svg.style.cursor = "grabbing";
+    },
+    { signal },
+  );
 
-  window.addEventListener("mousemove", (e) => {
-    if (!dragging) return;
-    const dxClient = e.clientX - dragStart.x;
-    const dyClient = e.clientY - dragStart.y;
-    if (Math.abs(dxClient) > 3 || Math.abs(dyClient) > 3) dragMoved = true;
-    const rect = svg.getBoundingClientRect();
-    vb.x = dragStart.vbx - (dxClient / rect.width) * vb.w;
-    vb.y = dragStart.vby - (dyClient / rect.height) * vb.h;
-    clamp();
-    setViewBox();
-  });
+  window.addEventListener(
+    "mousemove",
+    (e) => {
+      if (!dragging) return;
+      const dxClient = e.clientX - dragStart.x;
+      const dyClient = e.clientY - dragStart.y;
+      if (Math.abs(dxClient) > 3 || Math.abs(dyClient) > 3) dragMoved = true;
+      const rect = svg.getBoundingClientRect();
+      vb.x = dragStart.vbx - (dxClient / rect.width) * vb.w;
+      vb.y = dragStart.vby - (dyClient / rect.height) * vb.h;
+      clamp();
+      setViewBox();
+    },
+    { signal },
+  );
 
-  window.addEventListener("mouseup", () => {
-    if (dragging) {
-      dragging = false;
-      svg.style.cursor = "grab";
-    }
-  });
+  window.addEventListener(
+    "mouseup",
+    () => {
+      if (dragging) {
+        dragging = false;
+        svg.style.cursor = "grab";
+      }
+    },
+    { signal },
+  );
 
   // Suppress clicks that arrived from a drag
   svg.addEventListener(
@@ -216,17 +184,21 @@ function attachZoomPan(svg) {
         dragMoved = false;
       }
     },
-    true,
+    { capture: true, signal },
   );
 
   // Double-click on empty map area resets zoom
-  svg.addEventListener("dblclick", (e) => {
-    // Only reset if not on a clickable element
-    const tag = e.target.tagName;
-    if (tag === "path" || tag === "rect" || tag === "g" || tag === "svg") reset();
-  });
+  svg.addEventListener(
+    "dblclick",
+    (e) => {
+      // Only reset if not on a clickable element
+      const tag = e.target.tagName;
+      if (tag === "path" || tag === "rect" || tag === "g" || tag === "svg") reset();
+    },
+    { signal },
+  );
 
-  svg.style.cursor = "default";
+  svg.style.cursor = "grab";
   reset.setZoom = (zoom) => setZoom(zoom);
   reset.getZoom = () => getZoom();
   reset.onZoom = (fn) => {
@@ -312,11 +284,6 @@ function buildGroups(groupBy) {
     cur.waypoints.push(wp);
   }
   return groups;
-}
-
-function groupColor(gi, total) {
-  const hue = Math.round((gi * 360) / Math.max(total, 1)) % 360;
-  return `hsl(${hue}, 55%, 38%)`;
 }
 
 // Type-based segment color — blue for ocean crossings, green for coastal/land,
@@ -676,16 +643,6 @@ function renderRouteMap() {
   const N = groups.length;
   const monthById = new Map((VOYAGE.months || []).map((m) => [m.id, m]));
   const segmentById = new Map((VOYAGE.segments || []).map((s) => [s.id, s]));
-  const monthIndexById = new Map((VOYAGE.months || []).map((m, i) => [m.id, i]));
-  const segmentIndexById = new Map((VOYAGE.segments || []).map((s, i) => [s.id, i]));
-  const specialPortByMonth = new Map(
-    (VOYAGE.months || []).map((m) => {
-      const label = m.label || "";
-      const hasHome = /\[[^\]]*\bhome\b[^\]]*\]/i.test(label);
-      const hasHaul = /\[[^\]]*\bhaul-out\b[^\]]*\]/i.test(label);
-      return [m.id, { home: hasHome, haul: hasHaul }];
-    }),
-  );
   // Backward-compat shim so existing template code keeps working
   const segments = groups.map((g) => ({
     id: g.key,
@@ -708,10 +665,12 @@ function renderRouteMap() {
   // actual sea route around land masses.
   let prevWp = null;
   segments.forEach((seg, si) => {
-    // Color encodes segment type (sea blue / forest green / walnut brown), regardless of grouping.
+    // In "By Month" mode the line color matches the month's accent (alternating
+    // light/dark gray). In "By Segment" mode the line keeps the segment type color
+    // (sea blue / forest green / walnut brown).
     const domSegId = STATE.groupBy === "segment" ? seg.id : dominantSegmentId(seg.waypoints);
     const segMeta = (VOYAGE.segments || []).find((s) => s.id === domSegId);
-    const color = segmentTypeColor(segMeta);
+    const color = STATE.groupBy === "month" ? monthColor(si) : segmentTypeColor(segMeta);
     const ownPts = seg.waypoints.map((w) => project(w.lat, w.lng));
     const linePts = [];
     if (prevWp) {
@@ -762,8 +721,7 @@ function renderRouteMap() {
 
     seg.waypoints.forEach((w, wi) => {
       const p = ownPts[wi];
-      const special = specialPortByMonth.get(w.month) || { home: null, haul: null };
-      const wpClass = special.haul === w.label ? "route-wp route-wp-haul" : special.home === w.label ? "route-wp route-wp-home" : w.kind === "side-trip" ? "route-wp route-wp-side-trip" : "route-wp";
+      const wpClass = w.kind === "side-trip" ? "route-wp route-wp-side-trip" : "route-wp";
       const monthLabel = formatMonthMapTitle(w.month);
       const courseLabel = (segmentById.get(w.segment) && segmentById.get(w.segment).name) || seg.name || "Unknown course";
       const stayDays = formatDays(w.tourStayDays);
@@ -1208,279 +1166,6 @@ function renderTimeline() {
 }
 
 // ============================================================
-// MONTH MODE (preserved for re-use after segmentation)
-// ============================================================
-
-function renderMonthMap() {
-  const waypoints = VOYAGE.waypoints;
-
-  const projected = DATA.months.map((m) => {
-    const w = waypoints[m.id];
-    if (!w) return null;
-    const p = project(w.lat, w.lng);
-    return { m, p, label: w.label };
-  });
-
-  // Per-month route paths — each path visits prev-primary → this month's stops (JSON order) →
-  // this month's primary, and gets a distinct stroke color so months are visually separable.
-  function buildPathD(pts) {
-    let d = "";
-    for (let i = 0; i < pts.length; i++) {
-      if (i === 0) {
-        d = `M ${pts[i].x.toFixed(1)} ${pts[i].y.toFixed(1)}`;
-        continue;
-      }
-      const dx = pts[i].x - pts[i - 1].x;
-      if (Math.abs(dx) > 500) {
-        // antimeridian wrap — exit one edge, re-enter the other
-        const goesLeft = dx > 0;
-        const exitX = goesLeft ? -15 : MAP_W + 15;
-        const entryX = goesLeft ? MAP_W + 15 : -15;
-        const midY = (pts[i - 1].y + pts[i].y) / 2;
-        d += ` L ${exitX.toFixed(1)} ${midY.toFixed(1)}`;
-        d += ` M ${entryX.toFixed(1)} ${midY.toFixed(1)}`;
-        d += ` L ${pts[i].x.toFixed(1)} ${pts[i].y.toFixed(1)}`;
-      } else {
-        d += ` L ${pts[i].x.toFixed(1)} ${pts[i].y.toFixed(1)}`;
-      }
-    }
-    return d;
-  }
-
-  // Primaries are dropped from the route polyline — they remain as labeled marker dots.
-  // Each month's path = (previous month's last stop) → this month's stops in order.
-  function lastStopPoint(monthIdx) {
-    const w = waypoints[projected[monthIdx].m.id];
-    if (w && w.stops && w.stops.length) {
-      const last = w.stops[w.stops.length - 1];
-      return project(last.lat, last.lng);
-    }
-    return projected[monthIdx].p; // fallback to primary if no stops
-  }
-
-  let routePaths = "";
-  for (let mi = 0; mi < projected.length; mi++) {
-    const item = projected[mi];
-    if (!item) continue;
-    const stops = (waypoints[item.m.id] && waypoints[item.m.id].stops) || [];
-    if (stops.length === 0) continue;
-    const pts = [];
-    if (mi > 0 && projected[mi - 1]) pts.push(lastStopPoint(mi - 1));
-    for (const s of stops) pts.push(project(s.lat, s.lng));
-    if (pts.length < 2) continue;
-    routePaths += `<path d="${buildPathD(pts)}" stroke="${monthColor(mi)}" class="route-path-month" data-month-id="${item.m.id}"/>`;
-  }
-
-  // Waypoint markers + labels
-  let waypointMarkers = "";
-  let waypointLabels = "";
-  let stopMarkers = "";
-  for (let mi = 0; mi < projected.length; mi++) {
-    const item = projected[mi];
-    if (!item) continue;
-    const { m, p, label } = item;
-    const waypoint = waypoints[m.id] || null;
-    const stayDays = waypoint ? formatDays(waypoint.tourStayDays) : "";
-    const titleLine1 = `${label || m.location}${stayDays ? ` (${stayDays})` : ""}`;
-    const style = waypointStyle(m.id, mi);
-    const ringHtml = style.ring
-      ? `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${style.r + 4}" fill="none" stroke="${style.fill}" stroke-width="1.2" opacity="0.55"/>`
-      : "";
-    waypointMarkers += `
-      <g class="waypoint" data-month-id="${m.id}">
-        ${ringHtml}
-        <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${style.r}" fill="${style.fill}" stroke="${style.stroke}" stroke-width="1"/>
-        ${waypointIcon(m.id, p)}
-        <title>${titleLine1}&#10;${formatMonthMapTitle(m.id)}&#10;${m.region || "Course"}</title>
-      </g>`;
-
-    const lblOffsetY = m.year === 2 && p.y < 320 ? -10 : 13;
-    waypointLabels += `<text x="${p.x.toFixed(1)}" y="${(p.y + lblOffsetY).toFixed(1)}" class="wp-label" text-anchor="middle">${m.num}</text>`;
-
-    // Secondary stops (smaller dots, no labels; hover shows tooltip)
-    const stops = waypoints[m.id] && waypoints[m.id].stops;
-    if (stops) {
-      for (const s of stops) {
-        const sp = project(s.lat, s.lng);
-        const cls = s.kind === "side-trip" ? "stop-dot stop-side-trip" : s.kind === "passage" ? "stop-dot stop-passage" : "stop-dot";
-        stopMarkers += `<circle cx="${sp.x.toFixed(1)}" cy="${sp.y.toFixed(1)}" r="2.5" class="${cls}"><title>${s.label}&#10;${formatMonthMapTitle(m.id)}</title></circle>`;
-      }
-    }
-  }
-
-  // Continent silhouette paths (from continents.js)
-  const continentsHtml = CONTINENTS.map((d) => `<path d="${d}" class="continent"/>`).join("");
-
-  // Graticule (lat/long grid) — every 30°
-  let graticule = "";
-  for (let lng = -180; lng <= 180; lng += 30) {
-    const x = (((lng + 180) * MAP_W) / 360).toFixed(1);
-    graticule += `<line x1="${x}" y1="0" x2="${x}" y2="${MAP_H}" class="grid-line"/>`;
-  }
-  for (let lat = -60; lat <= 60; lat += 30) {
-    const y = (((90 - lat) * MAP_H) / 180).toFixed(1);
-    graticule += `<line x1="0" y1="${y}" x2="${MAP_W}" y2="${y}" class="grid-line"/>`;
-  }
-  const eqY = (MAP_H / 2).toFixed(1);
-  graticule += `<line x1="0" y1="${eqY}" x2="${MAP_W}" y2="${eqY}" class="grid-equator"/>`;
-
-  // Region labels — from voyage.jsonc
-  const regionLabels = (VOYAGE.mapLabels || [])
-    .map((l) => {
-      const cls =
-        l.type === "continent"
-          ? "region-label"
-          : l.type === "ocean-major"
-            ? "region-label ocean major"
-            : l.type === "ocean"
-              ? "region-label ocean"
-              : "region-label";
-      return `<text x="${l.x}" y="${l.y}" class="${cls}" text-anchor="middle">${l.text}</text>`;
-    })
-    .join("");
-
-  // Decorative cartouche — text from voyage.jsonc
-  const c = VOYAGE.cartouche || {};
-  const startMonth = (VOYAGE && VOYAGE.voyage && VOYAGE.voyage.startMonth) || "Jan";
-  const startYear = (VOYAGE && VOYAGE.voyage && VOYAGE.voyage.startYear) || 2034;
-  const cartoucheStartText = `departing ${startMonth} ${startYear}`;
-  const cartouche = `
-    <g transform="translate(820 415)" class="map-cartouche">
-      <rect x="0" y="0" width="170" height="68" rx="2" fill="#f1e4be" stroke="#4a3217" stroke-width="0.8"/>
-      <rect x="3" y="3" width="164" height="62" rx="1" fill="none" stroke="#b8932e" stroke-width="0.5"/>
-      <text x="85" y="22" text-anchor="middle" class="cartouche-title">${c.title || ""}</text>
-      <text x="85" y="36" text-anchor="middle" class="cartouche-sub">${cartoucheStartText}</text>
-      <text x="85" y="54" text-anchor="middle" class="cartouche-sub">${c.sub2 || ""}</text>
-    </g>
-  `;
-
-  const svg = `
-    <svg viewBox="0 0 ${MAP_W} ${MAP_H}" xmlns="http://www.w3.org/2000/svg" class="world-map-svg" preserveAspectRatio="xMidYMid meet">
-      <defs>
-        <pattern id="ocean-grain" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
-          <circle cx="1" cy="1" r="0.4" fill="rgba(74,50,23,0.10)"/>
-        </pattern>
-      </defs>
-      <rect width="${MAP_W}" height="${MAP_H}" fill="#ecdcb0"/>
-      <rect width="${MAP_W}" height="${MAP_H}" fill="url(#ocean-grain)"/>
-      <g class="graticule">${graticule}</g>
-      <g class="continents">${continentsHtml}</g>
-      <g class="regions">${regionLabels}</g>
-      <g class="route" style="overflow:visible">${routePaths}</g>
-      <g class="stops">${stopMarkers}</g>
-      <g class="waypoints">${waypointMarkers}</g>
-      <g class="waypoint-labels">${waypointLabels}</g>
-      ${cartouche}
-    </svg>
-  `;
-
-  $("#world-map").innerHTML = svg;
-
-  // Wire wheel-zoom + drag-pan + reset button
-  const svgElM = $("#world-map svg");
-  const resetM = attachZoomPan(svgElM);
-  mountZoomControls($("#world-map"), resetM);
-
-  // Wire waypoint clicks → scroll to that month's card in the timeline
-  $$(".waypoint").forEach((g) => {
-    g.addEventListener("click", () => {
-      const id = g.dataset.monthId;
-      const card = document.querySelector(`.voyage-card[data-month-id="${id}"]`);
-      if (card) {
-        card.scrollIntoView({ behavior: "smooth", block: "center" });
-        card.classList.add("pulse");
-        setTimeout(() => card.classList.remove("pulse"), 1500);
-      }
-    });
-  });
-}
-
-// ============================================================
-// TIMELINE RENDERING
-// ============================================================
-
-function badgeHtml(monthBadges) {
-  const labels = {
-    home: "✈ home trip",
-    haul: "🏗 haul out",
-    passage: "🌊 ocean passage",
-    quarantine: "🐕 dog quarantine",
-    celebration: "🎉 circumnavigation complete",
-  };
-  return (monthBadges || []).map((b) => `<span class="badge badge-${b}">${labels[b] || b}</span>`).join("");
-}
-
-function renderMonthTimeline() {
-  const host = $("#voyage-timeline");
-  const years = VOYAGE.years || {};
-  const waypoints = VOYAGE.waypoints || {};
-  let html = "";
-
-  for (const yr of [1, 2, 3]) {
-    const meta = years[String(yr)] || { title: `Year ${yr}`, season: "", summary: "" };
-    const months = DATA.months.filter((m) => m.year === yr);
-
-    html += `
-      <div class="year-block">
-        <div class="year-block-head">
-          <div class="year-block-mark">Year ${yr}</div>
-          <h3 class="year-block-title">${meta.title}</h3>
-          <div class="year-block-season">${seasonForMonth(meta)}</div>
-          <p class="year-block-summary">${meta.summary}</p>
-        </div>
-        <div class="voyage-grid">
-    `;
-
-    for (const m of months) {
-      const badges = badgeHtml(m.badges);
-      const badgeClasses = (m.badges || []).map((b) => `card-${b}`).join(" ");
-      const wp = waypoints[m.id];
-      const wpLabel = wp ? wp.label : "";
-      const stops = wp && wp.stops;
-      const stopsHtml =
-        stops && stops.length
-          ? `<div class="vc-stops"><strong>Stops</strong>${stops
-              .map((s) => {
-                const tag =
-                  s.kind === "side-trip"
-                    ? ' <em class="vc-stop-kind">(side trip)</em>'
-                    : s.kind === "passage"
-                      ? ' <em class="vc-stop-kind">(passage)</em>'
-                      : "";
-                return `<span class="vc-stop">${s.label}${tag}</span>`;
-              })
-              .join("")}</div>`
-          : "";
-      html += `
-        <article class="voyage-card ${badgeClasses}" data-month-id="${m.id}">
-          <div class="vc-head">
-            <div class="vc-mark">${m.num} · ${m.calMonth} · YR${yr}</div>
-            ${badges ? `<div class="vc-badges">${badges}</div>` : ""}
-          </div>
-          <div class="vc-loc">
-            <span class="vc-flag">${m.flag}</span>${m.location}
-          </div>
-          <div class="vc-region">${m.region}</div>
-          ${m.summary ? `<p class="vc-summary">${m.summary}</p>` : ""}
-          ${stopsHtml}
-          <div class="vc-foot">
-            ${wpLabel ? `<span class="vc-waypoint">anchorage: <em>${wpLabel}</em></span>` : "<span></span>"}
-            <a href="budget.html#${m.id}" class="vc-budget-link">view budget →</a>
-          </div>
-        </article>
-      `;
-    }
-
-    html += `
-        </div>
-      </div>
-    `;
-  }
-
-  host.innerHTML = html;
-}
-
-// ============================================================
 // BOOT
 // ============================================================
 
@@ -1610,15 +1295,45 @@ function computeMonths(voyage) {
       plannedTourDays: m.tour,
       plannedHomeDays: m.home,
       plannedHaulDays: m.haul,
-      plannedReservedDays: 0,
       plannedTotalDays: total,
     };
   });
 }
 
+const MONTH_LONG_NAMES = {
+  Jan: "January", Feb: "February", Mar: "March", Apr: "April",
+  May: "May", Jun: "June", Jul: "July", Aug: "August",
+  Sep: "September", Oct: "October", Nov: "November", Dec: "December",
+};
+
+// Populate the header spec chips + cast-off date from the loaded voyage data
+// so the displayed values stay in sync with the JSONC source.
+function renderHeader() {
+  const waypoints = VOYAGE.waypoints || [];
+  const segments = VOYAGE.segments || [];
+  const months = VOYAGE.months || [];
+  const destinations = waypoints.length;
+  const passages = segments.filter((s) => s.type === "crossing").length;
+  const hauls = months.filter((m) => (m.plannedHaulDays || 0) > 0).length;
+  const homes = months.filter((m) => (m.plannedHomeDays || 0) > 0).length;
+  const totalNm = segments.reduce((s, x) => s + (x.nm || 0), 0);
+
+  const set = (id, text) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  };
+  set("chip-destinations", `${destinations} destinations · ${passages} ocean passages`);
+  set("chip-events", `${hauls} haul-outs · ${homes} trips home`);
+  set("chip-duration", `${months.length} months · ≈ ${totalNm.toLocaleString()} nm`);
+
+  const startMonth = (VOYAGE.voyage && VOYAGE.voyage.startMonth) || "Jan";
+  const startYear = (VOYAGE.voyage && VOYAGE.voyage.startYear) || new Date().getFullYear();
+  set("cast-off-date", `${MONTH_LONG_NAMES[startMonth] || startMonth} ${startYear}`);
+}
+
 async function boot() {
   try {
-    [DATA, VOYAGE] = await Promise.all([fetchJson("months.json"), fetchJson("voyage.jsonc")]);
+    VOYAGE = await fetchJson("voyage.jsonc");
     VOYAGE.months = computeMonths(VOYAGE);
   } catch (err) {
     $("#loading").innerHTML = `
@@ -1636,7 +1351,7 @@ async function boot() {
   // Until the budget itinerary is locked in, hide the budget CTA
   document.body.classList.add("route-mode");
 
-  classifyMonths();
+  renderHeader();
   renderMap();
   renderTimeline();
 }
