@@ -1348,9 +1348,6 @@ async function boot() {
 
   $("#loading").remove();
 
-  // Until the budget itinerary is locked in, hide the budget CTA
-  document.body.classList.add("route-mode");
-
   renderHeader();
   renderMap();
   renderTimeline();

@@ -1,0 +1,146 @@
+// prettier-ignore
+{
+  "_comment": "Budget rate sheet — feeds computeBudget() in app.js to generate per-month line items from the voyage plan in voyage.jsonc. Edit per-category / per-segment rates here; the budget regenerates automatically. Numbers are USD mid estimates; lo/hi are derived in app.js using `loHiRanges`.",
+
+  "meta": {
+    "vessel": "40' catamaran · 2015 build",
+    "crew": "2 adults (65 & 56) + 1 dog",
+    "targetDeparture": "2033",
+    "dockageSplit": "30% anchor · 30% mooring · 30% slip · 10% passage"
+  },
+
+  "categories": {
+    "marina":   { "name": "Marina & Dockage",            "icon": "⚓",  "color": "blue"   },
+    "prov":     { "name": "Provisioning & Dining",        "icon": "🛒", "color": "green"  },
+    "health":   { "name": "Health Insurance",             "icon": "🏥", "color": "red"    },
+    "vessel":   { "name": "Vessel Insurance",             "icon": "🛡️", "color": "teal"   },
+    "maint":    { "name": "Maintenance & Repairs",        "icon": "🔧", "color": "warn"   },
+    "fuel":     { "name": "Fuel & Energy",                "icon": "⛽", "color": "gold"   },
+    "comms":    { "name": "Communications & Nav",         "icon": "📡", "color": "purple" },
+    "customs":  { "name": "Customs & Port Fees",          "icon": "🛂", "color": "sand"   },
+    "dog":      { "name": "Dog Expenses",                 "icon": "🐾", "color": "pink"   },
+    "personal": { "name": "Personal & Lifestyle",         "icon": "👤", "color": "sand"   },
+    "admin":    { "name": "Admin & Banking",              "icon": "📋", "color": "sand"   },
+    "flights":  { "name": "Flights Home + Boat Watch",    "icon": "✈️", "color": "gold"   },
+    "haul":     { "name": "Haul-Out & Bottom Work",       "icon": "🏗️", "color": "warn"   },
+    "buffer":   { "name": "Drake Passage Buffer",         "icon": "⚠️", "color": "warn"   },
+    "celeb":    { "name": "Circumnavigation Celebration", "icon": "🎉", "color": "gold"   }
+  },
+
+  "loHiRanges": {
+    "health":   [0.95, 1.10],
+    "vessel":   [0.90, 1.15],
+    "comms":    [0.85, 1.20],
+    "marina":   [0.75, 1.40],
+    "prov":     [0.80, 1.30],
+    "fuel":     [0.75, 1.40],
+    "customs":  [0.80, 1.30],
+    "maint":    [0.70, 1.50],
+    "dog":      [0.85, 1.25],
+    "personal": [0.75, 1.40],
+    "admin":    [0.90, 1.20],
+    "flights":  [0.80, 1.30],
+    "haul":     [0.85, 1.40],
+    "buffer":   [0.50, 2.00],
+    "celeb":    [0.60, 1.50]
+  },
+
+  "recurring": [
+    { "cat": "health", "name": "Cigna Global / GeoBlue — Jeff (65)", "note": "Medicare does not cover international", "mid": 917 },
+    { "cat": "health", "name": "International plan — Missy (56)",    "note": "expat / liveaboard policy",            "mid": 483 },
+    { "cat": "health", "name": "MEDEVAC evacuation rider",           "note": "MedjetAssist or similar",              "mid": 150 },
+    { "cat": "vessel", "name": "Bluewater hull & liability",         "note": "global cruising endorsement",          "mid": 300 },
+    { "cat": "comms",  "name": "Starlink Roam + Iridium GO",         "note": "global data + offshore safety",        "mid": 175 }
+  ],
+
+  // Per-segment cost profile. computeBudget picks the dominant segment's profile
+  // for each month. *Day rates are $ per day-in-category; sail vs. tour days come
+  // from the voyage packing (computeMonths in app.js).
+  "segmentRates": {
+    "midAtlantic":   { "name": "Mid-Atlantic crossing",        "marinaDay": 70,  "provDay": 50, "personalDay": 30, "fuelSailDay": 50, "customsBase": 250, "maintBase": 800  },
+    "mediterranean": { "name": "Mediterranean",                "marinaDay": 110, "provDay": 65, "personalDay": 40, "fuelSailDay": 70, "customsBase": 400, "maintBase": 850  },
+    "nAtlantic":     { "name": "North Atlantic crossing",      "marinaDay": 75,  "provDay": 55, "personalDay": 30, "fuelSailDay": 55, "customsBase": 300, "maintBase": 800  },
+    "sAmericaSE":    { "name": "South America (Atlantic side)","marinaDay": 65,  "provDay": 50, "personalDay": 25, "fuelSailDay": 55, "customsBase": 350, "maintBase": 850  },
+    "antarctica":    { "name": "Antarctica",                   "marinaDay": 60,  "provDay": 85, "personalDay": 50, "fuelSailDay": 95, "customsBase": 600, "maintBase": 1300 },
+    "sAmericaSW":    { "name": "South America (Pacific side)", "marinaDay": 60,  "provDay": 50, "personalDay": 25, "fuelSailDay": 55, "customsBase": 350, "maintBase": 850  },
+    "sPacific":      { "name": "South Pacific",                "marinaDay": 55,  "provDay": 65, "personalDay": 35, "fuelSailDay": 60, "customsBase": 400, "maintBase": 950  },
+    "oceanic":       { "name": "Oceanic — NZ & Australia",     "marinaDay": 100, "provDay": 70, "personalDay": 40, "fuelSailDay": 70, "customsBase": 500, "maintBase": 1000 },
+    "asia":          { "name": "Asia",                         "marinaDay": 35,  "provDay": 35, "personalDay": 20, "fuelSailDay": 50, "customsBase": 350, "maintBase": 700  },
+    "indian":        { "name": "Indian Ocean",                 "marinaDay": 55,  "provDay": 55, "personalDay": 35, "fuelSailDay": 60, "customsBase": 400, "maintBase": 900  },
+    "africaSouth":   { "name": "Around Africa",                "marinaDay": 50,  "provDay": 45, "personalDay": 25, "fuelSailDay": 60, "customsBase": 400, "maintBase": 1000 },
+    "sAtlantic":     { "name": "South Atlantic crossing",      "marinaDay": 80,  "provDay": 60, "personalDay": 30, "fuelSailDay": 55, "customsBase": 250, "maintBase": 800  },
+    "sAmericaNE":    { "name": "Northern South America",       "marinaDay": 55,  "provDay": 45, "personalDay": 25, "fuelSailDay": 55, "customsBase": 350, "maintBase": 850  },
+    "caribbean":     { "name": "Caribbean",                    "marinaDay": 90,  "provDay": 65, "personalDay": 40, "fuelSailDay": 60, "customsBase": 400, "maintBase": 900  }
+  },
+
+  "baseMonthly": {
+    "dog":   400,
+    "admin": 150
+  },
+
+  // Line item names/notes per category for the standard, every-month rows.
+  "templates": {
+    "marina":   { "name": "Marina, mooring & anchorage fees", "note": "30% slip · 30% mooring · 30% anchor · 10% passage" },
+    "prov":     { "name": "Provisioning & dining out",         "note": "2× restaurants/wk + ship's stores" },
+    "fuel":     { "name": "Diesel, propane & shore power",     "note": "" },
+    "customs":  { "name": "Port fees & cruising permits",      "note": "" },
+    "maint":    { "name": "Routine maintenance & spares",      "note": "" },
+    "personal": { "name": "Excursions, laundry, clothing",     "note": "" },
+    "dog":      { "name": "Dog food, vet, grooming",           "note": "" },
+    "admin":    { "name": "Wire fees, banking, mail storage",  "note": "" }
+  },
+
+  // Per-event line items appended to event-triggering months.
+  "homeTrip": [
+    { "cat": "dog",     "name": "Dog boarding — 8 nights",        "note": "while owners are away", "mid": 580  },
+    { "cat": "flights", "name": "Flight — Jeff (round-trip)",      "mid": 1100 },
+    { "cat": "flights", "name": "Flight — Missy (round-trip)",     "mid": 1100 },
+    { "cat": "flights", "name": "Ground transport both ends",      "mid": 200  },
+    { "cat": "flights", "name": "Travel insurance",                "mid": 100  },
+    { "cat": "flights", "name": "Misc home expenses",              "mid": 250  },
+    { "cat": "flights", "name": "Boat watch — 2 weeks",            "mid": 400  }
+  ],
+
+  "haulOut": [
+    { "cat": "haul", "name": "Travel lift (catamaran wide beam)", "note": "$1,500-2,500 range",  "mid": 2000 },
+    { "cat": "haul", "name": "Bottom paint (2 hulls, 2 coats)",                                  "mid": 2800 },
+    { "cat": "haul", "name": "Zincs, shaft seals, pressure wash",                                "mid": 700  },
+    { "cat": "haul", "name": "Yard blocking / storage",                                          "mid": 450  },
+    { "cat": "haul", "name": "Through-hull & rudder inspection",                                 "mid": 400  }
+  ],
+
+  // Applied to the month with the most antarctica-segment days.
+  "antarcticaBuffer": {
+    "cat": "buffer",
+    "name": "Drake Passage / Antarctica weather hold",
+    "note": "fuel + sail repair + retreat allowance — non-negotiable",
+    "mid": 2000
+  },
+
+  // Applied to the final month of the voyage.
+  "celebration": [
+    { "cat": "celeb", "name": "Homecoming celebration",     "note": "marina party + family fly-in", "mid": 1200 },
+    { "cat": "celeb", "name": "Pennant, plaque, log binding", "note": "circumnavigation pennant + framed chart", "mid": 350  }
+  ],
+
+  // Per-year metadata for the year tabs. Indexed 1..N; extra entries beyond the
+  // computed year count are ignored, missing entries fall back to a generic title.
+  "years": [
+    { "title": "Year One — Atlantic & Mediterranean",        "route": "Annapolis · Bermuda · Azores · Lisbon · Barcelona · Italy · Croatia · Albania · Turkey · Egypt · Jordan · Greece · Sicily" },
+    { "title": "Year Two — South America & Antarctica",      "route": "Casablanca · Madeira · Canaries · Cape Verde · Brazil · Uruguay · Falklands · Antarctica · Chile · Peru · Ecuador · Panama" },
+    { "title": "Year Three — Pacific Crossing & Antipodes",  "route": "Costa Rica · Galápagos · Easter Island · French Polynesia · Cook Islands · Samoa · Tonga · Fiji · Vanuatu · New Zealand · Australia" },
+    { "title": "Year Four — Asia & Indian Ocean",            "route": "Philippines · Japan · South Korea · Taiwan · Hong Kong · Vietnam · Thailand · Singapore · Bangladesh · India · Sri Lanka · Maldives" },
+    { "title": "Year Five — Africa, Atlantic & Homecoming",  "route": "Réunion · Madagascar · Mozambique · South Africa · Namibia · St Helena · Ascension · NE Brazil · French Guiana · Caribbean · Florida" }
+  ],
+
+  "notes": [
+    { "tone": "red",  "title": "🏥 Age-65 Insurance Cliff",         "body": "Medicare does not travel. Shop GeoBlue Xplorer Premier or Cigna Global Platinum 6 months before departure. The age-65 premium is roughly double the age-56 premium — combined coverage runs ~$1,550/month including a MEDEVAC rider, and is the single largest non-haul cost in the budget." },
+    { "tone": "warn", "title": "⚠️ Antarctica Buffer — Non-Negotiable", "body": "The $2,000 buffer in the Antarctica month covers Drake Passage weather-window holds, channel beacon damage, sail repair, or a forced retreat. Antarctic peninsula routing has zero margin for opportunistic departures — wait for your window, even if it costs three weeks." },
+    { "tone": "gold", "title": "💡 Year 4 Is The Cheapest",          "body": "Asia (Philippines, Vietnam, Thailand, India, Sri Lanka) pulls Year 4's monthly average ~$1,000/mo below Years 1 and 2. Plan to rebuild any reserve drawn down by the Pacific crossing and the Antarctica detour." },
+    { "tone": "warn", "title": "🏗️ Four Haul-Outs, Four Strategies",  "body": "Palermo (M12) — Sicily yards are reasonable mid-trip. Buenaventura (M24) — Pacific approach, plan provisions ahead. Osaka (M37) — high quality, premium prices. Diego Suarez (M49) — best bottom-paint value before the Atlantic re-crossing." },
+    { "tone": "red",  "title": "🔴 East Africa Routing",             "body": "Never route through the Gulf of Aden. Hug the East African coast south — Madagascar, Mozambique, Durban — and round at the Cape. Time the Cape Town departure for April/May before Southern Ocean winter. The Agulhas Current is fast and rough; wait for your window." },
+    { "tone": "warn", "title": "🛂 Schengen 90/180 Rule",            "body": "The Mediterranean tour overstays Schengen if you don't break the count. The 30 days planned in the Gulf of Aqaba (Jordan, non-Schengen) intentionally resets the rolling 180-day clock before the final Sicily approach. Skip it and you'll be fined on exit." },
+    { "tone": "pink", "title": "🐾 Dog Boarding Abroad",             "body": "Cruiser Facebook groups are the best resource. Book 2+ weeks ahead. Europe and Japan are easy; SE Asia and Africa require legwork. South American marinas often have staff who'll watch the dog for cash. Bring vaccination records to every booking." },
+    { "tone": "gold", "title": "📋 $40K Emergency Reserve",          "body": "Hold $40,000 entirely outside the monthly operating budget. Five years of bluewater sailing will stress every system multiple times — watermaker, sails, engines, dinghy, electronics. Over 56 months the chance of a major unplanned expense is effectively 100%, and the southern oceans alone could consume the entire reserve." }
+  ]
+}

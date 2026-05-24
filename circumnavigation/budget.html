@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Budget Detail · 36-Month Circumnavigation</title>
+<title>Budget Detail · Circumnavigation</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,14 +59,15 @@
       <text x="50" y="3.5" text-anchor="middle" font-family="Playfair Display, serif" font-style="italic" font-size="6" font-weight="700" fill="#7a2f1d">N</text>
     </svg>
     <div class="compass">Ledger · Reckoning · Stores · Charts</div>
-    <h1>The <em>Budget</em><br>Three Years, Itemised</h1>
-    <p class="subtitle">Every line item that funds the voyage — marina dockage, provisioning, diesel, dog certs, haul-outs, and the relentless every-month health insurance bill — laid out month by month.</p>
+    <h1>The <em>Budget</em><br>Five Years, Itemised</h1>
+    <p class="subtitle">Every line item that funds the voyage — marina dockage, provisioning, diesel, dog certs, haul-outs, and the relentless every-month health insurance bill — derived line by line from <code>voyage.jsonc</code> + <code>rates.jsonc</code> so any itinerary change flows straight through.</p>
     <div class="spec-row">
       <span class="chip">40' Catamaran · 2015 build</span>
       <span class="chip">2 adults (65 &amp; 56) + 1 dog</span>
       <span class="chip">30% anchor · 30% mooring · 30% slip · 10% passage</span>
-      <span class="chip">12 flights home · 36 dog-boarding nights/yr</span>
-      <span class="chip">3 annual haul-outs</span>
+      <span class="chip" id="chip-flights">…</span>
+      <span class="chip" id="chip-hauls">…</span>
+      <span class="chip" id="chip-duration">…</span>
     </div>
   </header>
 
@@ -80,14 +81,14 @@
 
   <div class="tiles" id="tiles">
     <div class="tile main">
-      <div class="t-lbl">3-Year Total</div>
+      <div class="t-lbl">Full Voyage Total</div>
       <div class="t-val gold" id="t-total">—</div>
       <div class="t-sub" id="t-total-range">computing…</div>
     </div>
     <div class="tile">
       <div class="t-lbl">Per Year (avg)</div>
       <div class="t-val teal" id="t-year">—</div>
-      <div class="t-sub">across all 36 months</div>
+      <div class="t-sub" id="t-year-sub">computing…</div>
     </div>
     <div class="tile">
       <div class="t-lbl">Per Month (avg)</div>
@@ -100,30 +101,25 @@
       <div class="t-sub">recurring, every month</div>
     </div>
     <div class="tile">
-      <div class="t-lbl">Countries Visited</div>
-      <div class="t-val blue" id="t-countries">~38</div>
-      <div class="t-sub">across 6 ocean passages</div>
+      <div class="t-lbl">Categories Tracked</div>
+      <div class="t-val blue">15</div>
+      <div class="t-sub">across all line items</div>
     </div>
   </div>
 
-  <div class="tabs" role="tablist">
-    <button class="tab active" data-year="rollup">3-Year Rollup</button>
-    <button class="tab" data-year="1">Year 1 · Med &amp; Atlantic</button>
-    <button class="tab" data-year="2">Year 2 · Pacific &amp; Antipodes</button>
-    <button class="tab" data-year="3">Year 3 · Asia &amp; Indian Ocean</button>
-  </div>
+  <div class="tabs" id="year-tabs" role="tablist"></div>
 
   <div id="year-rollup" class="panel active">
     <div class="year-hdr">
       <div>
-        <div class="year-title">3-Year Rollup</div>
-        <div class="year-route">All categories across all 36 months · 12 flights home · 3 haul-outs · ~38 countries</div>
+        <div class="year-title">Voyage Rollup</div>
+        <div class="year-route">All categories across every month of the planned voyage.</div>
       </div>
       <div class="year-total" id="yr-total"><span class="yt-big">—</span>low — · high —</div>
     </div>
 
     <div class="sbox cfchart">
-      <div class="stitle">Monthly Cash Flow — All 36 Months</div>
+      <div class="stitle">Monthly Cash Flow</div>
       <div class="cf-grid" id="cf-bars"></div>
       <div class="cf-labels" id="cf-labels"></div>
       <div class="cf-legend">
@@ -135,9 +131,9 @@
     </div>
 
     <div class="sbox">
-      <div class="stitle">Category Breakdown — All Three Years</div>
+      <div class="stitle">Category Breakdown — Per Year</div>
       <table id="rollup-cats">
-        <thead><tr><th>Category</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>3-Yr Total</th><th>%</th></tr></thead>
+        <thead></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -145,7 +141,7 @@
     <div class="sbox">
       <div class="stitle">Year-by-Year Stats</div>
       <table id="rollup-years">
-        <thead><tr><th>Metric</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>3-Year</th></tr></thead>
+        <thead></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -156,46 +152,12 @@
     </div>
   </div>
 
-  <div id="year-1" class="panel">
-    <div class="year-hdr">
-      <div>
-        <div class="year-title">Year One — Mediterranean &amp; Atlantic</div>
-        <div class="year-route">Spain · Croatia · Greece · Turkey · Gibraltar · Canaries · Cape Verde · Brazil · Uruguay · Argentina · Cape Horn · Chile</div>
-      </div>
-      <div class="year-total" id="y1-total"><span class="yt-big">—</span>low — · high —</div>
-    </div>
-    <div class="month-subtabs" data-subtabs-for="1"></div>
-    <div class="month-panel-host" data-host-for="1"></div>
-  </div>
-
-  <div id="year-2" class="panel">
-    <div class="year-hdr">
-      <div>
-        <div class="year-title">Year Two — Pacific &amp; Antipodes</div>
-        <div class="year-route">Easter Island · French Polynesia · Cook Is. · Tonga · Samoa · Fiji · Vanuatu · New Zealand · Australia · Indonesia</div>
-      </div>
-      <div class="year-total" id="y2-total"><span class="yt-big">—</span>low — · high —</div>
-    </div>
-    <div class="month-subtabs" data-subtabs-for="2"></div>
-    <div class="month-panel-host" data-host-for="2"></div>
-  </div>
-
-  <div id="year-3" class="panel">
-    <div class="year-hdr">
-      <div>
-        <div class="year-title">Year Three — Asia, Indian Ocean &amp; Home</div>
-        <div class="year-route">Philippines · Taiwan · Japan · Sri Lanka · Maldives · India · Seychelles · East Africa · South Africa · St. Helena · Ascension · Caribbean</div>
-      </div>
-      <div class="year-total" id="y3-total"><span class="yt-big">—</span>low — · high —</div>
-    </div>
-    <div class="month-subtabs" data-subtabs-for="3"></div>
-    <div class="month-panel-host" data-host-for="3"></div>
-  </div>
+  <div id="year-panels"></div>
 
   <div id="loading" class="loading">Casting off…</div>
 
   <footer>
-    Jorczak.com · Circumnavigation Planning · All figures USD · 2034 target departure · Estimates only — individual results vary by pace, season, and lifestyle
+    Jorczak.com · Circumnavigation Planning · All figures USD · Estimates only — individual results vary by pace, season, and lifestyle
   </footer>
 
 </div>
