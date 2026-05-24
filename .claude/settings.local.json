@@ -1,4 +1,5 @@
 {
+  "skipDangerousModePermissionPrompt": true,
   "sandbox": {
     "network": {
       "allowedDomains": ["discord.com"]
@@ -7,37 +8,18 @@
   "permissions": {
     "defaultMode": "bypassPermissions",
     "allow": [
+      "Bash",
+      "Bash(*)",
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
       "WebSearch",
-      "WebFetch(domain:*)",
-      "WebFetch(domain:www.familysearch.org)",
-      "WebFetch(domain:namecensus.com)",
-      "WebFetch(domain:en.geneanet.org)",
-      "WebFetch(domain:surnameorigin.info)",
-      "WebFetch(domain:forebears.io)",
-      "WebFetch(domain:www.ancientfaces.com)",
-      "WebFetch(domain:www.imdb.com)",
-      "WebFetch(domain:lastnames.myheritage.com)",
-      "WebFetch(domain:prabook.com)",
-      "WebFetch(domain:familynames.org)",
-      "WebFetch(domain:www.ancestry.com)",
-      "WebFetch(domain:www.behindthename.com)",
-      "WebFetch(domain:lemko.org)",
-      "Bash(npx --yes live-server --version)",
-      "Bash(node -e \"require\\(''./family-tree.json''\\)\")",
-      "Bash(node -e \"require\\(''./family-tree.json''\\); console.log\\(''valid''\\)\")",
-      "WebFetch(domain:www.inkfreenews.com)",
-      "WebFetch(domain:www.odonnellfhome.com)",
-      "Bash(node -e \"require\\(''c:/Users/jeff/OneDrive/Projects/Code/Websites/Jorczak/family-tree.json''\\); console.log\\(''JSON valid''\\)\")",
-      "WebFetch(domain:www.legacy.com)",
-      "Bash(node -e \":*)",
-      "Bash(node validate.js)",
-      "Bash(node -e \"var d=require\\(''./family-tree.json''\\); console.log\\(JSON.stringify\\(d.marriages[0]\\)\\); console.log\\(JSON.stringify\\(d.parentage[0]\\)\\);\")",
-      "Bash(node -e \"require\\(''./family-tree.json''\\); console.log\\(''JSON valid''\\)\")",
-      "WebFetch(domain:www.findagrave.com)",
-      "WebFetch(domain:obituaries.goshennews.com)",
-      "WebFetch(domain:www.rrefh.com)",
-      "WebFetch(domain:www.myheritage.com)",
-      "WebFetch(domain:www.instantcheckmate.com)"
+      "WebFetch",
+      "WebFetch(*)",
+      "Powershell",
+      "Powershell(*)"
     ]
   }
 }

@@ -1,0 +1,761 @@
+// prettier-ignore
+{
+  "_comment": "Abandoned voyage segments — extracted from voyage.jsonc on schema rev. Baltic Sea and Rhein–Main–Danube Waterway are no longer part of the active itinerary. Routes include the original entry route from inner-hebrides-skye and exit route to istanbul — those references point at waypoints that live in voyage.jsonc, not here. Re-introduce by merging segments[], waypoints[], and routes[] back, dropping the bridge route from the main file.",
+  "segments": [
+    {
+      "id": "baltic",
+      "name": "Baltic Sea",
+      "nm": 3213,
+      "type": "coastal"
+    },
+    {
+      "id": "rhineDanube",
+      "name": "Rhein–Main–Danube Waterway",
+      "nm": 1469,
+      "type": "inland"
+    },
+    {
+      "id": "mediterranean",
+      "name": "Mediterranean",
+      "nm": 5981,
+      "type": "coastal"
+    }
+  ],
+  "waypoints": [
+    {
+      "id": "dublin",
+      "lat": 53.3498053,
+      "lng": -6.2603097,
+      "label": "Dublin",
+      "kind": "port",
+      "segment": "baltic",
+      "month": "m02",
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Ireland"
+    },
+    {
+      "id": "isle-of-man",
+      "lat": 54.236107,
+      "lng": -4.548056,
+      "label": "Isle of Man",
+      "kind": "port",
+      "segment": "baltic",
+      "month": "m02",
+      "tourStayDays": 1,
+      "tourStayRule": "small-island"
+    },
+    {
+      "id": "inner-hebrides-skye",
+      "lat": 57.4366037,
+      "lng": -6.5813982,
+      "label": "Inner Hebrides (Skye)",
+      "kind": "port",
+      "segment": "baltic",
+      "month": "m03",
+      "tourStayDays": 1,
+      "tourStayRule": "small-island"
+    },
+    {
+      "id": "outer-hebrides",
+      "lat": 57.413346,
+      "lng": -6.1947426,
+      "label": "Outer Hebrides",
+      "kind": "port",
+      "segment": "baltic",
+      "month": "m03",
+      "tourStayDays": 1,
+      "tourStayRule": "small-island"
+    },
+    {
+      "id": "scotland-nw",
+      "lat": 57.895418,
+      "lng": -5.161313,
+      "label": "Scotland NW",
+      "kind": "port",
+      "segment": "baltic",
+      "month": "m03",
+      "tourStayDays": 1,
+      "tourStayRule": "small-island-override"
+    },
+    {
+      "id": "stavanger",
+      "lat": 58.9996746,
+      "lng": 5.6187068,
+      "label": "Stavanger",
+      "kind": "port",
+      "segment": "baltic",
+      "month": "m03",
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:Norway"
+    },
+    {
+      "id": "oslo",
+      "lat": 59.9121746,
+      "lng": 10.7312704,
+      "label": "Oslo",
+      "kind": "port",
+      "segment": "baltic",
+      "month": "m03",
+      "tourStayDays": 2,
+      "tourStayRule": "mainland-country-share:Norway"
+    },
+    {
+      "id": "copenhagen",
+      "lat": 55.6760968,
+      "lng": 12.5683372,
+      "label": "Copenhagen",
+      "kind": "port",
+      "segment": "baltic",
+      "month": "m03",
+      "tourStayDays": 2,
+      "tourStayRule": "mainland-country-share:Denmark"
+    },
+    {
+      "id": "stockholm",
+      "lat": 59.3327036,
+      "lng": 18.0656255,
+      "label": "Stockholm",
+      "kind": "port",
+      "segment": "baltic",
+      "month": "m04",
+      "tourStayDays": 2,
+      "tourStayRule": "mainland-country-share:Sweden"
+    },
+    {
+      "id": "helsinki",
+      "lat": 60.1698557,
+      "lng": 24.9383791,
+      "label": "Helsinki",
+      "kind": "port",
+      "segment": "baltic",
+      "month": "m04",
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:Finland"
+    },
+    {
+      "id": "st-petersburg",
+      "lat": 59.9310584,
+      "lng": 30.3609096,
+      "label": "St Petersburg",
+      "kind": "port",
+      "segment": "baltic",
+      "month": "m04",
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:Russia"
+    },
+    {
+      "id": "gda-sk",
+      "lat": 54.3520252,
+      "lng": 18.6466384,
+      "label": "Gdańsk",
+      "kind": "port",
+      "segment": "baltic",
+      "month": "m04",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Poland"
+    },
+    {
+      "id": "aarhus",
+      "lat": 56.162939,
+      "lng": 10.203921,
+      "label": "Aarhus",
+      "kind": "port",
+      "segment": "baltic",
+      "month": "m05",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Denmark"
+    },
+    {
+      "id": "rotterdam",
+      "lat": 51.9244201,
+      "lng": 4.4777326,
+      "label": "Rotterdam",
+      "kind": "port",
+      "segment": "baltic",
+      "month": "m05",
+      "tourStayDays": 2,
+      "tourStayRule": "mainland-country-share:Netherlands"
+    },
+    {
+      "id": "d-sseldorf",
+      "lat": 51.4344079,
+      "lng": 6.7623293,
+      "label": "Düsseldorf",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m05",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Germany"
+    },
+    {
+      "id": "k-ln-cologne",
+      "lat": 50.937531,
+      "lng": 6.9602786,
+      "label": "Köln (Cologne)",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m05",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Germany"
+    },
+    {
+      "id": "koblenz",
+      "lat": 50.3569429,
+      "lng": 7.5889959,
+      "label": "Koblenz",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m05",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Germany"
+    },
+    {
+      "id": "mainz",
+      "lat": 49.9928617,
+      "lng": 8.2472526,
+      "label": "Mainz",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m05",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Germany"
+    },
+    {
+      "id": "mannheim",
+      "lat": 49.4873329,
+      "lng": 8.4646441,
+      "label": "Mannheim",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m05",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Germany"
+    },
+    {
+      "id": "karlsruhe",
+      "lat": 49.0068901,
+      "lng": 8.4036527,
+      "label": "Karlsruhe",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m05",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Germany"
+    },
+    {
+      "id": "strasbourg",
+      "lat": 48.5734053,
+      "lng": 7.7521113,
+      "label": "Strasbourg",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m05",
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:France"
+    },
+    {
+      "id": "frankfurt-am-main",
+      "lat": 50.1109221,
+      "lng": 8.6821267,
+      "label": "Frankfurt-am-Main",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m05",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Germany"
+    },
+    {
+      "id": "w-rzburg",
+      "lat": 49.7913044,
+      "lng": 9.9533548,
+      "label": "Würzburg",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m05",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Germany"
+    },
+    {
+      "id": "bamberg",
+      "lat": 49.8988135,
+      "lng": 10.9027636,
+      "label": "Bamberg",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m06",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Germany"
+    },
+    {
+      "id": "n-rnberg",
+      "lat": 49.4542881,
+      "lng": 11.0745641,
+      "label": "Nürnberg",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m06",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Germany"
+    },
+    {
+      "id": "regensburg",
+      "lat": 48.9175771,
+      "lng": 11.8931689,
+      "label": "Regensburg",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m06",
+      "tourStayDays": 2,
+      "tourStayRule": "mainland-country-share:Germany"
+    },
+    {
+      "id": "regensburg-danube",
+      "lat": 49.0134297,
+      "lng": 12.1016236,
+      "label": "Regensburg (Danube)",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m06",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Germany"
+    },
+    {
+      "id": "passau",
+      "lat": 48.5667364,
+      "lng": 13.4319466,
+      "label": "Passau",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m06",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Germany"
+    },
+    {
+      "id": "linz",
+      "lat": 48.3069096,
+      "lng": 14.285918,
+      "label": "Linz",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m06",
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:Austria"
+    },
+    {
+      "id": "bratislava",
+      "lat": 48.1477745,
+      "lng": 17.1071553,
+      "label": "Bratislava",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m06",
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:Slovakia"
+    },
+    {
+      "id": "vienna",
+      "lat": 48.2080696,
+      "lng": 16.3713095,
+      "label": "Vienna",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m06",
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:Austria"
+    },
+    {
+      "id": "budapest",
+      "lat": 47.497912,
+      "lng": 19.040235,
+      "label": "Budapest",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m06",
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Hungary"
+    },
+    {
+      "id": "belgrade",
+      "lat": 44.8125449,
+      "lng": 20.4612299,
+      "label": "Belgrade",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m07",
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Serbia"
+    },
+    {
+      "id": "vidin-iron-gate",
+      "lat": 43.996159,
+      "lng": 22.8679302,
+      "label": "Vidin (Iron Gate)",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m07",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Bulgaria"
+    },
+    {
+      "id": "ruse",
+      "lat": 43.9037076,
+      "lng": 25.9699265,
+      "label": "Ruse",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m07",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Bulgaria"
+    },
+    {
+      "id": "constan-a-black-sea",
+      "lat": 44.1759147,
+      "lng": 28.6519359,
+      "label": "Constanța (Black Sea)",
+      "kind": "port",
+      "segment": "rhineDanube",
+      "month": "m07",
+      "tourStayDays": 2,
+      "tourStayRule": "mainland-country-share:Romania"
+    },
+    {
+      "id": "fethiye",
+      "lat": 36.5610855,
+      "lng": 29.13767,
+      "label": "Fethiye",
+      "kind": "port",
+      "segment": "mediterranean",
+      "month": "m05",
+      "tourStayDays": 2,
+      "tourStayRule": "mainland-country-share:Turkey"
+    }
+  ],
+  "routes": [
+    {
+      "from": "lisbon",
+      "to": "dublin",
+      "distanceNm": 907.6,
+      "days": 8,
+      "via": [
+        {
+          "lat": 43.945658,
+          "lng": -10.218755
+        },
+        {
+          "lat": 52.062087,
+          "lng": -6.216894
+        }
+      ]
+    },
+    {
+      "from": "dublin",
+      "to": "isle-of-man",
+      "distanceNm": 80.7,
+      "days": 1
+    },
+    {
+      "from": "isle-of-man",
+      "to": "inner-hebrides-skye",
+      "distanceNm": 204,
+      "days": 2
+    },
+    {
+      "from": "inner-hebrides-skye",
+      "to": "istanbul",
+      "distanceNm": 3500,
+      "days": 28,
+      "via": [
+        {
+          "lat": 50,
+          "lng": -10
+        },
+        {
+          "lat": 38,
+          "lng": -10
+        },
+        {
+          "lat": 35.95,
+          "lng": -5.6
+        },
+        {
+          "lat": 37.5,
+          "lng": 12
+        },
+        {
+          "lat": 38,
+          "lng": 23
+        }
+      ],
+      "_placeholder": true,
+      "_note": "Bridge route after abandoning baltic + rhineDanube segments. Distance and via geometry are estimates — refine when committing."
+    },
+    {
+      "from": "inner-hebrides-skye",
+      "to": "outer-hebrides",
+      "distanceNm": 12.6,
+      "days": 1
+    },
+    {
+      "from": "outer-hebrides",
+      "to": "scotland-nw",
+      "distanceNm": 44,
+      "days": 1
+    },
+    {
+      "from": "scotland-nw",
+      "to": "stavanger",
+      "distanceNm": 349.4,
+      "days": 3,
+      "via": [
+        {
+          "lat": 58.671308,
+          "lng": -2.636373
+        }
+      ]
+    },
+    {
+      "from": "stavanger",
+      "to": "oslo",
+      "distanceNm": 268.9,
+      "days": 3,
+      "via": [
+        {
+          "lat": 57.675262,
+          "lng": 8.115746
+        }
+      ]
+    },
+    {
+      "from": "oslo",
+      "to": "copenhagen",
+      "distanceNm": 261,
+      "days": 3
+    },
+    {
+      "from": "copenhagen",
+      "to": "stockholm",
+      "distanceNm": 348.5,
+      "days": 3,
+      "via": [
+        {
+          "lat": 56.221934,
+          "lng": 17.221055
+        }
+      ]
+    },
+    {
+      "from": "stockholm",
+      "to": "helsinki",
+      "distanceNm": 213.8,
+      "days": 2
+    },
+    {
+      "from": "helsinki",
+      "to": "st-petersburg",
+      "distanceNm": 163.1,
+      "days": 2
+    },
+    {
+      "from": "st-petersburg",
+      "to": "gda-sk",
+      "distanceNm": 579.2,
+      "days": 5,
+      "via": [
+        {
+          "lat": 60.1698557,
+          "lng": 24.9383791
+        },
+        {
+          "lat": 58.968413,
+          "lng": 21.753378
+        }
+      ]
+    },
+    {
+      "from": "gda-sk",
+      "to": "aarhus",
+      "distanceNm": 359.9,
+      "days": 3,
+      "via": [
+        {
+          "lat": 54.555108,
+          "lng": 11.309335
+        }
+      ]
+    },
+    {
+      "from": "aarhus",
+      "to": "rotterdam",
+      "distanceNm": 601.8,
+      "days": 5,
+      "via": [
+        {
+          "lat": 57.952127,
+          "lng": 10.633313
+        },
+        {
+          "lat": 56.835198,
+          "lng": 7.758253
+        },
+        {
+          "lat": 54.147516,
+          "lng": 8.021554
+        },
+        {
+          "lat": 53.265767,
+          "lng": 4.47411
+        }
+      ]
+    },
+    {
+      "from": "rotterdam",
+      "to": "d-sseldorf",
+      "distanceNm": 130.3,
+      "days": 2,
+      "via": [
+        {
+          "lat": 52.392024,
+          "lng": 4.482115
+        }
+      ]
+    },
+    {
+      "from": "d-sseldorf",
+      "to": "k-ln-cologne",
+      "distanceNm": 30.7,
+      "days": 1
+    },
+    {
+      "from": "k-ln-cologne",
+      "to": "koblenz",
+      "distanceNm": 42.3,
+      "days": 1
+    },
+    {
+      "from": "koblenz",
+      "to": "mainz",
+      "distanceNm": 33.4,
+      "days": 1
+    },
+    {
+      "from": "mainz",
+      "to": "mannheim",
+      "distanceNm": 31.5,
+      "days": 1
+    },
+    {
+      "from": "mannheim",
+      "to": "karlsruhe",
+      "distanceNm": 28.9,
+      "days": 1
+    },
+    {
+      "from": "karlsruhe",
+      "to": "strasbourg",
+      "distanceNm": 36.6,
+      "days": 1
+    },
+    {
+      "from": "strasbourg",
+      "to": "frankfurt-am-main",
+      "distanceNm": 99.2,
+      "days": 1
+    },
+    {
+      "from": "frankfurt-am-main",
+      "to": "w-rzburg",
+      "distanceNm": 52.7,
+      "days": 1
+    },
+    {
+      "from": "w-rzburg",
+      "to": "bamberg",
+      "distanceNm": 37.3,
+      "days": 1
+    },
+    {
+      "from": "bamberg",
+      "to": "n-rnberg",
+      "distanceNm": 27.5,
+      "days": 1
+    },
+    {
+      "from": "n-rnberg",
+      "to": "regensburg",
+      "distanceNm": 45.5,
+      "days": 1
+    },
+    {
+      "from": "regensburg",
+      "to": "regensburg-danube",
+      "distanceNm": 10,
+      "days": 1
+    },
+    {
+      "from": "regensburg-danube",
+      "to": "passau",
+      "distanceNm": 59.1,
+      "days": 1
+    },
+    {
+      "from": "passau",
+      "to": "linz",
+      "distanceNm": 37.4,
+      "days": 1
+    },
+    {
+      "from": "linz",
+      "to": "bratislava",
+      "distanceNm": 113.2,
+      "days": 1
+    },
+    {
+      "from": "bratislava",
+      "to": "vienna",
+      "distanceNm": 29.7,
+      "days": 1
+    },
+    {
+      "from": "vienna",
+      "to": "budapest",
+      "distanceNm": 115.7,
+      "days": 1
+    },
+    {
+      "from": "budapest",
+      "to": "belgrade",
+      "distanceNm": 171.7,
+      "days": 2
+    },
+    {
+      "from": "belgrade",
+      "to": "vidin-iron-gate",
+      "distanceNm": 114.3,
+      "days": 1
+    },
+    {
+      "from": "vidin-iron-gate",
+      "to": "ruse",
+      "distanceNm": 134.2,
+      "days": 2
+    },
+    {
+      "from": "ruse",
+      "to": "constan-a-black-sea",
+      "distanceNm": 116.9,
+      "days": 1
+    },
+    {
+      "from": "constan-a-black-sea",
+      "to": "istanbul",
+      "distanceNm": 192.1,
+      "days": 2,
+      "via": [
+        {
+          "lat": 44.186938,
+          "lng": 28.653749
+        }
+      ]
+    }
+  ]
+}

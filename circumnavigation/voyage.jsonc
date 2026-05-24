@@ -1,6 +1,10 @@
 // prettier-ignore
 {
-  "_comment": "Voyage narrative + map content. Edit this file freely — voyage.js fetches it on load. Coordinates are real-world (lat/lng); map labels use the SVG viewBox (1000×500, equirectangular projection — x = (lng+180)*1000/360, y = (90-lat)*500/180). Each waypoint may have a `stops` array of secondary anchorages (small dots on the map, listed on the voyage card). `kind` ∈ port | side-trip | passage.",
+  "_comment": "Voyage narrative + map content. Edit this file freely — voyage.js fetches it on load. Coordinates are real-world (lat/lng); map labels use the SVG viewBox (1000×500, equirectangular projection — x = (lng+180)*1000/360, y = (90-lat)*500/180). `voyage` holds the cast-off date that anchors month numbering. `waypoints` is the ordered list of labeled destinations; each has an `id` referenced by `routes`. `routes` is the ordered list of legs between consecutive waypoints with distance, travel days (ceiling at 126 nm/day), and optional `via` pivots for line geometry.",
+  "voyage": {
+    "startYear": 2033,
+    "startMonth": "Mar"
+  },
   "cartouche": {
     "title": "The Voyage Chart",
     "sub1": "four years · departing 2034",
@@ -85,19 +89,8 @@
       "id": "midAtlantic",
       "name": "Mid Atlantic Crossing",
       "nm": 4536,
-      "type": "crossing"
-    },
-    {
-      "id": "baltic",
-      "name": "Baltic Sea",
-      "nm": 3213,
-      "type": "coastal"
-    },
-    {
-      "id": "rhineDanube",
-      "name": "Rhein–Main–Danube Waterway",
-      "nm": 1469,
-      "type": "inland"
+      "type": "crossing",
+      "hurricaneSeason": "Jun–Nov"
     },
     {
       "id": "mediterranean",
@@ -109,7 +102,8 @@
       "id": "nAtlantic",
       "name": "North Atlantic Crossing",
       "nm": 3194,
-      "type": "crossing"
+      "type": "crossing",
+      "hurricaneSeason": "Jun–Nov"
     },
     {
       "id": "sAmericaSE",
@@ -121,7 +115,8 @@
       "id": "antarctica",
       "name": "Antarctica Crossing",
       "nm": 1423,
-      "type": "crossing"
+      "type": "crossing",
+      "hurricaneSeason": "May–Sep"
     },
     {
       "id": "sAmericaSW",
@@ -133,7 +128,8 @@
       "id": "sPacific",
       "name": "South Pacific Crossing",
       "nm": 9766,
-      "type": "crossing"
+      "type": "crossing",
+      "hurricaneSeason": "Nov–Apr"
     },
     {
       "id": "oceanic",
@@ -151,7 +147,8 @@
       "id": "indian",
       "name": "Indian Ocean Crossing",
       "nm": 2966,
-      "type": "crossing"
+      "type": "crossing",
+      "hurricaneSeason": "Apr–Jun & Oct–Dec"
     },
     {
       "id": "africaSouth",
@@ -163,7 +160,8 @@
       "id": "sAtlantic",
       "name": "South Atlantic Crossing",
       "nm": 3384,
-      "type": "crossing"
+      "type": "crossing",
+      "hurricaneSeason": "Jun–Nov"
     },
     {
       "id": "sAmericaNE",
@@ -178,2711 +176,2332 @@
       "type": "coastal"
     }
   ],
-  "months": [
-    {
-      "id": "m01",
-      "label": "Month 1 - Mid Atlantic Crossing",
-      "calendarMonth": "Jan",
-      "season": "Winter",
-      "hurricaneRisk": false,
-      "dominantSegment": "midAtlantic",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 5.8,
-      "plannedTourDays": 4.5,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 10.3
-    },
-    {
-      "id": "m02",
-      "label": "Month 2 - Mid Atlantic Crossing",
-      "calendarMonth": "Feb",
-      "season": "Winter",
-      "hurricaneRisk": false,
-      "dominantSegment": "midAtlantic",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 15,
-      "plannedTourDays": 7,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 22
-    },
-    {
-      "id": "m03",
-      "label": "Month 3 - Mid Atlantic Crossing [home: Lisbon]",
-      "calendarMonth": "Mar",
-      "season": "Spring",
-      "hurricaneRisk": false,
-      "dominantSegment": "midAtlantic",
-      "monthCapacityDays": 16,
-      "plannedSailDays": 15.2,
-      "plannedTourDays": 14,
-      "plannedReservedDays": 14,
-      "plannedTotalDays": 43.2
-    },
-    {
-      "id": "m04",
-      "label": "Month 4 - Baltic Sea [home: Isle of Man]",
-      "calendarMonth": "Apr",
-      "season": "Spring",
-      "hurricaneRisk": false,
-      "dominantSegment": "baltic",
-      "monthCapacityDays": 16,
-      "plannedSailDays": 10.2,
-      "plannedTourDays": 19,
-      "plannedReservedDays": 14,
-      "plannedTotalDays": 43.2
-    },
-    {
-      "id": "m05",
-      "label": "Month 5 - Baltic Sea",
-      "calendarMonth": "May",
-      "season": "Spring",
-      "hurricaneRisk": false,
-      "dominantSegment": "baltic",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 2.9,
-      "plannedTourDays": 10.5,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 13.4
-    },
-    {
-      "id": "m06",
-      "label": "Month 6 - Baltic Sea",
-      "calendarMonth": "Jun",
-      "season": "Summer",
-      "hurricaneRisk": false,
-      "dominantSegment": "baltic",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 5.5,
-      "plannedTourDays": 21,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 26.5
-    },
-    {
-      "id": "m07",
-      "label": "Month 7 - Baltic Sea",
-      "calendarMonth": "Jul",
-      "season": "Summer",
-      "hurricaneRisk": false,
-      "dominantSegment": "baltic",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 8.7,
-      "plannedTourDays": 21,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 29.7
-    },
-    {
-      "id": "m08",
-      "label": "Month 8 - Rhein–Main–Danube Waterway [home: Rotterdam]",
-      "calendarMonth": "Aug",
-      "season": "Summer",
-      "hurricaneRisk": false,
-      "dominantSegment": "rhineDanube",
-      "monthCapacityDays": 16,
-      "plannedSailDays": 7.7,
-      "plannedTourDays": 20.5,
-      "plannedReservedDays": 14,
-      "plannedTotalDays": 42.2
-    },
-    {
-      "id": "m09",
-      "label": "Month 9 - Rhein–Main–Danube Waterway",
-      "calendarMonth": "Sep",
-      "season": "Autumn",
-      "hurricaneRisk": false,
-      "dominantSegment": "rhineDanube",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 1.2,
-      "plannedTourDays": 10.5,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 11.7
-    },
-    {
-      "id": "m10",
-      "label": "Month 10 - Rhein–Main–Danube Waterway",
-      "calendarMonth": "Oct",
-      "season": "Autumn",
-      "hurricaneRisk": false,
-      "dominantSegment": "rhineDanube",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 1,
-      "plannedTourDays": 7,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 8
-    },
-    {
-      "id": "m11",
-      "label": "Month 11 - Rhein–Main–Danube Waterway",
-      "calendarMonth": "Nov",
-      "season": "Autumn",
-      "hurricaneRisk": false,
-      "dominantSegment": "rhineDanube",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 4.5,
-      "plannedTourDays": 21,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 25.5
-    },
-    {
-      "id": "m12",
-      "label": "Month 12 - Mediterranean [home: Istanbul | haul-out: Istanbul]",
-      "calendarMonth": "Dec",
-      "season": "Winter",
-      "hurricaneRisk": false,
-      "dominantSegment": "mediterranean",
-      "monthCapacityDays": 2,
-      "plannedSailDays": 8.2,
-      "plannedTourDays": 17.5,
-      "plannedReservedDays": 28,
-      "plannedTotalDays": 53.7
-    },
-    {
-      "id": "m13",
-      "label": "Month 13 - Mediterranean",
-      "calendarMonth": "Jan",
-      "season": "Winter",
-      "hurricaneRisk": false,
-      "dominantSegment": "mediterranean",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 8.9,
-      "plannedTourDays": 7,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 15.9
-    },
-    {
-      "id": "m14",
-      "label": "Month 14 - Mediterranean",
-      "calendarMonth": "Feb",
-      "season": "Winter",
-      "hurricaneRisk": false,
-      "dominantSegment": "mediterranean",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 6.6,
-      "plannedTourDays": 14,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 20.6
-    },
-    {
-      "id": "m15",
-      "label": "Month 15 - Mediterranean [home: Pula]",
-      "calendarMonth": "Mar",
-      "season": "Spring",
-      "hurricaneRisk": false,
-      "dominantSegment": "mediterranean",
-      "monthCapacityDays": 16,
-      "plannedSailDays": 13.2,
-      "plannedTourDays": 15,
-      "plannedReservedDays": 14,
-      "plannedTotalDays": 42.2
-    },
-    {
-      "id": "m16",
-      "label": "Month 16 - Mediterranean",
-      "calendarMonth": "Apr",
-      "season": "Spring",
-      "hurricaneRisk": false,
-      "dominantSegment": "mediterranean",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 3,
-      "plannedTourDays": 10.5,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 13.5
-    },
-    {
-      "id": "m17",
-      "label": "Month 17 - Mediterranean",
-      "calendarMonth": "May",
-      "season": "Spring",
-      "hurricaneRisk": false,
-      "dominantSegment": "mediterranean",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 10.1,
-      "plannedTourDays": 14,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 24.1
-    },
-    {
-      "id": "m18",
-      "label": "Month 18 - North Atlantic Crossing [home: Canary Islands — Tenerife]",
-      "calendarMonth": "Jun",
-      "season": "Summer",
-      "hurricaneRisk": true,
-      "dominantSegment": "nAtlantic",
-      "monthCapacityDays": 16,
-      "plannedSailDays": 14.3,
-      "plannedTourDays": 14,
-      "plannedReservedDays": 14,
-      "plannedTotalDays": 42.3
-    },
-    {
-      "id": "m19",
-      "label": "Month 19 - North Atlantic Crossing",
-      "calendarMonth": "Jul",
-      "season": "Winter",
-      "hurricaneRisk": false,
-      "dominantSegment": "nAtlantic",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 12.6,
-      "plannedTourDays": 2,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 14.6
-    },
-    {
-      "id": "m20",
-      "label": "Month 20 - Around South America",
-      "calendarMonth": "Aug",
-      "season": "Winter",
-      "hurricaneRisk": false,
-      "dominantSegment": "sAmericaSE",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 20.6,
-      "plannedTourDays": 4.5,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 25.1
-    },
-    {
-      "id": "m21",
-      "label": "Month 21 - Around South America [home: Falklands — Stanley]",
-      "calendarMonth": "Sep",
-      "season": "Spring",
-      "hurricaneRisk": false,
-      "dominantSegment": "sAmericaSE",
-      "monthCapacityDays": 16,
-      "plannedSailDays": 10.7,
-      "plannedTourDays": 17,
-      "plannedReservedDays": 14,
-      "plannedTotalDays": 41.7
-    },
-    {
-      "id": "m22",
-      "label": "Month 22 - Antarctica Crossing",
-      "calendarMonth": "Oct",
-      "season": "Spring",
-      "hurricaneRisk": false,
-      "dominantSegment": "antarctica",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 0,
-      "plannedTourDays": 2.5,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 2.5
-    },
-    {
-      "id": "m23",
-      "label": "Month 23 - Antarctica Crossing",
-      "calendarMonth": "Nov",
-      "season": "Spring",
-      "hurricaneRisk": false,
-      "dominantSegment": "antarctica",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 5,
-      "plannedTourDays": 21,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 26
-    },
-    {
-      "id": "m24",
-      "label": "Month 24 - South America's West Coast [home: Antarctic Peninsula | haul-out: Antarctic Peninsula]",
-      "calendarMonth": "Dec",
-      "season": "Summer",
-      "hurricaneRisk": false,
-      "dominantSegment": "sAmericaSW",
-      "monthCapacityDays": 2,
-      "plannedSailDays": 10.8,
-      "plannedTourDays": 16.5,
-      "plannedReservedDays": 28,
-      "plannedTotalDays": 55.3
-    },
-    {
-      "id": "m25",
-      "label": "Month 25 - South America's West Coast",
-      "calendarMonth": "Jan",
-      "season": "Summer",
-      "hurricaneRisk": false,
-      "dominantSegment": "sAmericaSW",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 8,
-      "plannedTourDays": 5,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 13
-    },
-    {
-      "id": "m26",
-      "label": "Month 26 - South America's West Coast",
-      "calendarMonth": "Feb",
-      "season": "Summer",
-      "hurricaneRisk": false,
-      "dominantSegment": "sAmericaSW",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 11.1,
-      "plannedTourDays": 7,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 18.1
-    },
-    {
-      "id": "m27",
-      "label": "Month 27 - South America's West Coast [home: Guayaquil]",
-      "calendarMonth": "Mar",
-      "season": "Autumn",
-      "hurricaneRisk": false,
-      "dominantSegment": "sAmericaSW",
-      "monthCapacityDays": 16,
-      "plannedSailDays": 8.9,
-      "plannedTourDays": 21,
-      "plannedReservedDays": 14,
-      "plannedTotalDays": 43.9
-    },
-    {
-      "id": "m28",
-      "label": "Month 28 - South Pacific Crossing",
-      "calendarMonth": "Apr",
-      "season": "Autumn",
-      "hurricaneRisk": true,
-      "dominantSegment": "sPacific",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 27.1,
-      "plannedTourDays": 0,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 27.1
-    },
-    {
-      "id": "m29",
-      "label": "Month 29 - South Pacific Crossing [home: Gambier — Mangareva]",
-      "calendarMonth": "May",
-      "season": "Autumn",
-      "hurricaneRisk": true,
-      "dominantSegment": "sPacific",
-      "monthCapacityDays": 16,
-      "plannedSailDays": 16.2,
-      "plannedTourDays": 9,
-      "plannedReservedDays": 14,
-      "plannedTotalDays": 39.2
-    },
-    {
-      "id": "m30",
-      "label": "Month 30 - South Pacific Crossing",
-      "calendarMonth": "Jun",
-      "season": "Winter",
-      "hurricaneRisk": false,
-      "dominantSegment": "sPacific",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 1.3,
-      "plannedTourDays": 7,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 8.3
-    },
-    {
-      "id": "m31",
-      "label": "Month 31 - South Pacific Crossing",
-      "calendarMonth": "Jul",
-      "season": "Winter",
-      "hurricaneRisk": false,
-      "dominantSegment": "sPacific",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 4.5,
-      "plannedTourDays": 7,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 11.5
-    },
-    {
-      "id": "m32",
-      "label": "Month 32 - South Pacific Crossing",
-      "calendarMonth": "Aug",
-      "season": "Winter",
-      "hurricaneRisk": false,
-      "dominantSegment": "sPacific",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 7.6,
-      "plannedTourDays": 14,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 21.6
-    },
-    {
-      "id": "m33",
-      "label": "Month 33 - South Pacific Crossing [home: Tonga — Tongatapu]",
-      "calendarMonth": "Sep",
-      "season": "Spring",
-      "hurricaneRisk": false,
-      "dominantSegment": "sPacific",
-      "monthCapacityDays": 16,
-      "plannedSailDays": 7.6,
-      "plannedTourDays": 14,
-      "plannedReservedDays": 14,
-      "plannedTotalDays": 35.6
-    },
-    {
-      "id": "m34",
-      "label": "Month 34 - South Pacific Crossing",
-      "calendarMonth": "Oct",
-      "season": "Spring",
-      "hurricaneRisk": false,
-      "dominantSegment": "sPacific",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 5.5,
-      "plannedTourDays": 7,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 12.5
-    },
-    {
-      "id": "m35",
-      "label": "Month 35 - Oceanic",
-      "calendarMonth": "Nov",
-      "season": "Spring",
-      "hurricaneRisk": false,
-      "dominantSegment": "oceanic",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 16.6,
-      "plannedTourDays": 7,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 23.6
-    },
-    {
-      "id": "m36",
-      "label": "Month 36 - Oceanic [home: Sydney | haul-out: Sydney]",
-      "calendarMonth": "Dec",
-      "season": "Summer",
-      "hurricaneRisk": true,
-      "dominantSegment": "oceanic",
-      "monthCapacityDays": 2,
-      "plannedSailDays": 24.8,
-      "plannedTourDays": 2.5,
-      "plannedReservedDays": 28,
-      "plannedTotalDays": 55.3
-    },
-    {
-      "id": "m37",
-      "label": "Month 37 - Oceanic",
-      "calendarMonth": "Jan",
-      "season": "Summer",
-      "hurricaneRisk": true,
-      "dominantSegment": "oceanic",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 22,
-      "plannedTourDays": 5,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 27
-    },
-    {
-      "id": "m38",
-      "label": "Month 38 - Asia",
-      "calendarMonth": "Feb",
-      "season": "Winter",
-      "hurricaneRisk": false,
-      "dominantSegment": "asia",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 10,
-      "plannedTourDays": 0,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 10
-    },
-    {
-      "id": "m39",
-      "label": "Month 39 - Asia [home: Philippines — Mindoro]",
-      "calendarMonth": "Mar",
-      "season": "Spring",
-      "hurricaneRisk": false,
-      "dominantSegment": "asia",
-      "monthCapacityDays": 16,
-      "plannedSailDays": 16.1,
-      "plannedTourDays": 12,
-      "plannedReservedDays": 14,
-      "plannedTotalDays": 42.1
-    },
-    {
-      "id": "m40",
-      "label": "Month 40 - Asia [home: Hokkaido — Sapporo]",
-      "calendarMonth": "Apr",
-      "season": "Spring",
-      "hurricaneRisk": false,
-      "dominantSegment": "asia",
-      "monthCapacityDays": 16,
-      "plannedSailDays": 12.6,
-      "plannedTourDays": 16.5,
-      "plannedReservedDays": 14,
-      "plannedTotalDays": 43.1
-    },
-    {
-      "id": "m41",
-      "label": "Month 41 - Asia",
-      "calendarMonth": "May",
-      "season": "Spring",
-      "hurricaneRisk": false,
-      "dominantSegment": "asia",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 10.3,
-      "plannedTourDays": 14,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 24.3
-    },
-    {
-      "id": "m42",
-      "label": "Month 42 - Asia",
-      "calendarMonth": "Jun",
-      "season": "Summer",
-      "hurricaneRisk": true,
-      "dominantSegment": "asia",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 6.9,
-      "plannedTourDays": 7,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 13.9
-    },
-    {
-      "id": "m43",
-      "label": "Month 43 - Asia",
-      "calendarMonth": "Jul",
-      "season": "Summer",
-      "hurricaneRisk": true,
-      "dominantSegment": "asia",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 3.3,
-      "plannedTourDays": 3.5,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 6.8
-    },
-    {
-      "id": "m44",
-      "label": "Month 44 - Asia",
-      "calendarMonth": "Aug",
-      "season": "Summer",
-      "hurricaneRisk": true,
-      "dominantSegment": "asia",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 10.8,
-      "plannedTourDays": 10.5,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 21.3
-    },
-    {
-      "id": "m45",
-      "label": "Month 45 - Asia [home: Chittagong]",
-      "calendarMonth": "Sep",
-      "season": "Autumn",
-      "hurricaneRisk": true,
-      "dominantSegment": "asia",
-      "monthCapacityDays": 16,
-      "plannedSailDays": 16.7,
-      "plannedTourDays": 12,
-      "plannedReservedDays": 14,
-      "plannedTotalDays": 42.7
-    },
-    {
-      "id": "m46",
-      "label": "Month 46 - Indian Ocean Crossing",
-      "calendarMonth": "Oct",
-      "season": "Autumn",
-      "hurricaneRisk": true,
-      "dominantSegment": "indian",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 9.4,
-      "plannedTourDays": 16.5,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 25.9
-    },
-    {
-      "id": "m47",
-      "label": "Month 47 - Indian Ocean Crossing",
-      "calendarMonth": "Nov",
-      "season": "Spring",
-      "hurricaneRisk": false,
-      "dominantSegment": "indian",
-      "monthCapacityDays": 30,
-      "plannedSailDays": 13.4,
-      "plannedTourDays": 14,
-      "plannedReservedDays": 0,
-      "plannedTotalDays": 27.4
-    },
-    {
-      "id": "m48",
-      "label": "Month 48 - Caribbean [home: Madagascar — Toamasina | haul-out: Madagascar — Toamasina]",
-      "calendarMonth": "Dec",
-      "season": "Winter",
-      "hurricaneRisk": false,
-      "dominantSegment": "caribbean",
-      "monthCapacityDays": 2,
-      "plannedSailDays": 99,
-      "plannedTourDays": 72,
-      "plannedReservedDays": 28,
-      "plannedTotalDays": 199
-    }
-  ],
   "waypoints": [
     {
+      "id": "annapolis",
       "lat": 38.9764364,
       "lng": -76.489642,
       "label": "Annapolis",
       "kind": "port",
       "segment": "midAtlantic",
-      "month": "m01",
       "tourStayDays": 1,
-      "tourStayRule": "mainland-country-share:United States",
-      "distanceFromPrevNm": 0
+      "tourStayRule": "mainland-country-share:United States"
     },
     {
+      "id": "bermuda",
       "lat": 32.3078,
       "lng": -64.7505,
       "label": "Bermuda",
       "kind": "port",
       "segment": "midAtlantic",
-      "month": "m01",
       "tourStayDays": 3,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 697.9
+      "tourStayRule": "small-island"
     },
     {
+      "id": "azores-horta",
       "lat": 38.5348447,
       "lng": -28.6299812,
       "label": "Azores — Horta",
       "kind": "port",
       "segment": "midAtlantic",
-      "month": "m02",
       "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 1794.4
+      "tourStayRule": "large-island"
     },
     {
+      "id": "lisbon",
       "lat": 38.7222524,
       "lng": -9.1393366,
       "label": "Lisbon",
       "kind": "port",
       "segment": "midAtlantic",
-      "month": "m03",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Portugal",
-      "distanceFromPrevNm": 912.5
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Portugal"
     },
     {
-      "lat": 43.945658,
-      "lng": -10.218755,
-      "segment": "midAtlantic",
-      "month": "m03",
-      "distanceFromPrevNm": 317.4
-    },
-    {
-      "lat": 52.062087,
-      "lng": -6.216894,
-      "segment": "midAtlantic",
-      "month": "m03",
-      "distanceFromPrevNm": 512.9
-    },
-    {
-      "lat": 53.3498053,
-      "lng": -6.2603097,
-      "label": "Dublin",
-      "kind": "port",
-      "segment": "midAtlantic",
-      "month": "m03",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Ireland",
-      "distanceFromPrevNm": 77.3
-    },
-    {
-      "lat": 54.236107,
-      "lng": -4.548056,
-      "label": "Isle of Man",
-      "kind": "port",
-      "segment": "midAtlantic",
-      "month": "m04",
-      "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 80.7
-    },
-    {
-      "lat": 57.4366037,
-      "lng": -6.5813982,
-      "label": "Inner Hebrides (Skye)",
-      "kind": "port",
-      "segment": "midAtlantic",
-      "month": "m04",
-      "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 204
-    },
-    {
-      "lat": 57.413346,
-      "lng": -6.1947426,
-      "label": "Outer Hebrides",
-      "kind": "port",
-      "segment": "baltic",
-      "month": "m04",
-      "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 12.6
-    },
-    {
-      "lat": 57.895418,
-      "lng": -5.161313,
-      "label": "Scotland NW",
-      "kind": "port",
-      "segment": "baltic",
-      "month": "m04",
-      "tourStayDays": 1,
-      "tourStayRule": "small-island-override",
-      "distanceFromPrevNm": 44
-    },
-    {
-      "lat": 58.671308,
-      "lng": -2.636373,
-      "segment": "baltic",
-      "month": "m04",
-      "distanceFromPrevNm": 92.3
-    },
-    {
-      "lat": 58.9996746,
-      "lng": 5.6187068,
-      "label": "Stavanger",
-      "kind": "port",
-      "segment": "baltic",
-      "month": "m04",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Norway",
-      "distanceFromPrevNm": 257.1
-    },
-    {
-      "lat": 57.675262,
-      "lng": 8.115746,
-      "segment": "baltic",
-      "month": "m04",
-      "distanceFromPrevNm": 111.9
-    },
-    {
-      "lat": 59.9121746,
-      "lng": 10.7312704,
-      "label": "Oslo",
-      "kind": "port",
-      "segment": "baltic",
-      "month": "m04",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Norway",
-      "distanceFromPrevNm": 157
-    },
-    {
-      "lat": 55.6760968,
-      "lng": 12.5683372,
-      "label": "Copenhagen",
-      "kind": "port",
-      "segment": "baltic",
-      "month": "m04",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Denmark",
-      "distanceFromPrevNm": 261
-    },
-    {
-      "lat": 56.221934,
-      "lng": 17.221055,
-      "segment": "baltic",
-      "month": "m05",
-      "distanceFromPrevNm": 159.8
-    },
-    {
-      "lat": 59.3327036,
-      "lng": 18.0656255,
-      "label": "Stockholm",
-      "kind": "port",
-      "segment": "baltic",
-      "month": "m05",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Sweden",
-      "distanceFromPrevNm": 188.7
-    },
-    {
-      "lat": 60.1698557,
-      "lng": 24.9383791,
-      "label": "Helsinki",
-      "kind": "port",
-      "segment": "baltic",
-      "month": "m06",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Finland",
-      "distanceFromPrevNm": 213.8
-    },
-    {
-      "lat": 59.9310584,
-      "lng": 30.3609096,
-      "label": "St Petersburg",
-      "kind": "port",
-      "segment": "baltic",
-      "month": "m06",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Russia",
-      "distanceFromPrevNm": 163.1
-    },
-    {
-      "lat": 60.1698557,
-      "lng": 24.9383791,
-      "label": "Helsinki",
-      "kind": "port",
-      "segment": "baltic",
-      "month": "m06",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Finland",
-      "distanceFromPrevNm": 163.1
-    },
-    {
-      "lat": 58.968413,
-      "lng": 21.753378,
-      "segment": "baltic",
-      "month": "m06",
-      "distanceFromPrevNm": 120.7
-    },
-    {
-      "lat": 54.3520252,
-      "lng": 18.6466384,
-      "label": "Gdańsk",
-      "kind": "port",
-      "segment": "baltic",
-      "month": "m07",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Poland",
-      "distanceFromPrevNm": 295.4
-    },
-    {
-      "lat": 54.555108,
-      "lng": 11.309335,
-      "segment": "baltic",
-      "month": "m07",
-      "distanceFromPrevNm": 256.3
-    },
-    {
-      "lat": 56.162939,
-      "lng": 10.203921,
-      "label": "Aarhus",
-      "kind": "port",
-      "segment": "baltic",
-      "month": "m07",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Denmark",
-      "distanceFromPrevNm": 103.6
-    },
-    {
-      "lat": 57.952127,
-      "lng": 10.633313,
-      "segment": "baltic",
-      "month": "m07",
-      "distanceFromPrevNm": 108.3
-    },
-    {
-      "lat": 56.835198,
-      "lng": 7.758253,
-      "segment": "baltic",
-      "month": "m07",
-      "distanceFromPrevNm": 114.7
-    },
-    {
-      "lat": 54.147516,
-      "lng": 8.021554,
-      "segment": "baltic",
-      "month": "m07",
-      "distanceFromPrevNm": 161.6
-    },
-    {
-      "lat": 53.265767,
-      "lng": 4.47411,
-      "segment": "baltic",
-      "month": "m08",
-      "distanceFromPrevNm": 136.7
-    },
-    {
-      "lat": 51.9244201,
-      "lng": 4.4777326,
-      "label": "Rotterdam",
-      "kind": "port",
-      "segment": "baltic",
-      "month": "m08",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Netherlands",
-      "distanceFromPrevNm": 80.5
-    },
-    {
-      "lat": 52.392024,
-      "lng": 4.482115,
-      "segment": "rhineDanube",
-      "month": "m08",
-      "distanceFromPrevNm": 28.1
-    },
-    {
-      "lat": 51.4344079,
-      "lng": 6.7623293,
-      "label": "Düsseldorf",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m08",
-      "tourStayDays": 0.5,
-      "tourStayRule": "mainland-country-share:Germany",
-      "distanceFromPrevNm": 102.2
-    },
-    {
-      "lat": 50.937531,
-      "lng": 6.9602786,
-      "label": "Köln (Cologne)",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m08",
-      "tourStayDays": 0.5,
-      "tourStayRule": "mainland-country-share:Germany",
-      "distanceFromPrevNm": 30.7
-    },
-    {
-      "lat": 50.3569429,
-      "lng": 7.5889959,
-      "label": "Koblenz",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m08",
-      "tourStayDays": 0.5,
-      "tourStayRule": "mainland-country-share:Germany",
-      "distanceFromPrevNm": 42.3
-    },
-    {
-      "lat": 49.9928617,
-      "lng": 8.2472526,
-      "label": "Mainz",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m08",
-      "tourStayDays": 0.5,
-      "tourStayRule": "mainland-country-share:Germany",
-      "distanceFromPrevNm": 33.4
-    },
-    {
-      "lat": 49.4873329,
-      "lng": 8.4646441,
-      "label": "Mannheim",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m08",
-      "tourStayDays": 0.5,
-      "tourStayRule": "mainland-country-share:Germany",
-      "distanceFromPrevNm": 31.5
-    },
-    {
-      "lat": 49.0068901,
-      "lng": 8.4036527,
-      "label": "Karlsruhe",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m08",
-      "tourStayDays": 0.5,
-      "tourStayRule": "mainland-country-share:Germany",
-      "distanceFromPrevNm": 28.9
-    },
-    {
-      "lat": 48.5734053,
-      "lng": 7.7521113,
-      "label": "Strasbourg",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m08",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:France",
-      "distanceFromPrevNm": 36.6
-    },
-    {
-      "lat": 50.1109221,
-      "lng": 8.6821267,
-      "label": "Frankfurt-am-Main",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m08",
-      "tourStayDays": 0.5,
-      "tourStayRule": "mainland-country-share:Germany",
-      "distanceFromPrevNm": 99.2
-    },
-    {
-      "lat": 49.7913044,
-      "lng": 9.9533548,
-      "label": "Würzburg",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m08",
-      "tourStayDays": 0.5,
-      "tourStayRule": "mainland-country-share:Germany",
-      "distanceFromPrevNm": 52.7
-    },
-    {
-      "lat": 49.8988135,
-      "lng": 10.9027636,
-      "label": "Bamberg",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m08",
-      "tourStayDays": 0.5,
-      "tourStayRule": "mainland-country-share:Germany",
-      "distanceFromPrevNm": 37.3
-    },
-    {
-      "lat": 49.4542881,
-      "lng": 11.0745641,
-      "label": "Nürnberg",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m08",
-      "tourStayDays": 0.5,
-      "tourStayRule": "mainland-country-share:Germany",
-      "distanceFromPrevNm": 27.5
-    },
-    {
-      "lat": 48.9175771,
-      "lng": 11.8931689,
-      "label": "Regensburg",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m08",
-      "tourStayDays": 0.5,
-      "tourStayRule": "mainland-country-share:Germany",
-      "distanceFromPrevNm": 45.5
-    },
-    {
-      "lat": 49.0134297,
-      "lng": 12.1016236,
-      "label": "Regensburg (Danube)",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m08",
-      "tourStayDays": 0.5,
-      "tourStayRule": "mainland-country-share:Germany",
-      "distanceFromPrevNm": 10
-    },
-    {
-      "lat": 48.5667364,
-      "lng": 13.4319466,
-      "label": "Passau",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m08",
-      "tourStayDays": 0.5,
-      "tourStayRule": "mainland-country-share:Germany",
-      "distanceFromPrevNm": 59.1
-    },
-    {
-      "lat": 48.3069096,
-      "lng": 14.285918,
-      "label": "Linz",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m08",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Austria",
-      "distanceFromPrevNm": 37.4
-    },
-    {
-      "lat": 48.1477745,
-      "lng": 17.1071553,
-      "label": "Bratislava",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m09",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Slovakia",
-      "distanceFromPrevNm": 113.2
-    },
-    {
-      "lat": 48.2080696,
-      "lng": 16.3713095,
-      "label": "Vienna",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m09",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Austria",
-      "distanceFromPrevNm": 29.7
-    },
-    {
-      "lat": 47.497912,
-      "lng": 19.040235,
-      "label": "Budapest",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m10",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Hungary",
-      "distanceFromPrevNm": 115.7
-    },
-    {
-      "lat": 44.8125449,
-      "lng": 20.4612299,
-      "label": "Belgrade",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m11",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Serbia",
-      "distanceFromPrevNm": 171.7
-    },
-    {
-      "lat": 43.996159,
-      "lng": 22.8679302,
-      "label": "Vidin (Iron Gate)",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m11",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Bulgaria",
-      "distanceFromPrevNm": 114.3
-    },
-    {
-      "lat": 43.9037076,
-      "lng": 25.9699265,
-      "label": "Ruse",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m11",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Bulgaria",
-      "distanceFromPrevNm": 134.2
-    },
-    {
-      "lat": 44.1759147,
-      "lng": 28.6519359,
-      "label": "Constanța (Black Sea)",
-      "kind": "port",
-      "segment": "rhineDanube",
-      "month": "m11",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Romania",
-      "distanceFromPrevNm": 116.9
-    },
-    {
-      "lat": 44.186938,
-      "lng": 28.653749,
-      "segment": "mediterranean",
-      "month": "m11",
-      "distanceFromPrevNm": 0.7
-    },
-    {
-      "lat": 41.0082376,
-      "lng": 28.9783589,
-      "label": "Istanbul",
-      "kind": "port",
-      "segment": "mediterranean",
-      "month": "m12",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Turkey",
-      "distanceFromPrevNm": 191.4
-    },
-    {
-      "lat": 37.9838096,
-      "lng": 23.7275388,
-      "label": "Athens",
-      "kind": "port",
-      "segment": "mediterranean",
-      "month": "m12",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Greece",
-      "distanceFromPrevNm": 303.5
-    },
-    {
-      "lat": 36.5610855,
-      "lng": 29.13767,
-      "label": "Fethiye",
-      "kind": "port",
-      "segment": "mediterranean",
-      "month": "m12",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Turkey",
-      "distanceFromPrevNm": 272.2
-    },
-    {
-      "lat": 31.2000924,
-      "lng": 29.9187387,
-      "label": "Alexandria",
-      "kind": "port",
-      "segment": "mediterranean",
-      "month": "m13",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Egypt",
-      "distanceFromPrevNm": 324.2
-    },
-    {
-      "lat": 30.0444196,
-      "lng": 31.2357116,
-      "label": "Cairo",
-      "kind": "side-trip",
-      "segment": "mediterranean",
-      "month": "m13",
-      "distanceFromPrevNm": 97.2
-    },
-    {
-      "lat": 25.6872431,
-      "lng": 32.6396357,
-      "label": "Luxor",
-      "kind": "side-trip",
-      "segment": "mediterranean",
-      "month": "m13",
-      "distanceFromPrevNm": 272
-    },
-    {
-      "lat": 30.0444196,
-      "lng": 31.2357116,
-      "segment": "mediterranean",
-      "month": "m13",
-      "distanceFromPrevNm": 272
-    },
-    {
-      "lat": 31.2000924,
-      "lng": 29.9187387,
-      "segment": "mediterranean",
-      "month": "m13",
-      "distanceFromPrevNm": 97.2
-    },
-    {
-      "lat": 35.240117,
-      "lng": 24.8092691,
-      "label": "Crete — Heraklion",
-      "kind": "port",
-      "segment": "mediterranean",
-      "month": "m14",
-      "tourStayDays": 7,
-      "tourStayRule": "large-island-override",
-      "distanceFromPrevNm": 353
-    },
-    {
-      "lat": 41.3245904,
-      "lng": 19.4564686,
-      "label": "Durrës (Albania)",
-      "kind": "port",
-      "segment": "mediterranean",
-      "month": "m14",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Albania",
-      "distanceFromPrevNm": 443.7
-    },
-    {
-      "lat": 45.0811661,
-      "lng": 13.6387067,
-      "label": "Pula",
-      "kind": "port",
-      "segment": "mediterranean",
-      "month": "m15",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Croatia",
-      "distanceFromPrevNm": 340
-    },
-    {
-      "lat": 45.6508342,
-      "lng": 13.7674486,
-      "label": "Trieste",
-      "kind": "port",
-      "segment": "mediterranean",
-      "month": "m15",
-      "tourStayDays": 1,
-      "tourStayRule": "mainland-country-share:Italy",
-      "distanceFromPrevNm": 34.6
-    },
-    {
-      "lat": 41.7311182,
-      "lng": 12.2862694,
-      "label": "Civitavecchia (Rome)",
-      "kind": "port",
-      "segment": "mediterranean",
-      "month": "m15",
-      "tourStayDays": 1,
-      "tourStayRule": "mainland-country-share:Italy",
-      "distanceFromPrevNm": 244
-    },
-    {
-      "lat": 45.440379,
-      "lng": 12.3159547,
-      "label": "Venice",
-      "kind": "port",
-      "segment": "mediterranean",
-      "month": "m15",
-      "tourStayDays": 1,
-      "tourStayRule": "mainland-country-share:Italy",
-      "distanceFromPrevNm": 222.7
-    },
-    {
-      "lat": 40.7496576,
-      "lng": 14.5053119,
-      "label": "Bay of Naples",
-      "kind": "port",
-      "segment": "mediterranean",
-      "month": "m15",
-      "tourStayDays": 1,
-      "tourStayRule": "mainland-country-share:Italy",
-      "distanceFromPrevNm": 297.5
-    },
-    {
-      "lat": 40.8517746,
-      "lng": 14.2681244,
-      "label": "Naples",
-      "kind": "port",
-      "segment": "mediterranean",
-      "month": "m15",
-      "tourStayDays": 1,
-      "tourStayRule": "mainland-country-share:Italy",
-      "distanceFromPrevNm": 12.4
-    },
-    {
-      "lat": 43.7699685,
-      "lng": 11.2576706,
-      "label": "Florence",
-      "kind": "port",
-      "segment": "mediterranean",
-      "month": "m15",
-      "tourStayDays": 1,
-      "tourStayRule": "mainland-country-share:Italy",
-      "distanceFromPrevNm": 220.3
-    },
-    {
-      "lat": 43.548476,
-      "lng": 10.3106087,
-      "label": "Livorno",
-      "kind": "port",
-      "segment": "mediterranean",
-      "month": "m15",
-      "tourStayDays": 1,
-      "tourStayRule": "mainland-country-share:Italy",
-      "distanceFromPrevNm": 43.2
-    },
-    {
-      "lat": 45.6779,
-      "lng": 7.596191,
-      "segment": "mediterranean",
-      "month": "m15",
-      "distanceFromPrevNm": 172.6
-    },
-    {
-      "lat": 43.3025742,
-      "lng": 5.3690743,
-      "label": "Marseille",
-      "kind": "port",
-      "segment": "mediterranean",
-      "month": "m16",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:France",
-      "distanceFromPrevNm": 171.6
-    },
-    {
+      "id": "barcelona",
       "lat": 41.3874374,
       "lng": 2.1686496,
       "label": "Barcelona",
       "kind": "port",
       "segment": "mediterranean",
-      "month": "m16",
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Spain"
+    },
+    {
+      "id": "marseille",
+      "lat": 43.3025742,
+      "lng": 5.3690743,
+      "label": "Marseille",
+      "kind": "port",
+      "segment": "mediterranean",
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:France"
+    },
+    {
+      "id": "livorno",
+      "lat": 43.548476,
+      "lng": 10.3106087,
+      "label": "Livorno",
+      "kind": "port",
+      "segment": "mediterranean",
+      "tourStayDays": 2,
+      "tourStayRule": "mainland-country-share:Italy"
+    },
+    {
+      "id": "florence",
+      "lat": 43.7699685,
+      "lng": 11.2576706,
+      "label": "Florence",
+      "kind": "side-trip",
+      "segment": "mediterranean",
+      "tourStayDays": 2,
+      "tourStayRule": "mainland-country-share:Italy"
+    },
+    {
+      "id": "civitavecchia",
+      "lat": 41.7311182,
+      "lng": 12.2862694,
+      "label": "Civitavecchia",
+      "kind": "port",
+      "segment": "mediterranean",
+      "tourStayDays": 2,
+      "tourStayRule": "mainland-country-share:Italy"
+    },
+    {
+      "id": "rome",
+      "lat": 41.9028,
+      "lng": 12.4964,
+      "label": "Rome",
+      "kind": "side-trip",
+      "segment": "mediterranean",
+      "tourStayDays": 4,
+      "tourStayRule": "mainland-country-share:Italy"
+    },
+    {
+      "id": "naples",
+      "lat": 40.8517746,
+      "lng": 14.2681244,
+      "label": "Naples",
+      "kind": "port",
+      "segment": "mediterranean",
+      "tourStayDays": 2,
+      "tourStayRule": "mainland-country-share:Italy"
+    },
+    {
+      "id": "pompeii",
+      "lat": 40.7489,
+      "lng": 14.4848,
+      "label": "Pompeii",
+      "kind": "side-trip",
+      "segment": "mediterranean",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Italy"
+    },
+    {
+      "id": "venice",
+      "lat": 45.440379,
+      "lng": 12.3159547,
+      "label": "Venice",
+      "kind": "port",
+      "segment": "mediterranean",
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Italy"
+    },
+    {
+      "id": "trieste",
+      "lat": 45.6508342,
+      "lng": 13.7674486,
+      "label": "Trieste",
+      "kind": "port",
+      "segment": "mediterranean",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Italy"
+    },
+    {
+      "id": "pula",
+      "lat": 45.0811661,
+      "lng": 13.6387067,
+      "label": "Pula",
+      "kind": "port",
+      "segment": "mediterranean",
+      "tourStayDays": 2,
+      "tourStayRule": "mainland-country-share:Croatia"
+    },
+    {
+      "id": "durr-s-albania",
+      "lat": 41.3245904,
+      "lng": 19.4564686,
+      "label": "Durrës (Albania)",
+      "kind": "port",
+      "segment": "mediterranean",
+      "tourStayDays": 2,
+      "tourStayRule": "mainland-country-share:Albania"
+    },
+    {
+      "id": "turgutreis",
+      "lat": 36.9986,
+      "lng": 27.2568,
+      "label": "Turgutreis",
+      "kind": "port",
+      "segment": "mediterranean",
+      "tourStayDays": 2,
+      "tourStayRule": "mainland-country-share:Turkey"
+    },
+    {
+      "id": "istanbul",
+      "lat": 41.0082376,
+      "lng": 28.9783589,
+      "label": "Istanbul",
+      "kind": "port",
+      "segment": "mediterranean",
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Turkey"
+    },
+    {
+      "id": "lycean-way-trail",
+      "lat": 36.5006,
+      "lng": 29.374,
+      "label": "Lycean Way Trail",
+      "kind": "side-trip",
+      "segment": "mediterranean",
+      "tourStayDays": 1,
+      "tourStayRule": "mainland-country-share:Turkey"
+    },
+    {
+      "id": "fethiye",
+      "lat": 36.6215,
+      "lng": 29.1164,
+      "label": "Fethiye",
+      "kind": "port",
+      "segment": "mediterranean",
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:Turkey"
+    },
+    {
+      "id": "alexandria",
+      "lat": 31.2000924,
+      "lng": 29.9187387,
+      "label": "Alexandria",
+      "kind": "port",
+      "segment": "mediterranean",
+      "tourStayDays": 14,
+      "tourStayRule": "mainland-country-share:Egypt"
+    },
+    {
+      "id": "cairo",
+      "lat": 30.0444196,
+      "lng": 31.2357116,
+      "label": "Cairo",
+      "kind": "side-trip",
+      "segment": "mediterranean",
+      "tourStayDays": 5
+    },
+    {
+      "id": "luxor",
+      "lat": 25.6872431,
+      "lng": 32.6396357,
+      "label": "Luxor",
+      "kind": "side-trip",
+      "segment": "mediterranean",
+      "tourStayDays": 2
+    },
+    {
+      "id": "gulf-of-aqaba",
+      "lat": 29.5316,
+      "lng": 35.0078,
+      "label": "Gulf of Aqaba",
+      "kind": "port",
+      "segment": "mediterranean",
+      "tourStayDays": 30,
+      "tourStayRule": "mainland-country-share:Jordan"
+    },
+    {
+      "id": "crete-heraklion",
+      "lat": 35.240117,
+      "lng": 24.8092691,
+      "label": "Crete — Heraklion",
+      "kind": "port",
+      "segment": "mediterranean",
+      "tourStayDays": 1,
+      "tourStayRule": "large-island-override"
+    },
+    {
+      "id": "athens",
+      "lat": 37.9838096,
+      "lng": 23.7275388,
+      "label": "Athens",
+      "kind": "port",
+      "segment": "mediterranean",
       "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Spain",
-      "distanceFromPrevNm": 182.7
+      "tourStayRule": "mainland-country-share:Greece"
     },
     {
-      "lat": 36.423129,
-      "lng": -1.921322,
+      "id": "syracuse",
+      "lat": 37.0755,
+      "lng": 15.2866,
+      "label": "Syracuse",
+      "kind": "port",
       "segment": "mediterranean",
-      "month": "m17",
-      "distanceFromPrevNm": 354
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:Italy"
     },
     {
-      "lat": 35.917492,
-      "lng": -5.705129,
+      "id": "palermo",
+      "lat": 38.115689,
+      "lng": 13.361267,
+      "label": "Palermo",
+      "kind": "port",
       "segment": "mediterranean",
-      "month": "m17",
-      "distanceFromPrevNm": 185.9
+      "tourStayDays": 7,
+      "tourStayRule": "mainland-country-share:Italy"
     },
     {
+      "id": "casablanca",
       "lat": 33.5731104,
       "lng": -7.5898434,
       "label": "Casablanca",
       "kind": "port",
-      "segment": "mediterranean",
-      "month": "m17",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Morocco",
-      "distanceFromPrevNm": 168.7
+      "segment": "nAtlantic",
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:Morocco"
     },
     {
-      "lat": 32.543994,
-      "lng": -12.721418,
-      "segment": "mediterranean",
-      "month": "m17",
-      "distanceFromPrevNm": 265.5
-    },
-    {
-      "lat": 32.278323,
-      "lng": -17.007039,
-      "segment": "mediterranean",
-      "month": "m17",
-      "distanceFromPrevNm": 217.8
-    },
-    {
+      "id": "madeira-funchal",
       "lat": 32.6506129,
       "lng": -16.9082357,
       "label": "Madeira — Funchal",
       "kind": "port",
       "segment": "nAtlantic",
-      "month": "m17",
-      "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 22.9
+      "tourStayDays": 3,
+      "tourStayRule": "large-island"
     },
     {
+      "id": "canary-islands-tenerife",
       "lat": 28.4636296,
       "lng": -16.2518467,
       "label": "Canary Islands — Tenerife",
       "kind": "port",
       "segment": "nAtlantic",
-      "month": "m18",
       "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 253.7
+      "tourStayRule": "large-island"
     },
     {
-      "lat": 21.057515,
-      "lng": -18.193364,
-      "segment": "nAtlantic",
-      "month": "m18",
-      "distanceFromPrevNm": 457.1
-    },
-    {
-      "lat": 14.747204,
-      "lng": -17.668286,
-      "segment": "nAtlantic",
-      "month": "m18",
-      "distanceFromPrevNm": 380.1
-    },
-    {
-      "lat": 13.480422,
-      "lng": -16.625623,
-      "segment": "nAtlantic",
-      "month": "m18",
-      "distanceFromPrevNm": 97.3
-    },
-    {
+      "id": "cape-verde-mindelo",
       "lat": 16.8839948,
       "lng": -24.9874331,
       "label": "Cape Verde — Mindelo",
       "kind": "port",
       "segment": "nAtlantic",
-      "month": "m18",
-      "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 525.7
+      "tourStayDays": 3,
+      "tourStayRule": "large-island"
     },
     {
-      "lat": -5.7841695,
-      "lng": -35.1999708,
-      "label": "Natal, Brazil",
-      "kind": "port",
-      "segment": "nAtlantic",
-      "month": "m19",
-      "tourStayDays": 1,
-      "tourStayRule": "mainland-country-share:Brazil",
-      "distanceFromPrevNm": 1489.9
-    },
-    {
+      "id": "natal",
       "lat": -5.4854413,
       "lng": -35.2629155,
       "label": "Natal",
       "kind": "port",
       "segment": "sAmericaSE",
-      "month": "m19",
-      "tourStayDays": 1,
-      "tourStayRule": "mainland-country-share:Brazil",
-      "distanceFromPrevNm": 18.3
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Brazil"
     },
     {
+      "id": "recife",
       "lat": -8.0578381,
       "lng": -34.8828969,
       "label": "Recife",
       "kind": "port",
       "segment": "sAmericaSE",
-      "month": "m20",
-      "tourStayDays": 1,
-      "tourStayRule": "mainland-country-share:Brazil",
-      "distanceFromPrevNm": 156.1
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Brazil"
     },
     {
+      "id": "salvador",
       "lat": -12.9777378,
       "lng": -38.5016363,
       "label": "Salvador",
       "kind": "port",
       "segment": "sAmericaSE",
-      "month": "m20",
-      "tourStayDays": 1,
-      "tourStayRule": "mainland-country-share:Brazil",
-      "distanceFromPrevNm": 364.5
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Brazil"
     },
     {
-      "lat": -20.716219,
-      "lng": -38.785001,
+      "id": "rio-de-janeiro",
+      "lat": -22.9068467,
+      "lng": -43.1728965,
+      "label": "Rio de Janeiro",
+      "kind": "port",
       "segment": "sAmericaSE",
-      "month": "m20",
-      "distanceFromPrevNm": 464.9
+      "tourStayDays": 14,
+      "tourStayRule": "mainland-country-share:Brazil"
     },
     {
-      "lat": -23.582071,
-      "lng": -40.518412,
+      "id": "punta-del-este",
+      "lat": -34.9688,
+      "lng": -54.95,
+      "label": "Punta del Este",
+      "kind": "port",
       "segment": "sAmericaSE",
-      "month": "m20",
-      "distanceFromPrevNm": 197.2
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Uruguay"
     },
     {
-      "lat": -32.819063,
-      "lng": -52.239746,
-      "segment": "sAmericaSE",
-      "month": "m20",
-      "distanceFromPrevNm": 830.9
-    },
-    {
-      "lat": -38.178693,
-      "lng": -55.47505,
-      "segment": "sAmericaSE",
-      "month": "m20",
-      "distanceFromPrevNm": 358.5
-    },
-    {
+      "id": "mar-del-plata",
       "lat": -38.0054771,
       "lng": -57.5426106,
       "label": "Mar del Plata",
       "kind": "port",
       "segment": "sAmericaSE",
-      "month": "m20",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Argentina",
-      "distanceFromPrevNm": 98.2
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Argentina"
     },
     {
+      "id": "falklands-stanley",
       "lat": -51.6927517,
       "lng": -57.86196,
       "label": "Falklands — Stanley",
       "kind": "port",
       "segment": "sAmericaSE",
-      "month": "m21",
-      "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 821.9
+      "tourStayDays": 14,
+      "tourStayRule": "large-island"
     },
     {
-      "lat": -54.850321,
-      "lng": -64.979584,
-      "segment": "sAmericaSE",
-      "month": "m21",
-      "distanceFromPrevNm": 318
-    },
-    {
-      "lat": -55.170632,
-      "lng": -65.813829,
-      "segment": "sAmericaSE",
-      "month": "m21",
-      "distanceFromPrevNm": 34.6
-    },
-    {
+      "id": "ushuaia",
       "lat": -54.8076116,
       "lng": -68.3058409,
       "label": "Ushuaia",
       "kind": "port",
       "segment": "sAmericaSE",
-      "month": "m21",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Argentina",
-      "distanceFromPrevNm": 88.6
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Argentina"
     },
     {
-      "lat": -54.9352098,
-      "lng": -67.6058537,
-      "label": "Ushuaia depart",
-      "kind": "port",
-      "segment": "antarctica",
-      "month": "m21",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Argentina",
-      "distanceFromPrevNm": 25.4
-    },
-    {
-      "lat": -54.9352098,
-      "lng": -67.6058537,
-      "label": "Ushuaia depart",
-      "kind": "port",
-      "segment": "antarctica",
-      "month": "m22",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Argentina",
-      "distanceFromPrevNm": 0
-    },
-    {
+      "id": "south-shetlands",
       "lat": -62.9409297,
       "lng": -60.5553751,
       "label": "South Shetlands",
       "kind": "port",
       "segment": "antarctica",
-      "month": "m23",
-      "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 527.2
+      "tourStayDays": 2,
+      "tourStayRule": "large-island"
     },
     {
+      "id": "deception-island",
       "lat": -63.3209373,
       "lng": -57.9000592,
       "label": "Deception Island",
       "kind": "port",
       "segment": "antarctica",
-      "month": "m23",
-      "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 75.6
+      "tourStayDays": 1,
+      "tourStayRule": "large-island"
     },
     {
+      "id": "antarctic-peninsula",
       "lat": -64.8250816,
       "lng": -63.4942149,
       "label": "Antarctic Peninsula",
       "kind": "port",
       "segment": "antarctica",
-      "month": "m24",
-      "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 172.3
+      "tourStayDays": 1,
+      "tourStayRule": "large-island"
     },
     {
+      "id": "drake-return",
       "lat": -55.9652546,
       "lng": -67.2255579,
       "label": "Drake return",
       "kind": "port",
       "segment": "antarctica",
-      "month": "m24",
       "tourStayDays": 1,
-      "tourStayRule": "transit-stop-override",
-      "distanceFromPrevNm": 543.1
+      "tourStayRule": "transit-stop-override"
     },
     {
+      "id": "ushuaia-depart-3",
       "lat": -54.9352098,
       "lng": -67.6058537,
-      "label": "Ushuaia depart",
+      "label": "Ushuaia",
       "kind": "port",
       "segment": "antarctica",
-      "month": "m24",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Argentina",
-      "distanceFromPrevNm": 63.2
+      "tourStayDays": 2,
+      "tourStayRule": "mainland-country-share:Argentina"
     },
     {
-      "lat": -54.997902,
-      "lng": -68.718513,
-      "segment": "sAmericaSW",
-      "month": "m24",
-      "distanceFromPrevNm": 38.5
-    },
-    {
-      "lat": -54.402171,
-      "lng": -69.172856,
-      "segment": "sAmericaSW",
-      "month": "m24",
-      "distanceFromPrevNm": 39.1
-    },
-    {
-      "lat": -54.126469,
-      "lng": -70.165289,
-      "segment": "sAmericaSW",
-      "month": "m24",
-      "distanceFromPrevNm": 38.5
-    },
-    {
-      "lat": -53.482395,
-      "lng": -70.57443,
-      "segment": "sAmericaSW",
-      "month": "m24",
-      "distanceFromPrevNm": 41.3
-    },
-    {
-      "lat": -53.972703,
-      "lng": -71.209598,
-      "segment": "sAmericaSW",
-      "month": "m24",
-      "distanceFromPrevNm": 37.1
-    },
-    {
-      "lat": -51.860373,
-      "lng": -72.048676,
-      "segment": "sAmericaSW",
-      "month": "m24",
-      "distanceFromPrevNm": 130.4
-    },
-    {
+      "id": "puerto-ays-n",
       "lat": -49.1262469,
       "lng": -74.4098484,
       "label": "Puerto Aysén",
       "kind": "port",
       "segment": "sAmericaSW",
-      "month": "m24",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Chile",
-      "distanceFromPrevNm": 187.3
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Chile"
     },
     {
+      "id": "valdivia",
       "lat": -39.817419,
       "lng": -73.2426102,
       "label": "Valdivia",
       "kind": "port",
       "segment": "sAmericaSW",
-      "month": "m25",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Chile",
-      "distanceFromPrevNm": 561.1
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Chile"
     },
     {
+      "id": "valpara-so",
       "lat": -33.4488897,
       "lng": -70.6692655,
       "label": "Valparaíso",
       "kind": "port",
       "segment": "sAmericaSW",
-      "month": "m25",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Chile",
-      "distanceFromPrevNm": 401.9
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Chile"
     },
     {
-      "lat": -12.0511717,
-      "lng": -77.1256883,
-      "label": "Lima (Callao)",
-      "kind": "port",
-      "segment": "sAmericaSW",
-      "month": "m26",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Peru",
-      "distanceFromPrevNm": 1332.7
-    },
-    {
+      "id": "lima",
       "lat": -12.0466888,
       "lng": -77.0430886,
       "label": "Lima",
       "kind": "port",
       "segment": "sAmericaSW",
-      "month": "m26",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Peru",
-      "distanceFromPrevNm": 4.9
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Peru"
     },
     {
+      "id": "guayaquil",
       "lat": -2.216651,
       "lng": -80.9230203,
       "label": "Guayaquil",
       "kind": "port",
       "segment": "sAmericaSW",
-      "month": "m27",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Ecuador",
-      "distanceFromPrevNm": 633.7
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Ecuador"
     },
     {
-      "lat": -2.218103,
-      "lng": -80.9227566,
-      "label": "Guayaquil",
+      "id": "buenaventura",
+      "lat": 3.8772,
+      "lng": -77.0197,
+      "label": "Buenaventura",
+      "kind": "port",
+      "segment": "sAmericaSW",
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Colombia"
+    },
+    {
+      "id": "panama-city",
+      "lat": 8.9824,
+      "lng": -79.5199,
+      "label": "Panama City",
+      "kind": "port",
+      "segment": "sAmericaSW",
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Panama"
+    },
+    {
+      "id": "golfito",
+      "lat": 8.6394,
+      "lng": -83.1619,
+      "label": "Golfito",
+      "kind": "port",
+      "segment": "sAmericaSW",
+      "tourStayDays": 14,
+      "tourStayRule": "mainland-country-share:Costa Rica"
+    },
+    {
+      "id": "puerto-ayora",
+      "lat": -0.7402,
+      "lng": -90.3138,
+      "label": "Puerto Ayora",
       "kind": "port",
       "segment": "sPacific",
-      "month": "m27",
-      "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Ecuador",
-      "distanceFromPrevNm": 0.1
+      "tourStayDays": 5,
+      "tourStayRule": "small-island-override"
     },
     {
-      "lat": -26.283175,
-      "lng": -109.49835,
+      "id": "easter-island",
+      "lat": -27.1127,
+      "lng": -109.3497,
+      "label": "Easter Island",
+      "kind": "port",
       "segment": "sPacific",
-      "month": "m28",
-      "distanceFromPrevNm": 2191
+      "tourStayDays": 5,
+      "tourStayRule": "small-island-override"
     },
     {
-      "lat": -23.507704,
-      "lng": -128.683268,
-      "segment": "sPacific",
-      "month": "m28",
-      "distanceFromPrevNm": 1057
-    },
-    {
+      "id": "gambier-mangareva",
       "lat": -23.1096583,
       "lng": -134.9743477,
       "label": "Gambier — Mangareva",
       "kind": "port",
       "segment": "sPacific",
-      "month": "m29",
-      "tourStayDays": 1,
-      "tourStayRule": "small-island-override",
-      "distanceFromPrevNm": 347.7
+      "tourStayDays": 5,
+      "tourStayRule": "small-island-override"
     },
     {
+      "id": "marquesas-hiva-oa",
       "lat": -9.7812162,
       "lng": -139.0817124,
       "label": "Marquesas — Hiva Oa",
       "kind": "port",
       "segment": "sPacific",
-      "month": "m29",
-      "tourStayDays": 1,
-      "tourStayRule": "small-island-override",
-      "distanceFromPrevNm": 834.3
+      "tourStayDays": 5,
+      "tourStayRule": "small-island-override"
     },
     {
+      "id": "tahiti-papeete",
       "lat": -17.6509195,
       "lng": -149.4260421,
       "label": "Tahiti — Papeete",
       "kind": "port",
       "segment": "sPacific",
-      "month": "m29",
       "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 765.9
+      "tourStayRule": "large-island"
     },
     {
+      "id": "bora-bora",
       "lat": -16.3813622,
       "lng": -151.7317012,
       "label": "Bora Bora",
       "kind": "port",
       "segment": "sPacific",
-      "month": "m30",
-      "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 152.7
+      "tourStayDays": 3,
+      "tourStayRule": "large-island"
     },
     {
+      "id": "cook-rarotonga",
       "lat": -21.2056839,
       "lng": -159.7850102,
       "label": "Cook — Rarotonga",
       "kind": "port",
       "segment": "sPacific",
-      "month": "m31",
-      "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 541.5
+      "tourStayDays": 2,
+      "tourStayRule": "large-island"
     },
     {
+      "id": "cook-aitutaki",
       "lat": -18.8579523,
       "lng": -159.7852843,
       "label": "Cook — Aitutaki",
       "kind": "port",
       "segment": "sPacific",
-      "month": "m32",
-      "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 141
+      "tourStayDays": 2,
+      "tourStayRule": "large-island"
     },
     {
+      "id": "samoa-apia",
       "lat": -13.759029,
       "lng": -172.104629,
       "label": "Samoa — Apia",
       "kind": "port",
       "segment": "sPacific",
-      "month": "m32",
-      "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 772.7
+      "tourStayDays": 3,
+      "tourStayRule": "large-island"
     },
     {
+      "id": "tonga-tongatapu",
       "lat": -21.178986,
       "lng": -175.198242,
       "label": "Tonga — Tongatapu",
       "kind": "port",
       "segment": "sPacific",
-      "month": "m33",
-      "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 479.4
+      "tourStayDays": 3,
+      "tourStayRule": "large-island"
     },
     {
+      "id": "fiji-suva",
       "lat": -17.713371,
       "lng": 178.065032,
       "label": "Fiji — Suva",
       "kind": "port",
       "segment": "sPacific",
-      "month": "m33",
-      "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 434.4
+      "tourStayDays": 5,
+      "tourStayRule": "large-island"
     },
     {
+      "id": "vanuatu-espiritu-santo",
       "lat": -15.376706,
       "lng": 166.959158,
       "label": "Vanuatu — Espiritu Santo",
       "kind": "port",
       "segment": "sPacific",
-      "month": "m34",
-      "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 654.3
+      "tourStayDays": 3,
+      "tourStayRule": "large-island"
     },
     {
-      "lat": -36.196268,
-      "lng": 174.752777,
-      "segment": "sPacific",
-      "month": "m35",
-      "distanceFromPrevNm": 1317.8
-    },
-    {
+      "id": "auckland",
       "lat": -36.8508827,
       "lng": 174.7644881,
       "label": "Auckland",
       "kind": "port",
       "segment": "oceanic",
-      "month": "m35",
       "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:New Zealand",
-      "distanceFromPrevNm": 39.3
+      "tourStayRule": "mainland-country-share:New Zealand"
     },
     {
-      "lat": -46.095321,
-      "lng": 168.160949,
-      "segment": "oceanic",
-      "month": "m35",
-      "distanceFromPrevNm": 629
-    },
-    {
+      "id": "sydney",
       "lat": -33.8727409,
       "lng": 151.2057136,
       "label": "Sydney",
       "kind": "port",
       "segment": "oceanic",
-      "month": "m36",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Australia",
-      "distanceFromPrevNm": 1066.7
+      "tourStayDays": 5,
+      "tourStayRule": "mainland-country-share:Australia"
     },
     {
-      "lat": -38.157418,
-      "lng": 150.504013,
-      "segment": "oceanic",
-      "month": "m36",
-      "distanceFromPrevNm": 259.5
-    },
-    {
-      "lat": -40.156325,
-      "lng": 146.312083,
-      "segment": "oceanic",
-      "month": "m36",
-      "distanceFromPrevNm": 229.1
-    },
-    {
-      "lat": -34.287879,
-      "lng": 117.281833,
-      "segment": "oceanic",
-      "month": "m36",
-      "distanceFromPrevNm": 1425
-    },
-    {
+      "id": "fremantle-perth",
       "lat": -31.9513993,
       "lng": 115.8616783,
       "label": "Fremantle (Perth)",
       "kind": "port",
       "segment": "oceanic",
-      "month": "m37",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Australia",
-      "distanceFromPrevNm": 157.4
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:Australia"
     },
     {
-      "lat": -22.834534,
-      "lng": 110.626683,
-      "segment": "oceanic",
-      "month": "m37",
-      "distanceFromPrevNm": 614.2
-    },
-    {
-      "lat": -12.756007,
-      "lng": 125.866115,
-      "segment": "oceanic",
-      "month": "m37",
-      "distanceFromPrevNm": 1059.3
-    },
-    {
+      "id": "darwin",
       "lat": -12.4637333,
       "lng": 130.8444446,
       "label": "Darwin",
       "kind": "port",
       "segment": "oceanic",
-      "month": "m37",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Australia",
-      "distanceFromPrevNm": 292.2
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:Australia"
     },
     {
-      "lat": -11.870451,
-      "lng": 130.671753,
-      "segment": "asia",
-      "month": "m37",
-      "distanceFromPrevNm": 37
-    },
-    {
-      "lat": -3.932037,
-      "lng": 131.607831,
-      "segment": "asia",
-      "month": "m37",
-      "distanceFromPrevNm": 479.9
-    },
-    {
-      "lat": 14.885682,
-      "lng": 124.594211,
-      "segment": "asia",
-      "month": "m38",
-      "distanceFromPrevNm": 1204.4
-    },
-    {
+      "id": "philippines-mindoro",
       "lat": 12.879721,
       "lng": 121.774017,
       "label": "Philippines — Mindoro",
       "kind": "port",
       "segment": "asia",
-      "month": "m39",
       "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 203.8
+      "tourStayRule": "large-island"
     },
     {
+      "id": "osaka",
       "lat": 34.6937249,
       "lng": 135.5022535,
       "label": "Osaka",
       "kind": "port",
       "segment": "asia",
-      "month": "m39",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Japan",
-      "distanceFromPrevNm": 1507.6
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:Japan"
     },
     {
+      "id": "tokyo",
       "lat": 35.6803997,
       "lng": 139.7690174,
       "label": "Tokyo",
       "kind": "port",
       "segment": "asia",
-      "month": "m39",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Japan",
-      "distanceFromPrevNm": 217.6
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:Japan"
     },
     {
+      "id": "hokkaido-sapporo",
       "lat": 43.0617713,
       "lng": 141.3544507,
       "label": "Hokkaido — Sapporo",
       "kind": "port",
       "segment": "asia",
-      "month": "m40",
       "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 449.2
+      "tourStayRule": "large-island"
     },
     {
+      "id": "fukuoka",
       "lat": 33.5901838,
       "lng": 130.4016888,
       "label": "Fukuoka",
       "kind": "port",
       "segment": "asia",
-      "month": "m40",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Japan",
-      "distanceFromPrevNm": 766.5
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:Japan"
     },
     {
+      "id": "seoul-incheon",
       "lat": 37.5652129,
       "lng": 126.9773517,
       "label": "Seoul (Incheon)",
       "kind": "port",
       "segment": "asia",
-      "month": "m40",
       "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:South Korea",
-      "distanceFromPrevNm": 291.4
+      "tourStayRule": "mainland-country-share:South Korea"
     },
     {
+      "id": "taipei",
       "lat": 25.0329694,
       "lng": 121.5654177,
       "label": "Taipei",
       "kind": "port",
       "segment": "asia",
-      "month": "m41",
       "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Taiwan",
-      "distanceFromPrevNm": 801.6
+      "tourStayRule": "mainland-country-share:Taiwan"
     },
     {
+      "id": "hong-kong",
       "lat": 22.5428599,
       "lng": 114.05956,
       "label": "Hong Kong",
       "kind": "port",
       "segment": "asia",
-      "month": "m41",
       "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:China",
-      "distanceFromPrevNm": 438.5
+      "tourStayRule": "mainland-country-share:China"
     },
     {
+      "id": "saigon",
       "lat": 10.8230989,
       "lng": 106.6296638,
       "label": "Saigon",
       "kind": "port",
       "segment": "asia",
-      "month": "m42",
       "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Vietnam",
-      "distanceFromPrevNm": 822.7
+      "tourStayRule": "mainland-country-share:Vietnam"
     },
     {
+      "id": "bangkok",
       "lat": 13.7563309,
       "lng": 100.5017651,
       "label": "Bangkok",
       "kind": "port",
       "segment": "asia",
-      "month": "m43",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Thailand",
-      "distanceFromPrevNm": 400.3
+      "tourStayDays": 4,
+      "tourStayRule": "mainland-country-share:Thailand"
     },
     {
+      "id": "singapore",
       "lat": 1.2811866,
       "lng": 103.8503404,
       "label": "Singapore",
       "kind": "port",
       "segment": "asia",
-      "month": "m44",
       "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Singapore",
-      "distanceFromPrevNm": 775
+      "tourStayRule": "mainland-country-share:Singapore"
     },
     {
+      "id": "phuket",
       "lat": 7.9843109,
       "lng": 98.3307468,
       "label": "Phuket",
       "kind": "port",
       "segment": "asia",
-      "month": "m44",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Thailand",
-      "distanceFromPrevNm": 520.5
+      "tourStayDays": 4,
+      "tourStayRule": "mainland-country-share:Thailand"
     },
     {
+      "id": "chittagong",
       "lat": 21.4272184,
       "lng": 92.0061058,
       "label": "Chittagong",
       "kind": "port",
       "segment": "asia",
-      "month": "m45",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Bangladesh",
-      "distanceFromPrevNm": 886.3
+      "tourStayDays": 4,
+      "tourStayRule": "mainland-country-share:Bangladesh"
     },
     {
+      "id": "dhaka-coast",
       "lat": 21.8182277,
       "lng": 90.1397812,
       "label": "Dhaka coast",
       "kind": "port",
       "segment": "asia",
-      "month": "m45",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:Bangladesh",
-      "distanceFromPrevNm": 106.8
+      "tourStayDays": 4,
+      "tourStayRule": "mainland-country-share:Bangladesh"
     },
     {
+      "id": "odisha-coast",
       "lat": 19.8134554,
       "lng": 85.8312359,
       "label": "Odisha coast",
       "kind": "port",
       "segment": "asia",
-      "month": "m45",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:India",
-      "distanceFromPrevNm": 270.1
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:India"
     },
     {
+      "id": "chennai",
       "lat": 13.0843007,
       "lng": 80.2704622,
       "label": "Chennai",
       "kind": "port",
       "segment": "asia",
-      "month": "m45",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:India",
-      "distanceFromPrevNm": 515.4
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:India"
     },
     {
-      "lat": 10.166288,
-      "lng": 80.207026,
-      "segment": "asia",
-      "month": "m45",
-      "distanceFromPrevNm": 175.2
-    },
-    {
-      "lat": 9.678029,
-      "lng": 79.412955,
-      "segment": "asia",
-      "month": "m45",
-      "distanceFromPrevNm": 55.4
-    },
-    {
+      "id": "colombo",
       "lat": 6.9270786,
       "lng": 79.861243,
       "label": "Colombo",
       "kind": "port",
       "segment": "asia",
-      "month": "m46",
       "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Sri Lanka",
-      "distanceFromPrevNm": 167.3
+      "tourStayRule": "mainland-country-share:Sri Lanka"
     },
     {
-      "lat": 6.923189,
-      "lng": 79.752567,
-      "segment": "indian",
-      "month": "m46",
-      "distanceFromPrevNm": 6.5
-    },
-    {
+      "id": "kochi-cochin",
       "lat": 9.9312328,
       "lng": 76.2673041,
       "label": "Kochi (Cochin)",
       "kind": "port",
       "segment": "indian",
-      "month": "m46",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:India",
-      "distanceFromPrevNm": 274.7
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:India"
     },
     {
-      "lat": 4.566365,
-      "lng": 73.076348,
-      "segment": "indian",
-      "month": "m46",
-      "distanceFromPrevNm": 374
-    },
-    {
+      "id": "maldives-addu",
       "lat": -0.6058295,
       "lng": 73.091393,
       "label": "Maldives — Addu",
       "kind": "port",
       "segment": "indian",
-      "month": "m46",
       "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 310.5
+      "tourStayRule": "large-island"
     },
     {
-      "lat": -19.15069,
-      "lng": 58.071633,
-      "segment": "indian",
-      "month": "m47",
-      "distanceFromPrevNm": 1421.7
-    },
-    {
+      "id": "r-union",
       "lat": -21.115141,
       "lng": 55.536384,
       "label": "Réunion",
       "kind": "port",
       "segment": "indian",
-      "month": "m47",
       "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 185.3
+      "tourStayRule": "large-island"
     },
     {
+      "id": "madagascar-toamasina",
       "lat": -18.1716435,
       "lng": 49.3760744,
       "label": "Madagascar — Toamasina",
       "kind": "port",
       "segment": "indian",
-      "month": "m48",
       "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 390.5
+      "tourStayRule": "large-island"
     },
     {
-      "lat": -18.028045,
-      "lng": 49.458903,
-      "segment": "africaSouth",
-      "month": "m48",
-      "distanceFromPrevNm": 9.8
-    },
-    {
-      "lat": -15.454899,
-      "lng": 51.00812,
-      "segment": "africaSouth",
-      "month": "m48",
-      "distanceFromPrevNm": 178.3
-    },
-    {
+      "id": "madagascar-diego-suarez",
       "lat": -12.2782989,
       "lng": 49.2914581,
       "label": "Madagascar — Diego Suarez",
       "kind": "port",
       "segment": "africaSouth",
-      "month": "m48",
       "tourStayDays": 7,
-      "tourStayRule": "large-island",
-      "distanceFromPrevNm": 215.4
+      "tourStayRule": "large-island"
     },
     {
+      "id": "mozambique-pemba",
       "lat": -14.5656065,
       "lng": 40.6854309,
       "label": "Mozambique — Pemba",
       "kind": "port",
       "segment": "africaSouth",
-      "month": "m48",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Mozambique",
-      "distanceFromPrevNm": 521
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:Mozambique"
     },
     {
+      "id": "beira",
       "lat": -19.8315949,
       "lng": 34.8370183,
       "label": "Beira",
       "kind": "port",
       "segment": "africaSouth",
-      "month": "m48",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Mozambique",
-      "distanceFromPrevNm": 460.8
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:Mozambique"
     },
     {
+      "id": "maputo",
       "lat": -25.969248,
       "lng": 32.5731746,
       "label": "Maputo",
       "kind": "port",
       "segment": "africaSouth",
-      "month": "m48",
-      "tourStayDays": 2.5,
-      "tourStayRule": "mainland-country-share:Mozambique",
-      "distanceFromPrevNm": 389.2
+      "tourStayDays": 3,
+      "tourStayRule": "mainland-country-share:Mozambique"
     },
     {
+      "id": "durban",
       "lat": -29.5027229,
       "lng": 31.211077,
       "label": "Durban",
       "kind": "port",
       "segment": "africaSouth",
-      "month": "m48",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:South Africa",
-      "distanceFromPrevNm": 224.2
+      "tourStayDays": 4,
+      "tourStayRule": "mainland-country-share:South Africa"
     },
     {
-      "lat": -34.140867,
-      "lng": 28.209376,
-      "segment": "africaSouth",
-      "month": "m48",
-      "distanceFromPrevNm": 317.8
-    },
-    {
+      "id": "cape-town",
       "lat": -33.922087,
       "lng": 18.4231418,
       "label": "Cape Town",
       "kind": "port",
       "segment": "africaSouth",
-      "month": "m48",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:South Africa",
-      "distanceFromPrevNm": 486.9
+      "tourStayDays": 4,
+      "tourStayRule": "mainland-country-share:South Africa"
     },
     {
+      "id": "walvis-bay-namibia",
       "lat": -22.9585126,
       "lng": 14.5038721,
       "label": "Walvis Bay (Namibia)",
       "kind": "port",
       "segment": "africaSouth",
-      "month": "m48",
       "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Namibia",
-      "distanceFromPrevNm": 689.8
+      "tourStayRule": "mainland-country-share:Namibia"
     },
     {
-      "lat": -22.871257,
-      "lng": 14.526516,
-      "segment": "sAtlantic",
-      "month": "m48",
-      "distanceFromPrevNm": 5.4
-    },
-    {
+      "id": "st-helena-jamestown",
       "lat": -15.9267879,
       "lng": -5.7171247,
       "label": "St Helena — Jamestown",
       "kind": "port",
       "segment": "sAtlantic",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 1218.4
+      "tourStayRule": "small-island"
     },
     {
+      "id": "ascension-georgetown",
       "lat": -7.926223,
       "lng": -14.4112011,
       "label": "Ascension — Georgetown",
       "kind": "port",
       "segment": "sAtlantic",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 700.8
+      "tourStayRule": "small-island"
     },
     {
+      "id": "fernando-de-noronha",
       "lat": -3.8447976,
       "lng": -32.4268917,
       "label": "Fernando de Noronha",
       "kind": "port",
       "segment": "sAtlantic",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 1103.2
+      "tourStayRule": "small-island"
     },
     {
-      "lat": -3.695328,
-      "lng": -38.446095,
-      "segment": "sAtlantic",
-      "month": "m48",
-      "distanceFromPrevNm": 360.7
-    },
-    {
+      "id": "fortaleza",
       "lat": -3.7327177,
       "lng": -38.5269947,
       "label": "Fortaleza",
       "kind": "port",
       "segment": "sAmericaNE",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "mainland-country-share:Brazil",
-      "distanceFromPrevNm": 5.3
+      "tourStayRule": "mainland-country-share:Brazil"
     },
     {
-      "lat": -2.242711,
-      "lng": -41.097086,
-      "segment": "sAmericaNE",
-      "month": "m48",
-      "distanceFromPrevNm": 178.2
-    },
-    {
+      "id": "s-o-lu-s",
       "lat": -2.5306721,
       "lng": -44.2988947,
       "label": "São Luís",
       "kind": "port",
       "segment": "sAmericaNE",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "mainland-country-share:Brazil",
-      "distanceFromPrevNm": 192.8
+      "tourStayRule": "mainland-country-share:Brazil"
     },
     {
-      "lat": -1.364616,
-      "lng": -44.314484,
-      "segment": "sAmericaNE",
-      "month": "m48",
-      "distanceFromPrevNm": 70
-    },
-    {
-      "lat": -0.008343,
-      "lng": -47.8272,
-      "segment": "sAmericaNE",
-      "month": "m48",
-      "distanceFromPrevNm": 226.1
-    },
-    {
+      "id": "amazon-mouth",
       "lat": -0.1572135,
       "lng": -50.3913125,
       "label": "Amazon mouth",
       "kind": "port",
       "segment": "sAmericaNE",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "mainland-country-share:Brazil",
-      "distanceFromPrevNm": 154.2
+      "tourStayRule": "mainland-country-share:Brazil"
     },
     {
+      "id": "macap-amazon-delta",
       "lat": -1.5281453,
       "lng": -52.577289,
       "label": "Macapá / Amazon delta",
       "kind": "port",
       "segment": "sAmericaNE",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "mainland-country-share:Brazil",
-      "distanceFromPrevNm": 154.9
+      "tourStayRule": "mainland-country-share:Brazil"
     },
     {
+      "id": "cayenne-french-guiana",
       "lat": 4.9379774,
       "lng": -52.3354386,
       "label": "Cayenne (French Guiana)",
       "kind": "port",
       "segment": "sAmericaNE",
-      "month": "m48",
       "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:French Guiana",
-      "distanceFromPrevNm": 388.5
+      "tourStayRule": "mainland-country-share:French Guiana"
     },
     {
-      "lat": 6.085367,
-      "lng": -53.568445,
-      "segment": "sAmericaNE",
-      "month": "m48",
-      "distanceFromPrevNm": 100.9
-    },
-    {
+      "id": "paramaribo-suriname",
       "lat": 6.8012793,
       "lng": -58.1551255,
       "label": "Paramaribo (Suriname)",
       "kind": "port",
       "segment": "sAmericaNE",
-      "month": "m48",
       "tourStayDays": 7,
-      "tourStayRule": "mainland-country-share:Suriname",
-      "distanceFromPrevNm": 277
+      "tourStayRule": "mainland-country-share:Suriname"
     },
     {
-      "lat": 10.90158,
-      "lng": -61.15835,
-      "segment": "sAmericaNE",
-      "month": "m48",
-      "distanceFromPrevNm": 303.9
-    },
-    {
+      "id": "trinidad-port-of-spain",
       "lat": 10.691803,
       "lng": -61.222503,
       "label": "Trinidad — Port of Spain",
       "kind": "port",
       "segment": "caribbean",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 13.2
+      "tourStayRule": "small-island"
     },
     {
+      "id": "grenada",
       "lat": 12.1165,
       "lng": -61.679,
       "label": "Grenada",
       "kind": "port",
       "segment": "caribbean",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 89.7
+      "tourStayRule": "small-island"
     },
     {
+      "id": "martinique",
       "lat": 14.641528,
       "lng": -61.024174,
       "label": "Martinique",
       "kind": "port",
       "segment": "caribbean",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 156.4
+      "tourStayRule": "small-island"
     },
     {
+      "id": "dominica",
       "lat": 15.414999,
       "lng": -61.370976,
       "label": "Dominica",
       "kind": "port",
       "segment": "caribbean",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 50.6
+      "tourStayRule": "small-island"
     },
     {
+      "id": "guadeloupe",
       "lat": 16.265,
       "lng": -61.551,
       "label": "Guadeloupe",
       "kind": "port",
       "segment": "caribbean",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 52.1
+      "tourStayRule": "small-island"
     },
     {
+      "id": "antigua",
       "lat": 17.060816,
       "lng": -61.796428,
       "label": "Antigua",
       "kind": "port",
       "segment": "caribbean",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 49.8
+      "tourStayRule": "small-island"
     },
     {
+      "id": "st-barts-st-martin",
       "lat": 17.357822,
       "lng": -62.782998,
       "label": "St Barts / St Martin",
       "kind": "port",
       "segment": "caribbean",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 59.3
+      "tourStayRule": "small-island"
     },
     {
+      "id": "bvi-tortola",
       "lat": 18.4334704,
       "lng": -64.6332782,
       "label": "BVI — Tortola",
       "kind": "port",
       "segment": "caribbean",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 123.9
+      "tourStayRule": "small-island"
     },
     {
+      "id": "san-juan",
       "lat": 18.4153108,
       "lng": -66.0593509,
       "label": "San Juan",
       "kind": "port",
       "segment": "caribbean",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 81.2
+      "tourStayRule": "small-island"
     },
     {
+      "id": "dr-saman",
       "lat": 18.5600761,
       "lng": -68.372535,
       "label": "DR — Samaná",
       "kind": "port",
       "segment": "caribbean",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 132
+      "tourStayRule": "small-island"
     },
     {
-      "lat": 18.01202,
-      "lng": -71.123066,
-      "segment": "caribbean",
-      "month": "m48",
-      "distanceFromPrevNm": 160.2
-    },
-    {
+      "id": "turks-caicos",
       "lat": 21.694025,
       "lng": -71.797928,
       "label": "Turks & Caicos",
       "kind": "port",
       "segment": "caribbean",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 224.3
+      "tourStayRule": "small-island"
     },
     {
+      "id": "bahamas-nassau",
       "lat": 25.0443312,
       "lng": -77.3503609,
       "label": "Bahamas — Nassau",
       "kind": "port",
       "segment": "caribbean",
-      "month": "m48",
       "tourStayDays": 1,
-      "tourStayRule": "small-island",
-      "distanceFromPrevNm": 366.1
+      "tourStayRule": "small-island"
     },
     {
+      "id": "fort-lauderdale",
       "lat": 26.1224386,
       "lng": -80.1373174,
       "label": "Fort Lauderdale",
       "kind": "port",
       "segment": "caribbean",
-      "month": "m48",
-      "tourStayDays": 3.5,
-      "tourStayRule": "mainland-country-share:United States",
-      "distanceFromPrevNm": 164.2
+      "tourStayDays": 4,
+      "tourStayRule": "mainland-country-share:United States"
+    }
+  ],
+  "routes": [
+    {
+      "from": "annapolis",
+      "to": "bermuda",
+      "distanceNm": 697.9,
+      "days": 6
     },
     {
-      "lat": 35.431478,
-      "lng": -75.380727,
-      "segment": "caribbean",
-      "month": "m48",
-      "distanceFromPrevNm": 610.2
+      "from": "bermuda",
+      "to": "azores-horta",
+      "distanceNm": 1794.4,
+      "days": 15
     },
     {
-      "lat": 38.951404,
-      "lng": -76.483284,
-      "segment": "caribbean",
-      "month": "m48",
-      "distanceFromPrevNm": 217.8
+      "from": "azores-horta",
+      "to": "lisbon",
+      "distanceNm": 912.5,
+      "days": 8
+    },
+    {
+      "from": "lisbon",
+      "to": "barcelona",
+      "distanceNm": 750,
+      "days": 6,
+      "_placeholder": true,
+      "_note": "New entry into Med via Strait of Gibraltar.",
+      "via": [
+        {
+          "lat": 35.95,
+          "lng": -5.6
+        }
+      ]
+    },
+    {
+      "from": "barcelona",
+      "to": "marseille",
+      "distanceNm": 182.7,
+      "days": 2
+    },
+    {
+      "from": "marseille",
+      "to": "livorno",
+      "distanceNm": 344.2,
+      "days": 3
+    },
+    {
+      "from": "livorno",
+      "to": "florence",
+      "distanceNm": 43.2,
+      "days": 1
+    },
+    {
+      "from": "florence",
+      "to": "civitavecchia",
+      "distanceNm": 183,
+      "days": 2,
+      "_placeholder": true,
+      "via": [
+        {
+          "lat": 43.5485,
+          "lng": 10.3106
+        }
+      ],
+      "_note": "Florence inland return to Livorno + Tuscan coast sail to Civitavecchia."
+    },
+    {
+      "from": "civitavecchia",
+      "to": "rome",
+      "distanceNm": 43,
+      "days": 1,
+      "_placeholder": true,
+      "_note": "Overland side-trip Civitavecchia → Rome (boat stays at Civitavecchia)."
+    },
+    {
+      "from": "rome",
+      "to": "naples",
+      "distanceNm": 208,
+      "days": 2,
+      "_placeholder": true,
+      "via": [
+        {
+          "lat": 41.7311182,
+          "lng": 12.2862694
+        }
+      ],
+      "_note": "Rome return drive to Civitavecchia + Tyrrhenian coast sail to Naples."
+    },
+    {
+      "from": "naples",
+      "to": "pompeii",
+      "distanceNm": 12,
+      "days": 1,
+      "_placeholder": true,
+      "_note": "Overland side-trip Naples → Pompeii (boat stays at Naples)."
+    },
+    {
+      "from": "pompeii",
+      "to": "venice",
+      "distanceNm": 900,
+      "days": 8,
+      "_placeholder": true,
+      "_note": "Pompeii return to Naples, then south through Strait of Messina and north via Otranto up the Adriatic coast to Venice.",
+      "via": [
+        {
+          "lat": 40.8517746,
+          "lng": 14.2681244
+        },
+        {
+          "lat": 38.25,
+          "lng": 15.65
+        },
+        {
+          "lat": 39.85,
+          "lng": 18.4
+        },
+        {
+          "lat": 43,
+          "lng": 16.5
+        }
+      ]
+    },
+    {
+      "from": "venice",
+      "to": "trieste",
+      "distanceNm": 60,
+      "days": 1,
+      "_placeholder": true,
+      "_note": "Short Adriatic hop at the top of the gulf."
+    },
+    {
+      "from": "trieste",
+      "to": "pula",
+      "distanceNm": 34.6,
+      "days": 1
+    },
+    {
+      "from": "pula",
+      "to": "durr-s-albania",
+      "distanceNm": 340,
+      "days": 3
+    },
+    {
+      "from": "durr-s-albania",
+      "to": "turgutreis",
+      "distanceNm": 500,
+      "days": 4,
+      "_placeholder": true,
+      "_note": "Durrës to Turgutreis via the Ionian Sea, around southern Greece (Cape Maleas), then east across the southern Aegean to SW Turkey.",
+      "via": [
+        {
+          "lat": 39.4,
+          "lng": 20.0
+        },
+        {
+          "lat": 37.3,
+          "lng": 21.0
+        },
+        {
+          "lat": 36.42,
+          "lng": 23.2
+        },
+        {
+          "lat": 36.7,
+          "lng": 26.0
+        },
+        {
+          "lat": 36.9986,
+          "lng": 27.2568
+        }
+      ]
+    },
+    {
+      "from": "turgutreis",
+      "to": "istanbul",
+      "distanceNm": 250,
+      "days": 2,
+      "_placeholder": true,
+      "_note": "Turgutreis to Istanbul via the Aegean and Dardanelles approaches.",
+      "via": [
+        {
+          "lat": 39.8,
+          "lng": 26.8
+        },
+        {
+          "lat": 40.15,
+          "lng": 26.4
+        }
+      ]
+    },
+    {
+      "from": "istanbul",
+      "to": "lycean-way-trail",
+      "distanceNm": 330,
+      "days": 3,
+      "_placeholder": true,
+      "_note": "Istanbul to the Lycean Way Trail southbound through the Aegean to the Fethiye coast.",
+      "via": [
+        {
+          "lat": 40.15,
+          "lng": 26.4
+        },
+        {
+          "lat": 38.6,
+          "lng": 26.9
+        },
+        {
+          "lat": 36.9,
+          "lng": 28.2
+        },
+        {
+          "lat": 36.5006,
+          "lng": 29.374
+        }
+      ]
+    },
+    {
+      "from": "lycean-way-trail",
+      "to": "fethiye",
+      "distanceNm": 8,
+      "days": 1,
+      "_placeholder": true,
+      "_note": "Day trip return from the Lycean Way Trail to Fethiye (boat remains based in Fethiye)."
+    },
+    {
+      "from": "fethiye",
+      "to": "alexandria",
+      "distanceNm": 720,
+      "days": 6,
+      "_placeholder": true,
+      "_note": "Fethiye → Alexandria southbound through the Aegean and Eastern Mediterranean.",
+      "via": [
+        {
+          "lat": 36.2,
+          "lng": 28.4
+        },
+        {
+          "lat": 34.8,
+          "lng": 28.2
+        },
+        {
+          "lat": 31.2,
+          "lng": 29.9
+        }
+      ]
+    },
+    {
+      "from": "alexandria",
+      "to": "cairo",
+      "distanceNm": 97.2,
+      "days": 1,
+      "_placeholder": true,
+      "_note": "Overland side-trip Alexandria → Cairo (boat stays at Alexandria)."
+    },
+    {
+      "from": "cairo",
+      "to": "luxor",
+      "distanceNm": 272,
+      "days": 3,
+      "_placeholder": true,
+      "_note": "Overland side-trip Cairo → Luxor (boat still moored at Alexandria)."
+    },
+    {
+      "from": "luxor",
+      "to": "gulf-of-aqaba",
+      "distanceNm": 944,
+      "days": 8,
+      "_placeholder": true,
+      "_note": "Luxor → Cairo → Alexandria overland return, then sail Alexandria → Port Said → Suez Canal transit → Red Sea → Strait of Tiran → Gulf of Aqaba (Aqaba).",
+      "via": [
+        {
+          "lat": 30.0444196,
+          "lng": 31.2357116
+        },
+        {
+          "lat": 31.2000924,
+          "lng": 29.9187387
+        },
+        {
+          "lat": 31.27,
+          "lng": 32.3
+        },
+        {
+          "lat": 29.97,
+          "lng": 32.55
+        },
+        {
+          "lat": 27.86,
+          "lng": 34.31
+        }
+      ]
+    },
+    {
+      "from": "gulf-of-aqaba",
+      "to": "crete-heraklion",
+      "distanceNm": 800,
+      "days": 7,
+      "_placeholder": true,
+      "_note": "Return south through Strait of Tiran, north through Suez Canal, then NW across the Eastern Mediterranean to Crete.",
+      "via": [
+        {
+          "lat": 27.86,
+          "lng": 34.31
+        },
+        {
+          "lat": 29.97,
+          "lng": 32.55
+        },
+        {
+          "lat": 31.27,
+          "lng": 32.3
+        }
+      ]
+    },
+    {
+      "from": "crete-heraklion",
+      "to": "athens",
+      "distanceNm": 170,
+      "days": 2,
+      "_placeholder": true,
+      "_note": "Crete to Athens northbound through the Cyclades and into the Saronic Gulf.",
+      "via": [
+        {
+          "lat": 36.8,
+          "lng": 24.6
+        },
+        {
+          "lat": 37.3,
+          "lng": 23.8
+        }
+      ]
+    },
+    {
+      "from": "athens",
+      "to": "syracuse",
+      "distanceNm": 390,
+      "days": 4,
+      "_placeholder": true,
+      "_note": "Athens to Syracuse westbound via Cape Maleas and the Ionian Sea.",
+      "via": [
+        {
+          "lat": 36.42,
+          "lng": 23.2
+        },
+        {
+          "lat": 37.2,
+          "lng": 19.8
+        }
+      ]
+    },
+    {
+      "from": "syracuse",
+      "to": "palermo",
+      "distanceNm": 170,
+      "days": 2,
+      "_placeholder": true,
+      "_note": "Syracuse to Palermo via Sicily's southern and western coasts.",
+      "via": [
+        {
+          "lat": 36.9,
+          "lng": 14.2
+        },
+        {
+          "lat": 37.6,
+          "lng": 12.35
+        }
+      ]
+    },
+    {
+      "from": "palermo",
+      "to": "casablanca",
+      "distanceNm": 960,
+      "days": 8,
+      "via": [
+        {
+          "lat": 35.95,
+          "lng": -5.6
+        }
+      ],
+      "_placeholder": true,
+      "_note": "Palermo → Casablanca westbound through W. Med + Gibraltar + Atlantic Morocco."
+    },
+    {
+      "from": "casablanca",
+      "to": "madeira-funchal",
+      "distanceNm": 480,
+      "days": 4,
+      "_placeholder": true,
+      "_note": "Casablanca → Madeira Atlantic hop."
+    },
+    {
+      "from": "madeira-funchal",
+      "to": "canary-islands-tenerife",
+      "distanceNm": 253.7,
+      "days": 3
+    },
+    {
+      "from": "canary-islands-tenerife",
+      "to": "cape-verde-mindelo",
+      "distanceNm": 1460.2,
+      "days": 12,
+      "via": [
+        {
+          "lat": 21.057515,
+          "lng": -18.193364
+        },
+        {
+          "lat": 14.747204,
+          "lng": -17.668286
+        },
+        {
+          "lat": 13.480422,
+          "lng": -16.625623
+        }
+      ]
+    },
+    {
+      "from": "cape-verde-mindelo",
+      "to": "natal",
+      "distanceNm": 1508.2,
+      "days": 12
+    },
+    {
+      "from": "natal",
+      "to": "recife",
+      "distanceNm": 156.1,
+      "days": 2
+    },
+    {
+      "from": "recife",
+      "to": "salvador",
+      "distanceNm": 364.5,
+      "days": 3
+    },
+    {
+      "from": "salvador",
+      "to": "rio-de-janeiro",
+      "distanceNm": 653,
+      "days": 6
+    },
+    {
+      "from": "rio-de-janeiro",
+      "to": "punta-del-este",
+      "distanceNm": 951,
+      "days": 8,
+      "via": [
+        {
+          "lat": -32.819063,
+          "lng": -52.239746
+        }
+      ]
+    },
+    {
+      "from": "punta-del-este",
+      "to": "mar-del-plata",
+      "distanceNm": 221.1,
+      "days": 2,
+      "via": [
+        {
+          "lat": -38.178693,
+          "lng": -55.47505
+        }
+      ]
+    },
+    {
+      "from": "mar-del-plata",
+      "to": "falklands-stanley",
+      "distanceNm": 821.9,
+      "days": 7
+    },
+    {
+      "from": "falklands-stanley",
+      "to": "ushuaia",
+      "distanceNm": 441.2,
+      "days": 4,
+      "via": [
+        {
+          "lat": -54.850321,
+          "lng": -64.979584
+        },
+        {
+          "lat": -55.170632,
+          "lng": -65.813829
+        }
+      ]
+    },
+    {
+      "from": "ushuaia",
+      "to": "south-shetlands",
+      "distanceNm": 552.6,
+      "days": 6,
+      "via": [
+        {
+          "lat": -54.9352098,
+          "lng": -67.6058537
+        }
+      ]
+    },
+    {
+      "from": "south-shetlands",
+      "to": "deception-island",
+      "distanceNm": 75.6,
+      "days": 1
+    },
+    {
+      "from": "deception-island",
+      "to": "antarctic-peninsula",
+      "distanceNm": 172.3,
+      "days": 2
+    },
+    {
+      "from": "antarctic-peninsula",
+      "to": "drake-return",
+      "distanceNm": 543.1,
+      "days": 5
+    },
+    {
+      "from": "drake-return",
+      "to": "ushuaia-depart-3",
+      "distanceNm": 63.2,
+      "days": 1
+    },
+    {
+      "from": "ushuaia-depart-3",
+      "to": "puerto-ays-n",
+      "distanceNm": 512.2,
+      "days": 5,
+      "via": [
+        {
+          "lat": -54.997902,
+          "lng": -68.718513
+        },
+        {
+          "lat": -54.402171,
+          "lng": -69.172856
+        },
+        {
+          "lat": -54.126469,
+          "lng": -70.165289
+        },
+        {
+          "lat": -53.482395,
+          "lng": -70.57443
+        },
+        {
+          "lat": -53.972703,
+          "lng": -71.209598
+        },
+        {
+          "lat": -51.860373,
+          "lng": -72.048676
+        }
+      ]
+    },
+    {
+      "from": "puerto-ays-n",
+      "to": "valdivia",
+      "distanceNm": 561.1,
+      "days": 5
+    },
+    {
+      "from": "valdivia",
+      "to": "valpara-so",
+      "distanceNm": 401.9,
+      "days": 4
+    },
+    {
+      "from": "valpara-so",
+      "to": "lima",
+      "distanceNm": 1337.6,
+      "days": 12
+    },
+    {
+      "from": "lima",
+      "to": "guayaquil",
+      "distanceNm": 633.7,
+      "days": 6
+    },
+    {
+      "from": "guayaquil",
+      "to": "buenaventura",
+      "distanceNm": 434.4,
+      "days": 4
+    },
+    {
+      "from": "buenaventura",
+      "to": "panama-city",
+      "distanceNm": 340.9,
+      "days": 3
+    },
+    {
+      "from": "panama-city",
+      "to": "golfito",
+      "distanceNm": 217.1,
+      "days": 2
+    },
+    {
+      "from": "golfito",
+      "to": "puerto-ayora",
+      "distanceNm": 707.3,
+      "days": 6
+    },
+    {
+      "from": "puerto-ayora",
+      "to": "easter-island",
+      "distanceNm": 1926.5,
+      "days": 16
+    },
+    {
+      "from": "easter-island",
+      "to": "gambier-mangareva",
+      "distanceNm": 1385.3,
+      "days": 11,
+      "via": [
+        {
+          "lat": -23.507704,
+          "lng": -128.683268
+        }
+      ]
+    },
+    {
+      "from": "gambier-mangareva",
+      "to": "marquesas-hiva-oa",
+      "distanceNm": 834.3,
+      "days": 7
+    },
+    {
+      "from": "marquesas-hiva-oa",
+      "to": "tahiti-papeete",
+      "distanceNm": 765.9,
+      "days": 7
+    },
+    {
+      "from": "tahiti-papeete",
+      "to": "bora-bora",
+      "distanceNm": 152.7,
+      "days": 2
+    },
+    {
+      "from": "bora-bora",
+      "to": "cook-rarotonga",
+      "distanceNm": 541.5,
+      "days": 5
+    },
+    {
+      "from": "cook-rarotonga",
+      "to": "cook-aitutaki",
+      "distanceNm": 141,
+      "days": 2
+    },
+    {
+      "from": "cook-aitutaki",
+      "to": "samoa-apia",
+      "distanceNm": 772.7,
+      "days": 7
+    },
+    {
+      "from": "samoa-apia",
+      "to": "tonga-tongatapu",
+      "distanceNm": 479.4,
+      "days": 4
+    },
+    {
+      "from": "tonga-tongatapu",
+      "to": "fiji-suva",
+      "distanceNm": 434.4,
+      "days": 4
+    },
+    {
+      "from": "fiji-suva",
+      "to": "vanuatu-espiritu-santo",
+      "distanceNm": 654.3,
+      "days": 6
+    },
+    {
+      "from": "vanuatu-espiritu-santo",
+      "to": "auckland",
+      "distanceNm": 1357.1,
+      "days": 11,
+      "via": [
+        {
+          "lat": -36.196268,
+          "lng": 174.752777
+        }
+      ]
+    },
+    {
+      "from": "auckland",
+      "to": "sydney",
+      "distanceNm": 1695.7,
+      "days": 14,
+      "via": [
+        {
+          "lat": -46.095321,
+          "lng": 168.160949
+        }
+      ]
+    },
+    {
+      "from": "sydney",
+      "to": "fremantle-perth",
+      "distanceNm": 2071,
+      "days": 17,
+      "via": [
+        {
+          "lat": -38.157418,
+          "lng": 150.504013
+        },
+        {
+          "lat": -40.156325,
+          "lng": 146.312083
+        },
+        {
+          "lat": -34.287879,
+          "lng": 117.281833
+        }
+      ]
+    },
+    {
+      "from": "fremantle-perth",
+      "to": "darwin",
+      "distanceNm": 1965.7,
+      "days": 16,
+      "via": [
+        {
+          "lat": -22.834534,
+          "lng": 110.626683
+        },
+        {
+          "lat": -12.756007,
+          "lng": 125.866115
+        }
+      ]
+    },
+    {
+      "from": "darwin",
+      "to": "philippines-mindoro",
+      "distanceNm": 1925.1,
+      "days": 16,
+      "via": [
+        {
+          "lat": -11.870451,
+          "lng": 130.671753
+        },
+        {
+          "lat": -3.932037,
+          "lng": 131.607831
+        },
+        {
+          "lat": 14.885682,
+          "lng": 124.594211
+        }
+      ]
+    },
+    {
+      "from": "philippines-mindoro",
+      "to": "osaka",
+      "distanceNm": 1507.6,
+      "days": 12
+    },
+    {
+      "from": "osaka",
+      "to": "tokyo",
+      "distanceNm": 217.6,
+      "days": 2
+    },
+    {
+      "from": "tokyo",
+      "to": "hokkaido-sapporo",
+      "distanceNm": 449.2,
+      "days": 4
+    },
+    {
+      "from": "hokkaido-sapporo",
+      "to": "fukuoka",
+      "distanceNm": 766.5,
+      "days": 7
+    },
+    {
+      "from": "fukuoka",
+      "to": "seoul-incheon",
+      "distanceNm": 291.4,
+      "days": 3
+    },
+    {
+      "from": "seoul-incheon",
+      "to": "taipei",
+      "distanceNm": 801.6,
+      "days": 7
+    },
+    {
+      "from": "taipei",
+      "to": "hong-kong",
+      "distanceNm": 438.5,
+      "days": 4
+    },
+    {
+      "from": "hong-kong",
+      "to": "saigon",
+      "distanceNm": 822.7,
+      "days": 7
+    },
+    {
+      "from": "saigon",
+      "to": "bangkok",
+      "distanceNm": 400.3,
+      "days": 4
+    },
+    {
+      "from": "bangkok",
+      "to": "singapore",
+      "distanceNm": 775,
+      "days": 7
+    },
+    {
+      "from": "singapore",
+      "to": "phuket",
+      "distanceNm": 520.5,
+      "days": 5
+    },
+    {
+      "from": "phuket",
+      "to": "chittagong",
+      "distanceNm": 886.3,
+      "days": 8
+    },
+    {
+      "from": "chittagong",
+      "to": "dhaka-coast",
+      "distanceNm": 106.8,
+      "days": 1
+    },
+    {
+      "from": "dhaka-coast",
+      "to": "odisha-coast",
+      "distanceNm": 270.1,
+      "days": 3
+    },
+    {
+      "from": "odisha-coast",
+      "to": "chennai",
+      "distanceNm": 515.4,
+      "days": 5
+    },
+    {
+      "from": "chennai",
+      "to": "colombo",
+      "distanceNm": 397.9,
+      "days": 4,
+      "via": [
+        {
+          "lat": 10.166288,
+          "lng": 80.207026
+        },
+        {
+          "lat": 9.678029,
+          "lng": 79.412955
+        }
+      ]
+    },
+    {
+      "from": "colombo",
+      "to": "kochi-cochin",
+      "distanceNm": 281.2,
+      "days": 3,
+      "via": [
+        {
+          "lat": 6.923189,
+          "lng": 79.752567
+        }
+      ]
+    },
+    {
+      "from": "kochi-cochin",
+      "to": "maldives-addu",
+      "distanceNm": 684.5,
+      "days": 6,
+      "via": [
+        {
+          "lat": 4.566365,
+          "lng": 73.076348
+        }
+      ]
+    },
+    {
+      "from": "maldives-addu",
+      "to": "r-union",
+      "distanceNm": 1607,
+      "days": 13,
+      "via": [
+        {
+          "lat": -19.15069,
+          "lng": 58.071633
+        }
+      ]
+    },
+    {
+      "from": "r-union",
+      "to": "madagascar-toamasina",
+      "distanceNm": 390.5,
+      "days": 4
+    },
+    {
+      "from": "madagascar-toamasina",
+      "to": "madagascar-diego-suarez",
+      "distanceNm": 403.5,
+      "days": 4,
+      "via": [
+        {
+          "lat": -18.028045,
+          "lng": 49.458903
+        },
+        {
+          "lat": -15.454899,
+          "lng": 51.00812
+        }
+      ]
+    },
+    {
+      "from": "madagascar-diego-suarez",
+      "to": "mozambique-pemba",
+      "distanceNm": 521,
+      "days": 5
+    },
+    {
+      "from": "mozambique-pemba",
+      "to": "beira",
+      "distanceNm": 460.8,
+      "days": 4
+    },
+    {
+      "from": "beira",
+      "to": "maputo",
+      "distanceNm": 389.2,
+      "days": 4
+    },
+    {
+      "from": "maputo",
+      "to": "durban",
+      "distanceNm": 224.2,
+      "days": 2
+    },
+    {
+      "from": "durban",
+      "to": "cape-town",
+      "distanceNm": 804.7,
+      "days": 7,
+      "via": [
+        {
+          "lat": -34.140867,
+          "lng": 28.209376
+        }
+      ]
+    },
+    {
+      "from": "cape-town",
+      "to": "walvis-bay-namibia",
+      "distanceNm": 689.8,
+      "days": 6
+    },
+    {
+      "from": "walvis-bay-namibia",
+      "to": "st-helena-jamestown",
+      "distanceNm": 1223.8,
+      "days": 10,
+      "via": [
+        {
+          "lat": -22.871257,
+          "lng": 14.526516
+        }
+      ]
+    },
+    {
+      "from": "st-helena-jamestown",
+      "to": "ascension-georgetown",
+      "distanceNm": 700.8,
+      "days": 6
+    },
+    {
+      "from": "ascension-georgetown",
+      "to": "fernando-de-noronha",
+      "distanceNm": 1103.2,
+      "days": 9
+    },
+    {
+      "from": "fernando-de-noronha",
+      "to": "fortaleza",
+      "distanceNm": 366,
+      "days": 3,
+      "via": [
+        {
+          "lat": -3.695328,
+          "lng": -38.446095
+        }
+      ]
+    },
+    {
+      "from": "fortaleza",
+      "to": "s-o-lu-s",
+      "distanceNm": 371,
+      "days": 3,
+      "via": [
+        {
+          "lat": -2.242711,
+          "lng": -41.097086
+        }
+      ]
+    },
+    {
+      "from": "s-o-lu-s",
+      "to": "amazon-mouth",
+      "distanceNm": 450.3,
+      "days": 4,
+      "via": [
+        {
+          "lat": -1.364616,
+          "lng": -44.314484
+        },
+        {
+          "lat": -0.008343,
+          "lng": -47.8272
+        }
+      ]
+    },
+    {
+      "from": "amazon-mouth",
+      "to": "macap-amazon-delta",
+      "distanceNm": 154.9,
+      "days": 2
+    },
+    {
+      "from": "macap-amazon-delta",
+      "to": "cayenne-french-guiana",
+      "distanceNm": 388.5,
+      "days": 4
+    },
+    {
+      "from": "cayenne-french-guiana",
+      "to": "paramaribo-suriname",
+      "distanceNm": 377.9,
+      "days": 3,
+      "via": [
+        {
+          "lat": 6.085367,
+          "lng": -53.568445
+        }
+      ]
+    },
+    {
+      "from": "paramaribo-suriname",
+      "to": "trinidad-port-of-spain",
+      "distanceNm": 317.1,
+      "days": 3,
+      "via": [
+        {
+          "lat": 10.90158,
+          "lng": -61.15835
+        }
+      ]
+    },
+    {
+      "from": "trinidad-port-of-spain",
+      "to": "grenada",
+      "distanceNm": 89.7,
+      "days": 1
+    },
+    {
+      "from": "grenada",
+      "to": "martinique",
+      "distanceNm": 156.4,
+      "days": 2
+    },
+    {
+      "from": "martinique",
+      "to": "dominica",
+      "distanceNm": 50.6,
+      "days": 1
+    },
+    {
+      "from": "dominica",
+      "to": "guadeloupe",
+      "distanceNm": 52.1,
+      "days": 1
+    },
+    {
+      "from": "guadeloupe",
+      "to": "antigua",
+      "distanceNm": 49.8,
+      "days": 1
+    },
+    {
+      "from": "antigua",
+      "to": "st-barts-st-martin",
+      "distanceNm": 59.3,
+      "days": 1
+    },
+    {
+      "from": "st-barts-st-martin",
+      "to": "bvi-tortola",
+      "distanceNm": 123.9,
+      "days": 1
+    },
+    {
+      "from": "bvi-tortola",
+      "to": "san-juan",
+      "distanceNm": 81.2,
+      "days": 1
+    },
+    {
+      "from": "san-juan",
+      "to": "dr-saman",
+      "distanceNm": 132,
+      "days": 2
+    },
+    {
+      "from": "dr-saman",
+      "to": "turks-caicos",
+      "distanceNm": 384.5,
+      "days": 4,
+      "via": [
+        {
+          "lat": 18.01202,
+          "lng": -71.123066
+        }
+      ]
+    },
+    {
+      "from": "turks-caicos",
+      "to": "bahamas-nassau",
+      "distanceNm": 366.1,
+      "days": 3
+    },
+    {
+      "from": "bahamas-nassau",
+      "to": "fort-lauderdale",
+      "distanceNm": 164.2,
+      "days": 2
     }
   ]
 }

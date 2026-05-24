@@ -331,6 +331,201 @@ function segmentTypeColor(seg) {
   return (seg && SEGMENT_TYPE_COLOR[seg.type]) || SEGMENT_TYPE_COLOR.coastal;
 }
 
+function isNextCalendarMonth(prev, next) {
+  const a = MONTH_NAMES.indexOf(prev);
+  const b = MONTH_NAMES.indexOf(next);
+  if (a < 0 || b < 0) return false;
+  return (a + 1) % 12 === b;
+}
+
+function monthListToSeasonText(months) {
+  if (!months || !months.length) return "";
+  const ranges = [];
+  let start = months[0];
+  let prev = months[0];
+
+  for (let i = 1; i < months.length; i++) {
+    const cur = months[i];
+    if (isNextCalendarMonth(prev, cur)) {
+      prev = cur;
+      continue;
+    }
+    ranges.push(start === prev ? start : `${start}–${prev}`);
+    start = cur;
+    prev = cur;
+  }
+  ranges.push(start === prev ? start : `${start}–${prev}`);
+  return ranges.join(" & ");
+}
+
+function hurricaneSeasonTagHtml(seg) {
+  if (!seg) return "";
+  const fallbackMonths = SEGMENT_RISK_MONTHS[seg.id] || [];
+  const seasonText = seg.hurricaneSeason || monthListToSeasonText(fallbackMonths) || "n/a";
+  return (
+    '<div class="tl3-course-tags">' +
+    '<span class="tl3-tag tl3-tag-hurricane" title="Cyclone / hurricane season window for this segment">' +
+    "🌀 " +
+    seasonText +
+    "</span></div>"
+  );
+}
+
+const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+function startMonthIndex() {
+  const m = (VOYAGE && VOYAGE.voyage && VOYAGE.voyage.startMonth) || "Jan";
+  const i = MONTH_NAMES.indexOf(m);
+  return i < 0 ? 0 : i;
+}
+
+function calendarMonthFor(monthNum) {
+  return MONTH_NAMES[(startMonthIndex() + monthNum - 1) % 12];
+}
+
+// Countries in the Schengen Area (as of 2024 — Croatia 2023, Bulgaria + Romania 2024).
+const SCHENGEN_COUNTRIES = new Set([
+  "Austria", "Belgium", "Bulgaria", "Croatia", "Czech Republic", "Denmark",
+  "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Iceland",
+  "Italy", "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "Malta",
+  "Netherlands", "Norway", "Poland", "Portugal", "Romania", "Slovakia",
+  "Slovenia", "Spain", "Sweden", "Switzerland",
+]);
+
+// Islands / autonomous regions that belong to a Schengen country but don't carry
+// `mainland-country-share:` in their tourStayRule.
+const SCHENGEN_TERRITORY_LABELS = new Set([
+  "Azores — Horta",
+  "Madeira — Funchal",
+  "Canary Islands — Tenerife",
+  "Crete — Heraklion",
+]);
+
+function isSchengenWaypoint(w) {
+  if (!w) return false;
+  const rule = w.tourStayRule || "";
+  const m = rule.match(/^mainland-country-share:(.+)$/);
+  if (m) return SCHENGEN_COUNTRIES.has(m[1].trim());
+  return SCHENGEN_TERRITORY_LABELS.has(w.label);
+}
+
+// Schengen 90/180 stay rule. For each labeled destination, count how many of the
+// previous 180 days (ending at the end of that destination's tour) were spent in
+// Schengen territory. Sail days count as Schengen only when both endpoints are.
+// Home trips are inserted at month-end: only exit + re-entry transit days count
+// as Schengen (2 days total), while the rest of the home-trip days are outside.
+function computeSchengenWindow(destinations, routeIntoWp, voyageMonths) {
+  const activities = []; // { startDay, days, schengen }
+  const monthMetaById = new Map((voyageMonths || []).map((m) => [m.id, m]));
+
+  function appendMonthEndHomeTrip(monthId, dayRef) {
+    const vm = monthMetaById.get(monthId);
+    const homeDays = vm && vm.plannedHomeDays ? vm.plannedHomeDays : 0;
+    if (!homeDays) return dayRef;
+
+    // For Schengen accounting, home trips contribute only two transit days total.
+    // The full home-trip duration is still shown in UI events, but does not advance
+    // the Schengen rolling-day timeline beyond exit + re-entry.
+    const transitDays = Math.min(homeDays, 2);
+    if (transitDays >= 1) activities.push({ startDay: dayRef, days: 1, schengen: true });
+    if (transitDays >= 2) activities.push({ startDay: dayRef + 1, days: 1, schengen: true });
+    return dayRef + transitDays;
+  }
+
+  let day = 0;
+  let prevMonth = null;
+  destinations.forEach((w, i) => {
+    if (prevMonth !== null && w.month !== prevMonth) {
+      day = appendMonthEndHomeTrip(prevMonth, day);
+    }
+
+    // Snapshot at route-arrival (before local tour/stay begins for this destination).
+    w._dayAtRouteArrival = day;
+
+    if (i > 0) {
+      const r = routeIntoWp.get(w.id);
+      if (r) {
+        const inSchengenSail = isSchengenWaypoint(destinations[i - 1]) && isSchengenWaypoint(w);
+        activities.push({ startDay: day, days: r.days, schengen: inSchengenSail });
+        day += r.days;
+        w._dayAtRouteArrival = day;
+      }
+    }
+    const tour = w.tourStayDays || 0;
+    activities.push({ startDay: day, days: tour, schengen: isSchengenWaypoint(w) });
+    w._dayAtTourEnd = day + tour;
+    day += tour;
+    prevMonth = w.month;
+  });
+
+  if (prevMonth !== null) {
+    day = appendMonthEndHomeTrip(prevMonth, day);
+  }
+
+  function countAt(endDay) {
+    const windowStart = endDay - 180;
+    let sum = 0;
+    for (const a of activities) {
+      if (!a.schengen) continue;
+      const aEnd = a.startDay + a.days;
+      const overlap = Math.min(aEnd, endDay) - Math.max(a.startDay, windowStart);
+      if (overlap > 0) sum += overlap;
+    }
+    return sum;
+  }
+
+  const tourEndCounts = new Map();
+  const routeArrivalCounts = new Map();
+  destinations.forEach((w) => {
+    tourEndCounts.set(w.id, countAt(w._dayAtTourEnd));
+    routeArrivalCounts.set(w.id, countAt(w._dayAtRouteArrival));
+  });
+  return { tourEndCounts, routeArrivalCounts };
+}
+
+function computeHomeTripSchengenImpactByMonth(destinations, voyageMonths) {
+  const months = voyageMonths || [];
+  const lastByMonth = new Map();
+
+  for (const w of destinations || []) {
+    if (!w || !w.month) continue;
+    lastByMonth.set(w.month, w);
+  }
+
+  const impactByMonth = new Map();
+  for (let i = 0; i < months.length; i++) {
+    const m = months[i];
+    const homeDays = m && m.plannedHomeDays ? m.plannedHomeDays : 0;
+    if (!homeDays) continue;
+
+    const transitDays = Math.min(homeDays, 2);
+    if (!transitDays) continue;
+
+    let impact = 0;
+    const lastInMonth = lastByMonth.get(m.id);
+    if (lastInMonth && isSchengenWaypoint(lastInMonth)) impact = transitDays;
+
+    if (impact > 0) impactByMonth.set(m.id, impact);
+  }
+
+  return impactByMonth;
+}
+
+function calendarYearFor(monthNum, startYear) {
+  return startYear + Math.floor((startMonthIndex() + monthNum - 1) / 12);
+}
+
+function formatMonthMapTitle(monthId) {
+  if (!monthId) return "Unknown month";
+  const monthNum = Number(String(monthId).replace(/^m/i, ""));
+  if (!monthNum) return monthId;
+  const startYear = (VOYAGE && VOYAGE.voyage && VOYAGE.voyage.startYear) || 2034;
+  const cal = calendarMonthFor(monthNum);
+  const calYear = calendarYearFor(monthNum, startYear);
+  const voyageYr = Math.ceil(monthNum / 12);
+  return `Month ${monthNum} · ${cal} ${calYear} · Yr ${voyageYr}`;
+}
+
 function segmentModeColor(seg) {
   // `seg` may be a synthetic group (built in buildGroups) that lacks `type`.
   // Resolve to the canonical segment so the type lookup always works.
@@ -355,14 +550,125 @@ function dominantSegmentId(waypoints) {
   return best;
 }
 
+// Tropical cyclone season per segment. Derived from real-world basin climatology;
+// keyed off the calendar month (Jan-Dec), so it auto-updates when voyage.startMonth changes.
+const SEGMENT_RISK_MONTHS = {
+  midAtlantic: ["Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
+  nAtlantic: ["Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
+  caribbean: ["Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
+  sAmericaNE: ["Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
+  sAtlantic: [],
+  sAmericaSE: ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"],
+  sAmericaSW: [],
+  antarctica: [],
+  sPacific: ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"],
+  oceanic: ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"],
+  asia: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
+  indian: ["Apr", "May", "Jun", "Oct", "Nov", "Dec"],
+  africaSouth: ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"],
+  baltic: [],
+  rhineDanube: [],
+  mediterranean: [],
+};
+
+function normalizeMonthToken(token) {
+  if (!token) return null;
+  const t = token.trim();
+  if (!t) return null;
+  const short = t.slice(0, 3).toLowerCase();
+  const map = {
+    jan: "Jan",
+    feb: "Feb",
+    mar: "Mar",
+    apr: "Apr",
+    may: "May",
+    jun: "Jun",
+    jul: "Jul",
+    aug: "Aug",
+    sep: "Sep",
+    oct: "Oct",
+    nov: "Nov",
+    dec: "Dec",
+  };
+  return map[short] || null;
+}
+
+function expandMonthRange(startMonth, endMonth) {
+  const a = MONTH_NAMES.indexOf(startMonth);
+  const b = MONTH_NAMES.indexOf(endMonth);
+  if (a < 0 || b < 0) return [];
+  const out = [];
+  let i = a;
+  while (true) {
+    out.push(MONTH_NAMES[i]);
+    if (i === b) break;
+    i = (i + 1) % 12;
+  }
+  return out;
+}
+
+function parseSeasonMonths(seasonText) {
+  if (!seasonText || typeof seasonText !== "string") return [];
+  const months = new Set();
+  const parts = seasonText
+    .replace(/\u2013|\u2014/g, "-")
+    .split(/&|,/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  for (const p of parts) {
+    const m = p.match(/^([A-Za-z]+)\s*-\s*([A-Za-z]+)$/);
+    if (m) {
+      const start = normalizeMonthToken(m[1]);
+      const end = normalizeMonthToken(m[2]);
+      expandMonthRange(start, end).forEach((mo) => months.add(mo));
+      continue;
+    }
+    const single = normalizeMonthToken(p);
+    if (single) months.add(single);
+  }
+
+  return Array.from(months);
+}
+
+// Fallback hemisphere when a month has no waypoints to derive from.
+const SEGMENT_HEMI = {
+  midAtlantic: "N", baltic: "N", rhineDanube: "N", mediterranean: "N", nAtlantic: "N",
+  sAmericaSE: "S", antarctica: "S", sAmericaSW: "S", sPacific: "S", oceanic: "S",
+  asia: "N", indian: "S", africaSouth: "S", sAtlantic: "S", sAmericaNE: "N", caribbean: "N",
+};
+
+function hemisphereForMonth(monthMeta) {
+  if (!monthMeta) return "N";
+  const wps = (VOYAGE.waypoints || []).filter((w) => w.month === monthMeta.id);
+  if (wps.length) {
+    const avg = wps.reduce((s, w) => s + w.lat, 0) / wps.length;
+    return avg >= 0 ? "N" : "S";
+  }
+  return SEGMENT_HEMI[monthMeta.dominantSegment] || "N";
+}
+
+function seasonForMonth(monthMeta) {
+  if (!monthMeta) return "";
+  const monthNum = Number(String(monthMeta.id).replace(/^m/i, ""));
+  const cal = calendarMonthFor(monthNum);
+  const i = MONTH_NAMES.indexOf(cal);
+  const nh = i === 11 || i === 0 || i === 1 ? "Winter" : i >= 2 && i <= 4 ? "Spring" : i >= 5 && i <= 7 ? "Summer" : "Autumn";
+  if (hemisphereForMonth(monthMeta) === "N") return nh;
+  return { Winter: "Summer", Spring: "Autumn", Summer: "Winter", Autumn: "Spring" }[nh];
+}
+
 function isCycloneRiskMonth(monthMeta, segId) {
-  if (!monthMeta || !segId) return false;
-  if (typeof monthMeta.hurricaneRisk === "boolean") return monthMeta.hurricaneRisk;
-  // Tropical cyclone-prone route basins in this itinerary.
-  const cycloneProne = new Set(["midAtlantic", "nAtlantic", "sAtlantic", "sAmericaNE", "caribbean", "sPacific", "oceanic", "asia", "indian", "africaSouth"]);
-  if (!cycloneProne.has(segId)) return false;
-  // Using hemisphere-aware season from voyage.jsonc: peak risk during summer/autumn.
-  return monthMeta.season === "Summer" || monthMeta.season === "Autumn";
+  if (!monthMeta) return false;
+  const seg = segId || monthMeta.dominantSegment;
+  if (!seg) return false;
+  const monthNum = Number(String(monthMeta.id).replace(/^m/i, ""));
+  const cal = calendarMonthFor(monthNum);
+  const segMeta = (VOYAGE && VOYAGE.segments ? VOYAGE.segments : []).find((s) => s.id === seg);
+  if (segMeta && segMeta.hurricaneSeason) {
+    return parseSeasonMonths(segMeta.hurricaneSeason).includes(cal);
+  }
+  return (SEGMENT_RISK_MONTHS[seg] || []).includes(cal);
 }
 
 function renderRouteMap() {
@@ -375,9 +681,9 @@ function renderRouteMap() {
   const specialPortByMonth = new Map(
     (VOYAGE.months || []).map((m) => {
       const label = m.label || "";
-      const homeMatch = label.match(/\[.*?home:\s*([^\]|]+).*?\]/i);
-      const haulMatch = label.match(/\[.*?haul-out:\s*([^\]|]+).*?\]/i);
-      return [m.id, { home: homeMatch ? homeMatch[1].trim() : null, haul: haulMatch ? haulMatch[1].trim() : null }];
+      const hasHome = /\[[^\]]*\bhome\b[^\]]*\]/i.test(label);
+      const hasHaul = /\[[^\]]*\bhaul-out\b[^\]]*\]/i.test(label);
+      return [m.id, { home: hasHome, haul: hasHaul }];
     }),
   );
   // Backward-compat shim so existing template code keeps working
@@ -388,6 +694,9 @@ function renderRouteMap() {
     waypoints: g.waypoints,
   }));
 
+  // Route lookup: route ending at waypoint id → the route record (with via points).
+  const routeIntoWp = new Map((VOYAGE.routes || []).map((r) => [r.to, r]));
+
   let routePaths = "";
   let routeTags = "";
   let waypointDots = "";
@@ -395,15 +704,29 @@ function renderRouteMap() {
 
   // Build polylines per group. Each group's line continues from the previous group's
   // last waypoint so the colored segments connect (no visible gaps at month boundaries).
-  let prevLast = null;
+  // Via points from routes are inserted between consecutive waypoints to follow the
+  // actual sea route around land masses.
+  let prevWp = null;
   segments.forEach((seg, si) => {
     // Color encodes segment type (sea blue / forest green / walnut brown), regardless of grouping.
     const domSegId = STATE.groupBy === "segment" ? seg.id : dominantSegmentId(seg.waypoints);
     const segMeta = (VOYAGE.segments || []).find((s) => s.id === domSegId);
     const color = segmentTypeColor(segMeta);
     const ownPts = seg.waypoints.map((w) => project(w.lat, w.lng));
-    const linePts = prevLast ? [prevLast, ...ownPts] : ownPts;
-    const destCount = seg.waypoints.filter((w) => w.label).length;
+    const linePts = [];
+    if (prevWp) {
+      linePts.push(project(prevWp.lat, prevWp.lng));
+      const r = routeIntoWp.get(seg.waypoints[0].id);
+      if (r && r.via) r.via.forEach((v) => linePts.push(project(v.lat, v.lng)));
+    }
+    seg.waypoints.forEach((w, wi) => {
+      if (wi > 0) {
+        const r = routeIntoWp.get(w.id);
+        if (r && r.via) r.via.forEach((v) => linePts.push(project(v.lat, v.lng)));
+      }
+      linePts.push(ownPts[wi]);
+    });
+    const destCount = seg.waypoints.length;
     const nmText = seg.nm ? `${seg.nm.toLocaleString()} nm · ` : "";
     routePaths += `<path d="${buildPathDWithWrap(linePts)}" stroke="${color}" class="route-seg" data-seg-id="${seg.id}"><title>${seg.name} · ${nmText}${destCount} destinations</title></path>`;
 
@@ -428,33 +751,28 @@ function renderRouteMap() {
         }
       }
       const monthNum = Number((seg.id || "").replace(/^m/i, "")) || si + 1;
-      const yearNum = Math.ceil(monthNum / 12);
-      const startYearMatch = String((VOYAGE && VOYAGE.cartouche && VOYAGE.cartouche.sub1) || "").match(/(?:19|20)\d{2}/);
-      const startYear = startYearMatch ? Number(startYearMatch[0]) : 2026;
-      const calendarYear = startYear + Math.floor((monthNum - 1) / 12);
-      const fallbackMonth = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][(monthNum - 1) % 12];
-      const rawMonth = monthMeta && monthMeta.calendarMonth ? String(monthMeta.calendarMonth) : fallbackMonth;
-      const monthShort = `${rawMonth}`.slice(0, 3);
-      const monthTag = `${monthShort.charAt(0).toUpperCase()}${monthShort.slice(1).toLowerCase()}${String(calendarYear).slice(-2)}`;
-      const monthYearTitle = `Month ${monthNum} · Year ${yearNum}`;
+      const startYear = (VOYAGE && VOYAGE.voyage && VOYAGE.voyage.startYear) || 2034;
+      const calendarYear = calendarYearFor(monthNum, startYear);
+      const monthTag = `${calendarMonthFor(monthNum)}${String(calendarYear).slice(-2)}`;
+      const monthYearTitle = formatMonthMapTitle(seg.id);
       const tagClass = isRisk ? "route-tag route-tag-hazard" : "route-tag";
       const tagText = isRisk ? `⚠ ${monthTag}` : monthTag;
       routeTags += `<text x="${longest.mx.toFixed(1)}" y="${(longest.my - 6).toFixed(1)}" class="${tagClass}" text-anchor="middle">${tagText}<title>${monthYearTitle}</title></text>`;
     }
 
     seg.waypoints.forEach((w, wi) => {
-      if (!w.label) return;
       const p = ownPts[wi];
       const special = specialPortByMonth.get(w.month) || { home: null, haul: null };
-      const wpClass = special.haul === w.label ? "route-wp route-wp-haul" : special.home === w.label ? "route-wp route-wp-home" : "route-wp";
-      const monthLabel = (monthById.get(w.month) && monthById.get(w.month).label) || w.month || "Unknown month";
+      const wpClass = special.haul === w.label ? "route-wp route-wp-haul" : special.home === w.label ? "route-wp route-wp-home" : w.kind === "side-trip" ? "route-wp route-wp-side-trip" : "route-wp";
+      const monthLabel = formatMonthMapTitle(w.month);
       const courseLabel = (segmentById.get(w.segment) && segmentById.get(w.segment).name) || seg.name || "Unknown course";
-      const titleLine1 = w.label;
+      const stayDays = formatDays(w.tourStayDays);
+      const titleLine1 = `${w.label}${stayDays ? ` (${stayDays})` : ""}`;
       const titleLine2 = monthLabel;
       const titleLine3 = courseLabel;
       waypointDots += `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="1.8" class="${wpClass}" data-seg-id="${seg.id}"><title>${titleLine1}&#10;${titleLine2}&#10;${titleLine3}</title></circle>`;
     });
-    prevLast = ownPts[ownPts.length - 1];
+    prevWp = seg.waypoints[seg.waypoints.length - 1];
   });
 
   // Start marker
@@ -533,6 +851,9 @@ function renderRouteMap() {
   // Wire wheel-zoom + drag-pan + reset button
   const svgEl = $("#world-map svg");
   const reset = attachZoomPan(svgEl);
+  // Expose current zoom as a CSS variable so map elements (route stroke, dots, labels)
+  // can scale inversely and stay visually constant at any zoom level.
+  reset.onZoom((z) => svgEl.style.setProperty("--zoom", z));
 
   // Group-by toggle (By Month / By Segment) — overlay top-left of map
   const toggle = document.createElement("div");
@@ -566,60 +887,114 @@ function renderRouteMap() {
   });
 }
 
-// Avg cruising speed (~126 nm/day) used to estimate leg travel time.
-const NM_PER_DAY = 126;
-
 function formatNm(nm) {
-  const n = Math.round(nm);
-  return n.toLocaleString() + " nm";
+  return Math.round(nm).toLocaleString() + " nm";
 }
 
-function formatTravelTime(nm) {
-  if (!nm || nm <= 0) return "";
-  const hours = (nm / NM_PER_DAY) * 24;
-  if (hours < 24) return Math.round(hours) + "h";
-  const days = nm / NM_PER_DAY;
-  if (days < 10) return days.toFixed(1) + "d";
-  return Math.round(days) + "d";
+function formatDays(d) {
+  if (d == null || d <= 0) return "";
+  return (d % 1 === 0 ? String(d) : d.toFixed(1)) + "d";
+}
+
+// Home / haul destination rows at the end of each voyage month (after that month's ports).
+function appendMonthEndEvents(rows, monthId, lastWp, monthMetaById) {
+  const vm = monthMetaById.get(monthId);
+  if (!vm) return;
+  const seg = lastWp ? lastWp.segment : null;
+  if (vm.plannedHomeDays > 0) {
+    rows.push({
+      type: "event",
+      kind: "home",
+      month: monthId,
+      segment: seg,
+      days: vm.plannedHomeDays,
+    });
+  }
+  if (vm.plannedHaulDays > 0) {
+    rows.push({
+      type: "event",
+      kind: "haul",
+      month: monthId,
+      segment: seg,
+      days: vm.plannedHaulDays,
+    });
+  }
+}
+
+function buildTimelineRows(destinations, voyageMonths) {
+  const monthMetaById = new Map((voyageMonths || []).map((m) => [m.id, m]));
+  const rows = [];
+  let prevMonth = null;
+  let lastWpInMonth = null;
+
+  for (let i = 0; i < destinations.length; i++) {
+    const w = destinations[i];
+    if (w.month !== prevMonth) {
+      if (prevMonth !== null) {
+        appendMonthEndEvents(rows, prevMonth, lastWpInMonth, monthMetaById);
+      }
+      prevMonth = w.month;
+    }
+    lastWpInMonth = w;
+    rows.push({ type: "waypoint", w, destIndex: i });
+  }
+  if (prevMonth !== null) {
+    appendMonthEndEvents(rows, prevMonth, lastWpInMonth, monthMetaById);
+  }
+
+  // Haul-out can spill into a month with no ports (events-only month).
+  const monthsInRows = new Set();
+  for (const row of rows) {
+    monthsInRows.add(row.type === "waypoint" ? row.w.month : row.month);
+  }
+  for (const vm of voyageMonths || []) {
+    if (monthsInRows.has(vm.id)) continue;
+    if (!(vm.plannedHomeDays || vm.plannedHaulDays)) continue;
+    appendMonthEndEvents(rows, vm.id, null, monthMetaById);
+  }
+
+  return rows;
 }
 
 function renderRouteTimeline() {
   const host = $("#voyage-timeline");
-  // Walk the full waypoints list (including pivots) and bin distances per labeled destination.
-  // For each labeled waypoint, `legDistance` is the cumulative nm since the previous labeled one.
-  const allWps = VOYAGE.waypoints || [];
-  const destinations = [];
-  let cumulative = 0;
-  for (let i = 0; i < allWps.length; i++) {
-    const w = allWps[i];
-    cumulative += w.distanceFromPrevNm || 0;
-    if (w.label) {
-      destinations.push({ ...w, legDistance: destinations.length === 0 ? 0 : cumulative });
-      cumulative = 0;
-    }
-  }
+  const destinations = VOYAGE.waypoints || [];
+  const routeIntoWp = new Map((VOYAGE.routes || []).map((r) => [r.to, r]));
+  const schengenSnapshots = computeSchengenWindow(destinations, routeIntoWp, VOYAGE.months || []);
+  const schengenCount = schengenSnapshots.tourEndCounts;
+  const schengenRouteCount = schengenSnapshots.routeArrivalCounts;
+  const homeTripSchengenImpact = computeHomeTripSchengenImpactByMonth(destinations, VOYAGE.months || []);
   const monthById = new Map((VOYAGE.months || []).map((m) => [m.id, m]));
   const segmentById = new Map((VOYAGE.segments || []).map((s) => [s.id, s]));
   const monthIndexById = new Map((VOYAGE.months || []).map((m, i) => [m.id, i]));
   const segmentIndexById = new Map((VOYAGE.segments || []).map((s, i) => [s.id, i]));
+  const mediterraneanIndex = segmentIndexById.has("mediterranean") ? segmentIndexById.get("mediterranean") : Infinity;
+  const showSchengenForSegment = (segId) => {
+    if (mediterraneanIndex === Infinity) return true;
+    if (!segmentIndexById.has(segId)) return false;
+    return segmentIndexById.get(segId) <= mediterraneanIndex;
+  };
+  const rows = buildTimelineRows(destinations, VOYAGE.months);
 
-  const startYearMatch = String((VOYAGE && VOYAGE.cartouche && VOYAGE.cartouche.sub1) || "").match(/(?:19|20)\d{2}/);
-  const startYear = startYearMatch ? Number(startYearMatch[0]) : 2034;
+  const startYear = (VOYAGE && VOYAGE.voyage && VOYAGE.voyage.startYear) || 2034;
 
-  // Compute contiguous runs of identical month / segment so the side cards can
-  // span the rows of every destination they cover.
+  // Contiguous runs for month / course side cards (includes home & haul rows).
   const monthRuns = [];
   const segmentRuns = [];
-  destinations.forEach((w, i) => {
+  rows.forEach((row, i) => {
+    const monthId = row.type === "waypoint" ? row.w.month : row.month;
+    const segId = row.type === "waypoint" ? row.w.segment : row.segment;
     const lm = monthRuns[monthRuns.length - 1];
-    if (lm && lm.id === w.month) lm.end = i;
-    else monthRuns.push({ id: w.month, start: i, end: i });
-    const ls = segmentRuns[segmentRuns.length - 1];
-    if (ls && ls.id === w.segment) ls.end = i;
-    else segmentRuns.push({ id: w.segment, start: i, end: i });
+    if (lm && lm.id === monthId) lm.end = i;
+    else monthRuns.push({ id: monthId, start: i, end: i });
+    if (segId) {
+      const ls = segmentRuns[segmentRuns.length - 1];
+      if (ls && ls.id === segId) ls.end = i;
+      else segmentRuns.push({ id: segId, start: i, end: i });
+    }
   });
 
-  const N = destinations.length;
+  const N = rows.length;
   const totalNm = (VOYAGE.segments || []).reduce((s, x) => s + (x.nm || 0), 0);
 
   let html = "";
@@ -627,7 +1002,7 @@ function renderRouteTimeline() {
     '<div class="route-mode-banner">' +
     '<div class="route-mode-title"><em>The Voyage</em> · destination by destination</div>' +
     '<div class="route-mode-sub">' +
-    N +
+    destinations.length +
     " destinations · " +
     totalNm.toLocaleString() +
     " nm across " +
@@ -649,17 +1024,17 @@ function renderRouteTimeline() {
     const meta = monthById.get(run.id) || {};
     const mi = monthIndexById.has(run.id) ? monthIndexById.get(run.id) : 0;
     const monthNum = Number(String(run.id).replace(/^m/i, "")) || mi + 1;
-    const calendarYear = startYear + Math.floor((monthNum - 1) / 12);
+    const calendarYear = calendarYearFor(monthNum, startYear);
     const yearNum = Math.ceil(monthNum / 12);
     const span = run.end - run.start + 1;
     const startRow = run.start + 2;
-    const rawLabel = meta.label || "";
-    const cleanTitle = rawLabel.replace(/^Month\s+\d+\s*[-–—]\s*/i, "").replace(/\s*\[.*?\]\s*$/, "");
-    const homeMatch = rawLabel.match(/\[.*?home:\s*([^\]|]+).*?\]/i);
-    const haulMatch = rawLabel.match(/\[.*?haul-out:\s*([^\]|]+).*?\]/i);
+    const hasHome = (meta.plannedHomeDays || 0) > 0;
+    const hasHaul = (meta.plannedHaulDays || 0) > 0;
+    const hasRisk = isCycloneRiskMonth(meta, meta.dominantSegment);
     const badges = [];
-    if (homeMatch) badges.push('<span class="tl3-badge tl3-badge-home">⌂ Home trip</span>');
-    if (haulMatch) badges.push('<span class="tl3-badge tl3-badge-haul">⚓ Haul-out</span>');
+    if (hasHome) badges.push('<span class="tl3-badge tl3-badge-home">⌂ Home trip</span>');
+    if (hasHaul) badges.push('<span class="tl3-badge tl3-badge-haul">⚓ Haul Out</span>');
+    if (hasRisk) badges.push('<span class="tl3-badge tl3-badge-risk" title="Cyclone / hurricane risk month">🌀 Risk</span>');
     const color = monthColor(mi);
     html +=
       '<div class="tl3-month" style="grid-row: ' +
@@ -675,57 +1050,109 @@ function renderRouteTimeline() {
       yearNum +
       "</div>" +
       '<div class="tl3-month-cal">' +
-      (meta.calendarMonth || "") +
+      calendarMonthFor(monthNum) +
       " " +
       calendarYear +
       "</div>" +
-      (cleanTitle ? '<div class="tl3-month-title">' + cleanTitle + "</div>" : "") +
-      (meta.season ? '<div class="tl3-month-season">' + meta.season + "</div>" : "") +
+      ((function () { const s = seasonForMonth(meta); return s ? '<div class="tl3-month-season">' + s + "</div>" : ""; })()) +
       (badges.length ? '<div class="tl3-month-badges">' + badges.join("") + "</div>" : "") +
       "</div>";
   });
 
-  destinations.forEach((w, i) => {
-    const row = i + 2;
-    const segMeta = segmentById.get(w.segment) || {};
-    const typeColor = segmentTypeColor(segMeta);
-    const mi = monthIndexById.has(w.month) ? monthIndexById.get(w.month) : 0;
+  rows.forEach((row, i) => {
+    const gridRow = i + 2;
+    const mi = monthIndexById.has(row.type === "waypoint" ? row.w.month : row.month)
+      ? monthIndexById.get(row.type === "waypoint" ? row.w.month : row.month)
+      : 0;
     const mColor = monthColor(mi);
-    const monthMeta = monthById.get(w.month) || {};
-    const isHome = /\[.*?home:\s*([^\]|]+).*?\]/i.test(monthMeta.label || "") && new RegExp("home:\\s*" + w.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i").test(monthMeta.label || "");
-    const isHaul = /\[.*?haul-out:\s*([^\]|]+).*?\]/i.test(monthMeta.label || "") && new RegExp("haul-out:\\s*" + w.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i").test(monthMeta.label || "");
-    const flagHtml = isHaul
-      ? '<span class="tl3-stop-flag tl3-stop-flag-haul" title="Haul-out">⚓</span>'
-      : isHome
-        ? '<span class="tl3-stop-flag tl3-stop-flag-home" title="Home trip">⌂</span>'
-        : "";
-    const days = w.tourStayDays;
-    const daysText = days != null ? (days % 1 === 0 ? String(days) : days.toFixed(1)) + "d" : "";
-    const daysHtml = daysText ? '<span class="tl3-stop-days" title="Days ashore">' + daysText + "</span>" : "";
-    const stopClass = "tl3-stop" + (isHaul ? " tl3-stop-haul" : isHome ? " tl3-stop-home" : "");
-    const legNm = w.legDistance;
-    const legHtml =
-      legNm > 0
-        ? '<span class="tl3-leg-dist" title="Distance from previous">' +
-          formatNm(legNm) +
-          '</span><span class="tl3-leg-time" title="Travel time at ' +
-          NM_PER_DAY +
-          ' nm/day">' +
-          formatTravelTime(legNm) +
+
+    if (row.type === "event") {
+      const isHome = row.kind === "home";
+      const stopClass = isHome ? "tl3-stop tl3-stop-home" : "tl3-stop tl3-stop-haul";
+      const flagClass = isHome ? "tl3-stop-flag-home" : "tl3-stop-flag-haul";
+      const flagIcon = isHome ? "⌂" : "⚓";
+      const kindLabel = isHome ? "Home trip" : "Haul Out";
+      const monthMeta = monthById.get(row.month) || {};
+      const monthSegId = monthMeta.dominantSegment || row.segment;
+      const showSchengen = showSchengenForSegment(monthSegId);
+      const homeSchengenImpact = isHome && showSchengen ? homeTripSchengenImpact.get(row.month) || 0 : 0;
+      const homeSchengenHtml = homeSchengenImpact
+        ? '<span class="tl3-stop-eu tl3-stop-eu-left tl3-stop-eu-delta" title="Schengen impact from home-trip transit days">+' +
+          homeSchengenImpact +
           "</span>"
         : "";
+      const daysTitle = isHome ? "Days away — home visit" : "Days in haul-out";
+      const daysText = formatDays(row.days);
+      const daysHtml = daysText ? '<span class="tl3-stop-days" title="' + daysTitle + '">' + daysText + "</span>" : "";
+      const flagHtml = isHome
+        ? ""
+        : '<span class="tl3-stop-flag ' + flagClass + '" title="' + kindLabel + '">' + flagIcon + "</span>";
+      html +=
+        '<div class="' +
+        stopClass +
+        '" style="grid-row: ' +
+        gridRow +
+        '">' +
+        homeSchengenHtml +
+        flagHtml +
+        '<span class="tl3-stop-label">' +
+        '<span class="tl3-stop-kind">' +
+        kindLabel +
+        "</span>" +
+        "</span>" +
+        daysHtml +
+        "</div>";
+      return;
+    }
+
+    const w = row.w;
+    const segMeta = segmentById.get(w.segment) || {};
+    const typeColor = segmentTypeColor(segMeta);
+    const showSchengen = showSchengenForSegment(w.segment);
+    const daysHtml = formatDays(w.tourStayDays)
+      ? '<span class="tl3-stop-days" title="Days ashore">' + formatDays(w.tourStayDays) + "</span>"
+      : "";
+    const route = routeIntoWp.get(w.id);
+    const prevW = row.destIndex > 0 ? destinations[row.destIndex - 1] : null;
+    const routeSchengenImpact =
+      showSchengen && route && prevW && isSchengenWaypoint(prevW) && isSchengenWaypoint(w) ? route.days || 0 : 0;
+    const routeSchengenCount = schengenRouteCount.get(w.id) || 0;
+    const routeSchengenCls =
+      "tl3-stop-eu" + (routeSchengenCount >= 90 ? " tl3-stop-eu-over" : routeSchengenCount >= 75 ? " tl3-stop-eu-warn" : "");
+    const routeSchengenHtml =
+      routeSchengenImpact > 0
+        ? '<span class="tl3-leg-schengen ' + routeSchengenCls + '" title="Schengen count at this inbound route point">' +
+          routeSchengenCount +
+          "/90</span>"
+        : "";
+    const legHtml = route
+      ? '<span class="tl3-leg-dist" title="Distance from previous">' +
+        formatNm(route.distanceNm) +
+        '</span><span class="tl3-leg-time" title="Travel time at sea">' +
+        route.days +
+        "d</span>" +
+        routeSchengenHtml
+      : "";
+    const schengenHtml = (function () {
+      if (!showSchengen) return "";
+      const here = isSchengenWaypoint(w);
+      if (!here) return "";
+      const count = schengenCount.get(w.id) || 0;
+      const cls = "tl3-stop-eu" + (count >= 90 ? " tl3-stop-eu-over" : count >= 75 ? " tl3-stop-eu-warn" : "");
+      const star = here ? "★ " : "";
+      const countChip = '<span class="' + cls + '" title="Days in Schengen (rolling 180-day window)">' + star + count + "/90</span>";
+      return '<span class="tl3-stop-eu-stack">' + countChip + "</span>";
+    })();
     html +=
-      '<div class="' +
-      stopClass +
-      '" style="grid-row: ' +
-      row +
+      '<div class="tl3-stop" style="grid-row: ' +
+      gridRow +
       "; --type: " +
       typeColor +
       "; --month: " +
       mColor +
       '">' +
       legHtml +
-      flagHtml +
+      schengenHtml +
       '<span class="tl3-stop-label">' +
       w.label +
       "</span>" +
@@ -762,6 +1189,7 @@ function renderRouteTimeline() {
       " destination" +
       (span !== 1 ? "s" : "") +
       "</div>" +
+      hurricaneSeasonTagHtml(meta) +
       "</div>";
   });
 
@@ -851,6 +1279,9 @@ function renderMonthMap() {
     const item = projected[mi];
     if (!item) continue;
     const { m, p, label } = item;
+    const waypoint = waypoints[m.id] || null;
+    const stayDays = waypoint ? formatDays(waypoint.tourStayDays) : "";
+    const titleLine1 = `${label || m.location}${stayDays ? ` (${stayDays})` : ""}`;
     const style = waypointStyle(m.id, mi);
     const ringHtml = style.ring
       ? `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${style.r + 4}" fill="none" stroke="${style.fill}" stroke-width="1.2" opacity="0.55"/>`
@@ -860,7 +1291,7 @@ function renderMonthMap() {
         ${ringHtml}
         <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${style.r}" fill="${style.fill}" stroke="${style.stroke}" stroke-width="1"/>
         ${waypointIcon(m.id, p)}
-        <title>${label || m.location}&#10;${m.calMonth}&#10;${m.region || "Course"}</title>
+        <title>${titleLine1}&#10;${formatMonthMapTitle(m.id)}&#10;${m.region || "Course"}</title>
       </g>`;
 
     const lblOffsetY = m.year === 2 && p.y < 320 ? -10 : 13;
@@ -872,7 +1303,7 @@ function renderMonthMap() {
       for (const s of stops) {
         const sp = project(s.lat, s.lng);
         const cls = s.kind === "side-trip" ? "stop-dot stop-side-trip" : s.kind === "passage" ? "stop-dot stop-passage" : "stop-dot";
-        stopMarkers += `<circle cx="${sp.x.toFixed(1)}" cy="${sp.y.toFixed(1)}" r="2.5" class="${cls}"><title>${m.num} stop · ${s.label}</title></circle>`;
+        stopMarkers += `<circle cx="${sp.x.toFixed(1)}" cy="${sp.y.toFixed(1)}" r="2.5" class="${cls}"><title>${s.label}&#10;${formatMonthMapTitle(m.id)}</title></circle>`;
       }
     }
   }
@@ -910,12 +1341,15 @@ function renderMonthMap() {
 
   // Decorative cartouche — text from voyage.jsonc
   const c = VOYAGE.cartouche || {};
+  const startMonth = (VOYAGE && VOYAGE.voyage && VOYAGE.voyage.startMonth) || "Jan";
+  const startYear = (VOYAGE && VOYAGE.voyage && VOYAGE.voyage.startYear) || 2034;
+  const cartoucheStartText = `departing ${startMonth} ${startYear}`;
   const cartouche = `
     <g transform="translate(820 415)" class="map-cartouche">
       <rect x="0" y="0" width="170" height="68" rx="2" fill="#f1e4be" stroke="#4a3217" stroke-width="0.8"/>
       <rect x="3" y="3" width="164" height="62" rx="1" fill="none" stroke="#b8932e" stroke-width="0.5"/>
       <text x="85" y="22" text-anchor="middle" class="cartouche-title">${c.title || ""}</text>
-      <text x="85" y="36" text-anchor="middle" class="cartouche-sub">${c.sub1 || ""}</text>
+      <text x="85" y="36" text-anchor="middle" class="cartouche-sub">${cartoucheStartText}</text>
       <text x="85" y="54" text-anchor="middle" class="cartouche-sub">${c.sub2 || ""}</text>
     </g>
   `;
@@ -968,7 +1402,7 @@ function renderMonthMap() {
 function badgeHtml(monthBadges) {
   const labels = {
     home: "✈ home trip",
-    haul: "🏗 haul-out",
+    haul: "🏗 haul out",
     passage: "🌊 ocean passage",
     quarantine: "🐕 dog quarantine",
     celebration: "🎉 circumnavigation complete",
@@ -991,7 +1425,7 @@ function renderMonthTimeline() {
         <div class="year-block-head">
           <div class="year-block-mark">Year ${yr}</div>
           <h3 class="year-block-title">${meta.title}</h3>
-          <div class="year-block-season">${meta.season}</div>
+          <div class="year-block-season">${seasonForMonth(meta)}</div>
           <p class="year-block-summary">${meta.summary}</p>
         </div>
         <div class="voyage-grid">
@@ -1070,9 +1504,122 @@ async function fetchJson(url) {
   return JSON.parse(text);
 }
 
+// Pack waypoints into 30-day months by walking the route in order.
+// Home trip: 14 days reserved at the end of every 3rd month (3, 6, 9, 12, …).
+// Haul-out: 7 days at the end of every 12th month, immediately after that month's
+// home trip when both fit; otherwise haul-out spills into the following month.
+// Reserved days come out of the 30-day budget before sail+tour are packed.
+// Side-effect: assigns `w.month = "mNN"` to every waypoint.
+function computeMonths(voyage) {
+  const MONTH_CAP = 30;
+  const HOME_DAYS = 14;
+  const HAUL_DAYS = 7;
+
+  const wps = voyage.waypoints || [];
+  const routes = voyage.routes || [];
+  const segmentsById = (voyage.segments || []).reduce((acc, s) => {
+    acc[s.id] = s;
+    return acc;
+  }, {});
+  const routeByTo = new Map(routes.map((r) => [r.to, r]));
+
+  const months = [];
+  let pendingHaul = false;
+
+  const finalizeHaulSpill = (m) => {
+    if (m.haul <= 0 || m.monthNum % 12 !== 0) return;
+    if (m.sail + m.tour + m.home + m.haul <= MONTH_CAP) return;
+    m.haul = 0;
+    pendingHaul = true;
+  };
+
+  const startMonth = (idx) => {
+    const monthNum = idx + 1;
+    const home = monthNum % 3 === 0 ? HOME_DAYS : 0;
+    let haul = 0;
+    if (pendingHaul) {
+      haul = HAUL_DAYS;
+      pendingHaul = false;
+    } else if (monthNum % 12 === 0) {
+      haul = HAUL_DAYS;
+    }
+    const m = { monthNum, sail: 0, tour: 0, home, haul, wps: [], segDays: {} };
+    months.push(m);
+    return m;
+  };
+
+  let cur = startMonth(0);
+  for (let i = 0; i < wps.length; i++) {
+    const w = wps[i];
+    const r = i === 0 ? null : routeByTo.get(w.id);
+    const sail = r ? r.days || 0 : 0;
+    const tour = w.tourStayDays || 0;
+    const cost = sail + tour;
+
+    const available = MONTH_CAP - cur.home - cur.haul;
+    if (cur.wps.length > 0 && cur.sail + cur.tour + cost > available) {
+      finalizeHaulSpill(cur);
+      cur = startMonth(months.length);
+    }
+
+    cur.sail += sail;
+    cur.tour += tour;
+    cur.wps.push(w);
+    if (w.segment) cur.segDays[w.segment] = (cur.segDays[w.segment] || 0) + sail + tour;
+  }
+
+  finalizeHaulSpill(cur);
+  if (pendingHaul) {
+    const spill = startMonth(months.length);
+    spill.haul = HAUL_DAYS;
+    pendingHaul = false;
+  }
+
+  return months.map((m, idx) => {
+    const num = idx + 1;
+    const id = `m${String(num).padStart(2, "0")}`;
+    let dominantSegment = null;
+    let max = -1;
+    for (const [seg, days] of Object.entries(m.segDays)) {
+      if (days > max) {
+        max = days;
+        dominantSegment = seg;
+      }
+    }
+    const segName = dominantSegment ? (segmentsById[dominantSegment] || {}).name || "" : "";
+    const annots = [];
+    if (m.home > 0) annots.push("home");
+    if (m.haul > 0) annots.push("haul-out");
+    let label = `Month ${num} - ${segName}`;
+    if (annots.length) label += ` [${annots.join(" | ")}]`;
+
+    const total = m.sail + m.tour + m.home + m.haul;
+    const isLast = idx === months.length - 1;
+    let cap = MONTH_CAP;
+    if (total > MONTH_CAP) cap = total;
+    else if (isLast) cap = total;
+
+    for (const w of m.wps) w.month = id;
+
+    return {
+      id,
+      label,
+      dominantSegment,
+      monthCapacityDays: cap,
+      plannedSailDays: m.sail,
+      plannedTourDays: m.tour,
+      plannedHomeDays: m.home,
+      plannedHaulDays: m.haul,
+      plannedReservedDays: 0,
+      plannedTotalDays: total,
+    };
+  });
+}
+
 async function boot() {
   try {
     [DATA, VOYAGE] = await Promise.all([fetchJson("months.json"), fetchJson("voyage.jsonc")]);
+    VOYAGE.months = computeMonths(VOYAGE);
   } catch (err) {
     $("#loading").innerHTML = `
       <div style="color:#7a2f1d;font-family:'EB Garamond',serif;font-style:italic;font-size:14px;line-height:1.7;max-width:560px;margin:0 auto;text-align:left;padding:24px;background:rgba(160,74,48,0.08);border:1px solid rgba(160,74,48,0.3);border-radius:4px;">
