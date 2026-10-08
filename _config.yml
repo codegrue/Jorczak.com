@@ -1,0 +1,12 @@
+# Jekyll builds this site on GitHub Pages.
+# Markdown notes stay in the repository. This list stops Jekyll from publishing them.
+# A custom exclude list replaces the Pages default. That default skips CNAME in the build output.
+# CNAME stays on this list so the build keeps skipping it. GitHub still reads CNAME from the repository for the custom domain.
+exclude:
+  - CNAME
+  - CLAUDE.md
+  - README.md
+  - circumnavigation/CIRCUMNAV.md
+  - "*.md"
+  - "circumnavigation/*.md"
+  - "**/*.md"
